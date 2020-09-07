@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 /* Auth */
 Route::middleware('guest')->group(function () {
-    Route::post('login', 'API\Auth\LoginController@login')->name('login');
-    Route::post('register', 'API\Auth\RegisterController@register')->name('register');
+    Route::post('login', 'API\Auth\LoginController')->name('login');
+    Route::post('register', 'API\Auth\RegisterController')->name('register');
 });
+Route::middleware('auth:api')->post('logout', 'API\Auth\LogoutController')->name('logout');

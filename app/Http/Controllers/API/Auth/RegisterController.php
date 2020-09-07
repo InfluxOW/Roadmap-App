@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 
 class RegisterController extends Controller
@@ -61,14 +60,15 @@ class RegisterController extends Controller
      * @param \App\Http\Requests\RegisterRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function register(RegisterRequest $request)
+    public function __invoke(RegisterRequest $request)
     {
         $validatedData = $request->validated();
         $validatedData['password'] = bcrypt($request->password);
-        $user = User::create($validatedData);
+        User::create($validatedData);
 
-        $accessToken = $user->createToken('access_token')->accessToken;
-
-        return response(['user' => new UserResource($user), 'access_token' => $accessToken], 200);
+        return response(
+            ['message' => 'You were successfully registered. Use your email and password to sign in.'],
+            200
+        );
     }
 }
