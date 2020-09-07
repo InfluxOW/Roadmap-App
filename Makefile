@@ -13,7 +13,7 @@ seed:
 	php artisan db:seed
 docs:
 	php artisan ide-helper:generate
-	php artisan ide-helper:models
+	php artisan ide-helper:models -n
 	php artisan ide-helper:meta
 lint:
 	composer exec phpcs -v
