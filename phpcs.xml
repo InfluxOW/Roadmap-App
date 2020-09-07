@@ -12,7 +12,7 @@
     <file>tests</file>
     <file>database</file>
 
-    <rule ref="PSR12"></rule>
+    <rule ref="PSR12" />
 
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
         <exclude-pattern>database/</exclude-pattern>

@@ -2,15 +2,26 @@
 
 namespace App\Models;
 
+use App\Models\Users\Admin;
+use App\Models\Users\Developer;
+use App\Models\Users\Manager;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Parental\HasChildren;
 
-class User extends Authenticatable
+abstract class User extends Authenticatable
 {
     use Notifiable;
     use HasApiTokens;
+    use HasChildren;
+
+    protected $childTypes = [
+        'admin' => Admin::class,
+        'manager' => Manager::class,
+        'developer' => Developer::class
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'email', 'password', 'type'
     ];
 
     /**
