@@ -5,7 +5,7 @@ namespace App\Models\Users;
 use App\Models\User;
 use Parental\HasParent;
 
-class Developer extends User
+class Employee extends User
 {
     use HasParent;
 }

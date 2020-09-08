@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Users\Admin;
-use App\Models\Users\Developer;
+use App\Models\Users\Employee;
 use App\Models\Users\Manager;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,7 +20,7 @@ abstract class User extends Authenticatable
     protected $childTypes = [
         'admin' => Admin::class,
         'manager' => Manager::class,
-        'developer' => Developer::class
+        'employee' => Employee::class
     ];
 
     /**

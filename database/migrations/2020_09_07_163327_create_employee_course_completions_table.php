@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeveloperCourseCompletionsTable extends Migration
+class CreateEmployeeCourseCompletionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateDeveloperCourseCompletionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('developer_course_completions', function (Blueprint $table) {
-            $table->foreignId('developer_id')->index()->constrained('users')->cascadeOnDelete();
+        Schema::create('employee_course_completions', function (Blueprint $table) {
+            $table->foreignId('employee_id')->index()->constrained('users')->cascadeOnDelete();
             $table->foreignId('course_id')->index()->constrained()->cascadeOnDelete();
             $table->enum('rate', range(1, 10));
-            $table->unique(['developer_id', 'course_id']);
+            $table->unique(['employee_id', 'course_id']);
             $table->timestamp('completed_at');
         });
     }
@@ -29,6 +29,6 @@ class CreateDeveloperCourseCompletionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('developer_course_completions');
+        Schema::dropIfExists('employee_course_completions');
     }
 }

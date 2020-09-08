@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeveloperTechnologiesTable extends Migration
+class CreateEmployeeTechnologiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateDeveloperTechnologiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('developer_technologies', function (Blueprint $table) {
-            $table->foreignId('developer_id')->index()->constrained('users')->cascadeOnDelete();
+        Schema::create('employee_technologies', function (Blueprint $table) {
+            $table->foreignId('employee_id')->index()->constrained('users')->cascadeOnDelete();
             $table->foreignId('technology_id')->index()->constrained()->cascadeOnDelete();
-            $table->unique(['developer_id', 'technology_id']);
-            $table->timestamps();
+            $table->unique(['employee_id', 'technology_id']);
         });
     }
 
@@ -28,6 +27,6 @@ class CreateDeveloperTechnologiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('developer_technologies');
+        Schema::dropIfExists('employee_technologies');
     }
 }

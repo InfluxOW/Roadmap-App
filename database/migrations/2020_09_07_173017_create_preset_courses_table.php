@@ -17,7 +17,7 @@ class CreatePresetCoursesTable extends Migration
             $table->foreignId('preset_id')->index()->constrained()->cascadeOnDelete();
             $table->foreignId('course_id')->index()->constrained()->cascadeOnDelete();
             $table->unique(['preset_id', 'course_id']);
-            $table->timestamps();
+            $table->timestamp('assigned_at');
         });
     }
 

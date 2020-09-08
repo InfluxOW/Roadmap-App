@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeveloperLevelsTable extends Migration
+class CreateEmployeeLevelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDeveloperLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('developer_levels', function (Blueprint $table) {
+        Schema::create('employee_levels', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('slug');
@@ -27,6 +27,6 @@ class CreateDeveloperLevelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('developer_levels');
+        Schema::dropIfExists('employee_levels');
     }
 }
