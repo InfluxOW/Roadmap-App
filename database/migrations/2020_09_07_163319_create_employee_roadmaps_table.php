@@ -17,7 +17,7 @@ class CreateEmployeeRoadmapsTable extends Migration
             $table->foreignId('employee_id')->index()->constrained('users')->cascadeOnDelete();
             $table->foreignId('preset_id')->index()->constrained()->cascadeOnDelete();
             $table->unique(['employee_id', 'preset_id']);
-            $table->foreignId('assigned_by_id')->index()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('assigned_by_manager_id')->index()->constrained('users')->cascadeOnDelete();
             $table->timestamp('assigned_at');
         });
     }

@@ -23,18 +23,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('type');
-            $table->enum('sex', ['male', 'female'])->nullable();
-            $table->tinyInteger('age')->nullable();
-            $table->foreignId('company_id')->index()->constrained();
+            $table->foreignId('categorical_data_id')->nullable()->index()->constrained('user_categorical_data');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
-            /*
-             * For Employees
-             * */
-            $table->string('position');
-            $table->foreignId('team_id')->nullable()->index()->constrained();
-            $table->foreignId('development_direction_id')->nullable()->index()->constrained();
         });
     }
 
