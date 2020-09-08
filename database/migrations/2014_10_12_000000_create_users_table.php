@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('type');
-            $table->foreignId('categorical_data_id')->nullable()->index()->constrained('user_categorical_data');
+            $table->foreignId('categorical_data_id')->index()->constrained('users_categorical_data');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();

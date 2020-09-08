@@ -18,7 +18,7 @@ class CreatePresetsTable extends Migration
             $table->string('name')->unique();
             $table->string('slug');
             $table->text('description')->nullable();
-            $table->foreignId('manager_id')->index()->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('manager_id')->nullable()->index()->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

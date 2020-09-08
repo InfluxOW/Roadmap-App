@@ -16,8 +16,8 @@ class CreateEmployeeCourseCompletionsTable extends Migration
         Schema::create('employee_course_completions', function (Blueprint $table) {
             $table->foreignId('employee_id')->index()->constrained('users')->cascadeOnDelete();
             $table->foreignId('course_id')->index()->constrained()->cascadeOnDelete();
-            $table->enum('rate', range(1, 10));
             $table->unique(['employee_id', 'course_id']);
+            $table->enum('rating', range(1, 10));
             $table->timestamp('completed_at');
         });
     }
