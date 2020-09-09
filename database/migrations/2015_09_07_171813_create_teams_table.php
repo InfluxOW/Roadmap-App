@@ -17,6 +17,9 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->foreignId('owner_id')->index()->constrained('users');
+            $table->foreignId('company_id')->index()->constrained();
+            $table->unique(['name', 'company_id']);
             $table->timestamps();
         });
     }

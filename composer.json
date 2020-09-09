@@ -28,7 +28,8 @@
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "spatie/laravel-collection-macros": "^7.0",
-        "spatie/laravel-query-builder": "^3.2"
+        "spatie/laravel-query-builder": "^3.2",
+        "spatie/laravel-sluggable": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

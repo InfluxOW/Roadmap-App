@@ -15,10 +15,11 @@ class CreatePresetsTable extends Migration
     {
         Schema::create('presets', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('slug');
             $table->text('description')->nullable();
-            $table->foreignId('manager_id')->nullable()->index()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('manager_id')->nullable()->index()->constrained('users');
+            $table->unique(['name', 'manager_id']);
             $table->timestamps();
         });
     }

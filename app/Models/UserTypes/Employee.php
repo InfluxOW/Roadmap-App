@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\Models\UserTypes;
 
 use App\Models\User;
 use Parental\HasParent;

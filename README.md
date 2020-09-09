@@ -62,5 +62,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 Fix incompatible packages:
     "clarkeash/doorman": "^5.0",
-    "cviebrock/eloquent-sluggable": "^7.0",
     "rollbar/rollbar-laravel": "^6.0"

@@ -26,6 +26,7 @@ CREATE TABLE public.companies (
     id bigint NOT NULL,
     website character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
+    slug character varying(255) NOT NULL,
     description text NOT NULL,
     foundation_year smallint NOT NULL,
     industry character varying(255) NOT NULL,
@@ -134,6 +135,16 @@ CREATE TABLE public.employee_course_completions (
 
 
 --
+-- Name: employee_development_directions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.employee_development_directions (
+    employee_id bigint NOT NULL,
+    development_direction_id bigint NOT NULL
+);
+
+
+--
 -- Name: employee_levels; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -170,7 +181,7 @@ ALTER SEQUENCE public.employee_levels_id_seq OWNED BY public.employee_levels.id;
 CREATE TABLE public.employee_roadmaps (
     employee_id bigint NOT NULL,
     preset_id bigint NOT NULL,
-    assigned_by_manager_id bigint NOT NULL,
+    manager_id bigint NOT NULL,
     assigned_at timestamp(0) without time zone NOT NULL
 );
 
@@ -419,11 +430,11 @@ ALTER SEQUENCE public.presets_id_seq OWNED BY public.presets.id;
 
 
 --
--- Name: team_managers; Type: TABLE; Schema: public; Owner: -
+-- Name: team_members; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.team_managers (
-    manager_id bigint NOT NULL,
+CREATE TABLE public.team_members (
+    user_id bigint NOT NULL,
     team_id bigint NOT NULL,
     assigned_at timestamp(0) without time zone NOT NULL
 );
@@ -437,6 +448,8 @@ CREATE TABLE public.teams (
     id bigint NOT NULL,
     name character varying(255) NOT NULL,
     slug character varying(255) NOT NULL,
+    owner_id bigint NOT NULL,
+    company_id bigint NOT NULL,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone
 );
@@ -505,50 +518,17 @@ CREATE TABLE public.users (
     username character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
     password character varying(255) NOT NULL,
-    type character varying(255) NOT NULL,
-    categorical_data_id bigint NOT NULL,
+    role character varying(255) NOT NULL,
+    company_id bigint NOT NULL,
+    sex character varying(255),
+    birthday timestamp(0) without time zone,
+    "position" character varying(255),
     remember_token character varying(100),
     email_verified_at timestamp(0) without time zone,
     created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone
-);
-
-
---
--- Name: users_categorical_data; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.users_categorical_data (
-    id bigint NOT NULL,
-    company_id bigint,
-    sex character varying(255),
-    age smallint,
-    "position" character varying(255),
-    team_id bigint,
-    development_direction_id bigint,
-    created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,
-    CONSTRAINT users_categorical_data_sex_check CHECK (((sex)::text = ANY ((ARRAY['male'::character varying, 'female'::character varying])::text[])))
+    CONSTRAINT users_sex_check CHECK (((sex)::text = ANY ((ARRAY['male'::character varying, 'female'::character varying])::text[])))
 );
-
-
---
--- Name: users_categorical_data_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.users_categorical_data_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: users_categorical_data_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.users_categorical_data_id_seq OWNED BY public.users_categorical_data.id;
 
 
 --
@@ -655,10 +635,11 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- Name: users_categorical_data id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: companies companies_name_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users_categorical_data ALTER COLUMN id SET DEFAULT nextval('public.users_categorical_data_id_seq'::regclass);
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_name_unique UNIQUE (name);
 
 
 --
@@ -667,6 +648,14 @@ ALTER TABLE ONLY public.users_categorical_data ALTER COLUMN id SET DEFAULT nextv
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: companies companies_website_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_website_unique UNIQUE (website);
 
 
 --
@@ -683,6 +672,14 @@ ALTER TABLE ONLY public.courses
 
 ALTER TABLE ONLY public.courses
     ADD CONSTRAINT courses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: courses courses_source_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT courses_source_unique UNIQUE (source);
 
 
 --
@@ -707,6 +704,14 @@ ALTER TABLE ONLY public.development_directions
 
 ALTER TABLE ONLY public.employee_course_completions
     ADD CONSTRAINT employee_course_completions_employee_id_course_id_unique UNIQUE (employee_id, course_id);
+
+
+--
+-- Name: employee_development_directions employee_development_directions_employee_id_development_directi; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.employee_development_directions
+    ADD CONSTRAINT employee_development_directions_employee_id_development_directi UNIQUE (employee_id, development_direction_id);
 
 
 --
@@ -814,11 +819,11 @@ ALTER TABLE ONLY public.preset_courses
 
 
 --
--- Name: presets presets_name_unique; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: presets presets_name_manager_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.presets
-    ADD CONSTRAINT presets_name_unique UNIQUE (name);
+    ADD CONSTRAINT presets_name_manager_id_unique UNIQUE (name, manager_id);
 
 
 --
@@ -830,11 +835,19 @@ ALTER TABLE ONLY public.presets
 
 
 --
--- Name: team_managers team_managers_manager_id_team_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: team_members team_members_user_id_team_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.team_managers
-    ADD CONSTRAINT team_managers_manager_id_team_id_unique UNIQUE (manager_id, team_id);
+ALTER TABLE ONLY public.team_members
+    ADD CONSTRAINT team_members_user_id_team_id_unique UNIQUE (user_id, team_id);
+
+
+--
+-- Name: teams teams_name_company_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_name_company_id_unique UNIQUE (name, company_id);
 
 
 --
@@ -859,14 +872,6 @@ ALTER TABLE ONLY public.technologies
 
 ALTER TABLE ONLY public.technologies
     ADD CONSTRAINT technologies_pkey PRIMARY KEY (id);
-
-
---
--- Name: users_categorical_data users_categorical_data_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_categorical_data
-    ADD CONSTRAINT users_categorical_data_pkey PRIMARY KEY (id);
 
 
 --
@@ -922,10 +927,17 @@ CREATE INDEX employee_course_completions_employee_id_index ON public.employee_co
 
 
 --
--- Name: employee_roadmaps_assigned_by_manager_id_index; Type: INDEX; Schema: public; Owner: -
+-- Name: employee_development_directions_development_direction_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX employee_roadmaps_assigned_by_manager_id_index ON public.employee_roadmaps USING btree (assigned_by_manager_id);
+CREATE INDEX employee_development_directions_development_direction_id_index ON public.employee_development_directions USING btree (development_direction_id);
+
+
+--
+-- Name: employee_development_directions_employee_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX employee_development_directions_employee_id_index ON public.employee_development_directions USING btree (employee_id);
 
 
 --
@@ -933,6 +945,13 @@ CREATE INDEX employee_roadmaps_assigned_by_manager_id_index ON public.employee_r
 --
 
 CREATE INDEX employee_roadmaps_employee_id_index ON public.employee_roadmaps USING btree (employee_id);
+
+
+--
+-- Name: employee_roadmaps_manager_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX employee_roadmaps_manager_id_index ON public.employee_roadmaps USING btree (manager_id);
 
 
 --
@@ -1013,17 +1032,31 @@ CREATE INDEX presets_manager_id_index ON public.presets USING btree (manager_id)
 
 
 --
--- Name: team_managers_manager_id_index; Type: INDEX; Schema: public; Owner: -
+-- Name: team_members_team_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX team_managers_manager_id_index ON public.team_managers USING btree (manager_id);
+CREATE INDEX team_members_team_id_index ON public.team_members USING btree (team_id);
 
 
 --
--- Name: team_managers_team_id_index; Type: INDEX; Schema: public; Owner: -
+-- Name: team_members_user_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX team_managers_team_id_index ON public.team_managers USING btree (team_id);
+CREATE INDEX team_members_user_id_index ON public.team_members USING btree (user_id);
+
+
+--
+-- Name: teams_company_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX teams_company_id_index ON public.teams USING btree (company_id);
+
+
+--
+-- Name: teams_owner_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX teams_owner_id_index ON public.teams USING btree (owner_id);
 
 
 --
@@ -1034,31 +1067,10 @@ CREATE INDEX technologies_development_direction_id_index ON public.technologies 
 
 
 --
--- Name: users_categorical_data_company_id_index; Type: INDEX; Schema: public; Owner: -
+-- Name: users_company_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX users_categorical_data_company_id_index ON public.users_categorical_data USING btree (company_id);
-
-
---
--- Name: users_categorical_data_development_direction_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_categorical_data_development_direction_id_index ON public.users_categorical_data USING btree (development_direction_id);
-
-
---
--- Name: users_categorical_data_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_categorical_data_id_index ON public.users USING btree (categorical_data_id);
-
-
---
--- Name: users_categorical_data_team_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_categorical_data_team_id_index ON public.users_categorical_data USING btree (team_id);
+CREATE INDEX users_company_id_index ON public.users USING btree (company_id);
 
 
 --
@@ -1094,11 +1106,19 @@ ALTER TABLE ONLY public.employee_course_completions
 
 
 --
--- Name: employee_roadmaps employee_roadmaps_assigned_by_manager_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: employee_development_directions employee_development_directions_development_direction_id_foreig; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.employee_roadmaps
-    ADD CONSTRAINT employee_roadmaps_assigned_by_manager_id_foreign FOREIGN KEY (assigned_by_manager_id) REFERENCES public.users(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.employee_development_directions
+    ADD CONSTRAINT employee_development_directions_development_direction_id_foreig FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id);
+
+
+--
+-- Name: employee_development_directions employee_development_directions_employee_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.employee_development_directions
+    ADD CONSTRAINT employee_development_directions_employee_id_foreign FOREIGN KEY (employee_id) REFERENCES public.users(id);
 
 
 --
@@ -1106,7 +1126,15 @@ ALTER TABLE ONLY public.employee_roadmaps
 --
 
 ALTER TABLE ONLY public.employee_roadmaps
-    ADD CONSTRAINT employee_roadmaps_employee_id_foreign FOREIGN KEY (employee_id) REFERENCES public.users(id) ON DELETE CASCADE;
+    ADD CONSTRAINT employee_roadmaps_employee_id_foreign FOREIGN KEY (employee_id) REFERENCES public.users(id);
+
+
+--
+-- Name: employee_roadmaps employee_roadmaps_manager_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.employee_roadmaps
+    ADD CONSTRAINT employee_roadmaps_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id);
 
 
 --
@@ -1114,7 +1142,7 @@ ALTER TABLE ONLY public.employee_roadmaps
 --
 
 ALTER TABLE ONLY public.employee_roadmaps
-    ADD CONSTRAINT employee_roadmaps_preset_id_foreign FOREIGN KEY (preset_id) REFERENCES public.presets(id) ON DELETE CASCADE;
+    ADD CONSTRAINT employee_roadmaps_preset_id_foreign FOREIGN KEY (preset_id) REFERENCES public.presets(id);
 
 
 --
@@ -1154,23 +1182,39 @@ ALTER TABLE ONLY public.preset_courses
 --
 
 ALTER TABLE ONLY public.presets
-    ADD CONSTRAINT presets_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id) ON DELETE CASCADE;
+    ADD CONSTRAINT presets_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id);
 
 
 --
--- Name: team_managers team_managers_manager_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: team_members team_members_team_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.team_managers
-    ADD CONSTRAINT team_managers_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.team_members
+    ADD CONSTRAINT team_members_team_id_foreign FOREIGN KEY (team_id) REFERENCES public.teams(id) ON DELETE CASCADE;
 
 
 --
--- Name: team_managers team_managers_team_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: team_members team_members_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.team_managers
-    ADD CONSTRAINT team_managers_team_id_foreign FOREIGN KEY (team_id) REFERENCES public.teams(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.team_members
+    ADD CONSTRAINT team_members_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: teams teams_company_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_company_id_foreign FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: teams teams_owner_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_owner_id_foreign FOREIGN KEY (owner_id) REFERENCES public.users(id);
 
 
 --
@@ -1182,59 +1226,35 @@ ALTER TABLE ONLY public.technologies
 
 
 --
--- Name: users_categorical_data users_categorical_data_company_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_categorical_data
-    ADD CONSTRAINT users_categorical_data_company_id_foreign FOREIGN KEY (company_id) REFERENCES public.companies(id);
-
-
---
--- Name: users_categorical_data users_categorical_data_development_direction_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_categorical_data
-    ADD CONSTRAINT users_categorical_data_development_direction_id_foreign FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id);
-
-
---
--- Name: users users_categorical_data_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: users users_company_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_categorical_data_id_foreign FOREIGN KEY (categorical_data_id) REFERENCES public.users_categorical_data(id);
-
-
---
--- Name: users_categorical_data users_categorical_data_team_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_categorical_data
-    ADD CONSTRAINT users_categorical_data_team_id_foreign FOREIGN KEY (team_id) REFERENCES public.teams(id);
+    ADD CONSTRAINT users_company_id_foreign FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO public.migrations VALUES (1, '2013_09_07_171813_create_teams_table', 1);
-INSERT INTO public.migrations VALUES (2, '2013_09_07_181545_create_development_directions_table', 1);
-INSERT INTO public.migrations VALUES (3, '2013_09_07_182114_create_employee_levels_table', 1);
-INSERT INTO public.migrations VALUES (4, '2013_09_08_053914_create_companies_table', 1);
-INSERT INTO public.migrations VALUES (5, '2013_09_08_064246_create_users_categorical_data_table', 1);
-INSERT INTO public.migrations VALUES (6, '2014_10_12_000000_create_users_table', 1);
-INSERT INTO public.migrations VALUES (7, '2014_10_12_100000_create_password_resets_table', 1);
-INSERT INTO public.migrations VALUES (8, '2016_06_01_000001_create_oauth_auth_codes_table', 1);
-INSERT INTO public.migrations VALUES (9, '2016_06_01_000002_create_oauth_access_tokens_table', 1);
-INSERT INTO public.migrations VALUES (10, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1);
-INSERT INTO public.migrations VALUES (11, '2016_06_01_000004_create_oauth_clients_table', 1);
-INSERT INTO public.migrations VALUES (12, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1);
-INSERT INTO public.migrations VALUES (13, '2019_08_19_000000_create_failed_jobs_table', 1);
-INSERT INTO public.migrations VALUES (14, '2020_09_07_161311_create_technologies_table', 1);
-INSERT INTO public.migrations VALUES (15, '2020_09_07_162059_create_courses_table', 1);
-INSERT INTO public.migrations VALUES (16, '2020_09_07_162944_create_presets_table', 1);
-INSERT INTO public.migrations VALUES (17, '2020_09_07_163319_create_employee_roadmaps_table', 1);
-INSERT INTO public.migrations VALUES (18, '2020_09_07_163327_create_employee_course_completions_table', 1);
-INSERT INTO public.migrations VALUES (19, '2020_09_07_173017_create_preset_courses_table', 1);
-INSERT INTO public.migrations VALUES (20, '2020_09_07_173944_create_team_managers_table', 1);
-INSERT INTO public.migrations VALUES (21, '2020_09_07_180958_create_employee_technologies_table', 1);
+INSERT INTO public.migrations VALUES (1, '2013_09_07_181545_create_development_directions_table', 1);
+INSERT INTO public.migrations VALUES (2, '2013_09_07_182114_create_employee_levels_table', 1);
+INSERT INTO public.migrations VALUES (3, '2013_09_08_053914_create_companies_table', 1);
+INSERT INTO public.migrations VALUES (4, '2014_10_12_000000_create_users_table', 1);
+INSERT INTO public.migrations VALUES (5, '2014_10_12_100000_create_password_resets_table', 1);
+INSERT INTO public.migrations VALUES (6, '2015_09_07_171813_create_teams_table', 1);
+INSERT INTO public.migrations VALUES (7, '2016_06_01_000001_create_oauth_auth_codes_table', 1);
+INSERT INTO public.migrations VALUES (8, '2016_06_01_000002_create_oauth_access_tokens_table', 1);
+INSERT INTO public.migrations VALUES (9, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1);
+INSERT INTO public.migrations VALUES (10, '2016_06_01_000004_create_oauth_clients_table', 1);
+INSERT INTO public.migrations VALUES (11, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1);
+INSERT INTO public.migrations VALUES (12, '2019_08_19_000000_create_failed_jobs_table', 1);
+INSERT INTO public.migrations VALUES (13, '2020_09_07_161311_create_technologies_table', 1);
+INSERT INTO public.migrations VALUES (14, '2020_09_07_162059_create_courses_table', 1);
+INSERT INTO public.migrations VALUES (15, '2020_09_07_162944_create_presets_table', 1);
+INSERT INTO public.migrations VALUES (16, '2020_09_07_163319_create_employee_roadmaps_table', 1);
+INSERT INTO public.migrations VALUES (17, '2020_09_07_163327_create_employee_course_completions_table', 1);
+INSERT INTO public.migrations VALUES (18, '2020_09_07_173017_create_preset_courses_table', 1);
+INSERT INTO public.migrations VALUES (19, '2020_09_07_173944_create_team_members_table', 1);
+INSERT INTO public.migrations VALUES (20, '2020_09_07_180958_create_employee_technologies_table', 1);
+INSERT INTO public.migrations VALUES (21, '2020_09_09_150026_create_employee_development_directions_table', 1);

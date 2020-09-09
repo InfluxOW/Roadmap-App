@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Users\Admin;
-use App\Models\Users\Employee;
-use App\Models\Users\Manager;
+use App\Models\UserTypes\Admin;
+use App\Models\UserTypes\Employee;
+use App\Models\UserTypes\Manager;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,6 +22,7 @@ class User extends Authenticatable
         'manager' => Manager::class,
         'employee' => Employee::class
     ];
+    protected $childColumn = 'role';
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +30,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'email', 'password', 'role',
+        'sex', 'birthday', 'position'
     ];
 
     /**
@@ -48,5 +50,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthday' => 'datetime',
     ];
 }

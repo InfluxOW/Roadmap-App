@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTeamManagersTable extends Migration
+class CreateTeamMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTeamManagersTable extends Migration
      */
     public function up()
     {
-        Schema::create('team_managers', function (Blueprint $table) {
-            $table->foreignId('manager_id')->index()->constrained('users')->cascadeOnDelete();
+        Schema::create('team_members', function (Blueprint $table) {
+            $table->foreignId('user_id')->index()->constrained()->cascadeOnDelete();
             $table->foreignId('team_id')->index()->constrained()->cascadeOnDelete();
-            $table->unique(['manager_id', 'team_id']);
+            $table->unique(['user_id', 'team_id']);
             $table->timestamp('assigned_at');
         });
     }
@@ -28,6 +28,6 @@ class CreateTeamManagersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('team_managers');
+        Schema::dropIfExists('team_members');
     }
 }
