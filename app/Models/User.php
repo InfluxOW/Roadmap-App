@@ -6,15 +6,15 @@ use App\Models\Users\Admin;
 use App\Models\Users\Employee;
 use App\Models\Users\Manager;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
 use Parental\HasChildren;
 
-abstract class User extends Authenticatable
+class User extends Authenticatable
 {
+    use HasFactory;
     use Notifiable;
-    use HasApiTokens;
     use HasChildren;
 
     protected $childTypes = [
@@ -29,7 +29,7 @@ abstract class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'type'
+        'name', 'email', 'password',
     ];
 
     /**

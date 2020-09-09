@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 /* Auth */
 Route::middleware('guest')->group(function () {
-    Route::post('login', 'API\Auth\LoginController')->name('login');
-    Route::post('register', 'API\Auth\RegisterController')->name('register');
+    Route::post('login', Api\Auth\LoginController::class)->name('login');
+    Route::post('register', Api\Auth\RegisterController::class)->name('register');
 });
-Route::middleware('auth:api')->post('logout', 'API\Auth\LogoutController')->name('logout');
+Route::middleware('auth:api')->post('logout', Api\Auth\LogoutController::class)->name('logout');
