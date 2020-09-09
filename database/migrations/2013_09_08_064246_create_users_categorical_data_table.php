@@ -21,10 +21,10 @@ class CreateUsersCategoricalDataTable extends Migration
             $table->foreignId('company_id')->nullable()->index()->constrained();
             $table->enum('sex', ['male', 'female'])->nullable();
             $table->tinyInteger('age')->nullable();
+            $table->string('position')->nullable();
             /*
              * For Employees
              * */
-            $table->string('position')->nullable();
             $table->foreignId('team_id')->nullable()->index()->constrained();
             $table->foreignId('development_direction_id')->nullable()->index()->constrained();
             $table->timestamps();
