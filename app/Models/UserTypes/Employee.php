@@ -26,12 +26,12 @@ class Employee extends User
 
     public function directions()
     {
-        return $this->belongsToMany(DevelopmentDirection::class, 'employee_development_directions');
+        return $this->belongsToMany(DevelopmentDirection::class, 'employee_development_directions', 'employee_id');
     }
 
     public function technologies()
     {
-        return $this->belongsToMany(Technology::class, 'employee_technologies');
+        return $this->belongsToMany(Technology::class, 'employee_technologies', 'employee_id');
     }
 
     public function teams()

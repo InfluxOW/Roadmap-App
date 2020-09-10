@@ -34,6 +34,6 @@ class DevelopmentDirection extends Model
 
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'employee_development_directions');
+        return $this->belongsToMany(Employee::class, 'employee_development_directions', 'development_direction_id', 'employee_id');
     }
 }

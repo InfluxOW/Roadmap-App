@@ -2,6 +2,7 @@
 
 namespace App\Models\UserTypes;
 
+use App\Models\Company;
 use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\Team;

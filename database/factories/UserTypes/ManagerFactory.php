@@ -1,20 +1,23 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\UserTypes;
 
-use App\Models\EmployeeLevel;
+use App\Models\Model;
+use App\Models\User;
+use App\Models\UserTypes\Manager;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class EmployeeLevelFactory extends Factory
+class ManagerFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = EmployeeLevel::class;
+    protected $model = Manager::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +26,6 @@ class EmployeeLevelFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'name' => $this->faker->unique()->word,
-        ];
+        return User::factory()->manager()->getRawAttributes(null);
     }
 }

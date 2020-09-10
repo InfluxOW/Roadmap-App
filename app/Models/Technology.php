@@ -38,6 +38,6 @@ class Technology extends Model
 
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'employee_technologies');
+        return $this->belongsToMany(Employee::class, 'employee_technologies', 'technology_id', 'employee_id');
     }
 }

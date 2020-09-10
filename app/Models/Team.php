@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,11 +39,11 @@ class Team extends Model
 
     public function managers()
     {
-        return $this->belongsToMany(Manager::class, 'team_members', 'user_id')->withPivot('assigned_at');
+        return $this->belongsToMany(Manager::class, 'team_members', 'team_id', 'user_id')->withPivot('assigned_at');
     }
 
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'team_members', 'user_id')->withPivot('assigned_at');
+        return $this->belongsToMany(Employee::class, 'team_members', 'team_id', 'user_id')->withPivot('assigned_at');
     }
 }

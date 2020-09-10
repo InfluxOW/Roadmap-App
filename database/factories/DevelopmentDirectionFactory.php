@@ -23,9 +23,7 @@ class DevelopmentDirectionFactory extends Factory
     public function definition()
     {
         return [
-            'name' => Arr::random([
-                'Backend', 'Frontend', 'DevOps'
-            ]),
+            'name' => $this->faker->unique()->word,
         ];
     }
 }
