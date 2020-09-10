@@ -135,12 +135,32 @@ ALTER SEQUENCE public.development_directions_id_seq OWNED BY public.development_
 --
 
 CREATE TABLE public.employee_course_completions (
+    id bigint NOT NULL,
     employee_id bigint NOT NULL,
     course_id bigint NOT NULL,
-    rating character varying(255) NOT NULL,
+    rating character varying(255),
     completed_at timestamp(0) without time zone NOT NULL,
     CONSTRAINT employee_course_completions_rating_check CHECK (((rating)::text = ANY ((ARRAY['1'::character varying, '2'::character varying, '3'::character varying, '4'::character varying, '5'::character varying, '6'::character varying, '7'::character varying, '8'::character varying, '9'::character varying, '10'::character varying])::text[])))
 );
+
+
+--
+-- Name: employee_course_completions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.employee_course_completions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: employee_course_completions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.employee_course_completions_id_seq OWNED BY public.employee_course_completions.id;
 
 
 --
@@ -188,11 +208,31 @@ ALTER SEQUENCE public.employee_levels_id_seq OWNED BY public.employee_levels.id;
 --
 
 CREATE TABLE public.employee_roadmaps (
+    id bigint NOT NULL,
     employee_id bigint NOT NULL,
     preset_id bigint NOT NULL,
     manager_id bigint NOT NULL,
     assigned_at timestamp(0) without time zone NOT NULL
 );
+
+
+--
+-- Name: employee_roadmaps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.employee_roadmaps_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: employee_roadmaps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.employee_roadmaps_id_seq OWNED BY public.employee_roadmaps.id;
 
 
 --
@@ -590,10 +630,24 @@ ALTER TABLE ONLY public.development_directions ALTER COLUMN id SET DEFAULT nextv
 
 
 --
+-- Name: employee_course_completions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.employee_course_completions ALTER COLUMN id SET DEFAULT nextval('public.employee_course_completions_id_seq'::regclass);
+
+
+--
 -- Name: employee_levels id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.employee_levels ALTER COLUMN id SET DEFAULT nextval('public.employee_levels_id_seq'::regclass);
+
+
+--
+-- Name: employee_roadmaps id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.employee_roadmaps ALTER COLUMN id SET DEFAULT nextval('public.employee_roadmaps_id_seq'::regclass);
 
 
 --
@@ -733,6 +787,14 @@ ALTER TABLE ONLY public.employee_course_completions
 
 
 --
+-- Name: employee_course_completions employee_course_completions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.employee_course_completions
+    ADD CONSTRAINT employee_course_completions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: employee_development_directions employee_development_directions_employee_id_development_directi; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -762,6 +824,14 @@ ALTER TABLE ONLY public.employee_levels
 
 ALTER TABLE ONLY public.employee_roadmaps
     ADD CONSTRAINT employee_roadmaps_employee_id_preset_id_unique UNIQUE (employee_id, preset_id);
+
+
+--
+-- Name: employee_roadmaps employee_roadmaps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.employee_roadmaps
+    ADD CONSTRAINT employee_roadmaps_pkey PRIMARY KEY (id);
 
 
 --

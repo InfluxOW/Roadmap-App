@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UserTypes\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -25,4 +26,14 @@ class DevelopmentDirection extends Model
     /*
      * Relations
      * */
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class, 'technology_development_directions');
+    }
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class, 'employee_development_directions');
+    }
 }

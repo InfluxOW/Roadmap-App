@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UserTypes\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -25,4 +26,18 @@ class Technology extends Model
      * Relations
      * */
 
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_technologies');
+    }
+
+    public function directions()
+    {
+        return $this->belongsToMany(DevelopmentDirection::class, 'technology_development_directions');
+    }
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class, 'employee_technologies');
+    }
 }

@@ -14,6 +14,7 @@ class CreateEmployeeRoadmapsTable extends Migration
     public function up()
     {
         Schema::create('employee_roadmaps', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('employee_id')->index()->constrained('users');
             $table->foreignId('preset_id')->index()->constrained();
             $table->unique(['employee_id', 'preset_id']);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UserTypes\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -28,5 +29,20 @@ class Course extends Model
     public function level()
     {
         return $this->belongsTo(EmployeeLevel::class, 'employee_level_id');
+    }
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class, 'course_technologies');
+    }
+
+    public function presets()
+    {
+        return $this->belongsToMany(Preset::class, 'preset_courses')->withPivot('assigned_at');
+    }
+
+    public function completions()
+    {
+        return $this->hasMany(CourseCompletion::class);
     }
 }
