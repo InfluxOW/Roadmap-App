@@ -20,4 +20,18 @@ class Course extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    /*
+     * Relations
+     * */
+
+    public function level()
+    {
+        return $this->belongsTo(EmployeeLevel::class, 'employee_level_id');
+    }
+
+    public function technology()
+    {
+        return $this->belongsTo(Technology::class);
+    }
 }

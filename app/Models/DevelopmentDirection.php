@@ -13,11 +13,21 @@ class DevelopmentDirection extends Model
     use HasSlug;
 
     protected $fillable = ['name'];
+    public $timestamps = false;
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    /*
+     * Relations
+     * */
+
+    public function technologies()
+    {
+        return $this->hasMany(Technology::class);
     }
 }

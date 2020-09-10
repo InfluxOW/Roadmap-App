@@ -20,4 +20,18 @@ class Technology extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    /*
+     * Relations
+     * */
+
+    public function direction()
+    {
+        return $this->belongsTo(DevelopmentDirection::class, 'development_direction_id');
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

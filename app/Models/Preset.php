@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -19,5 +20,14 @@ class Preset extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    /*
+     * Relations
+     * */
+
+    public function manager()
+    {
+        return $this->belongsTo(Manager::class);
     }
 }

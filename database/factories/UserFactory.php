@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'company_id' => Company::factory(),
             'sex' => $sex,
-            'age' => $this->faker->numberBetween(18, 60),
+            'birthday' => $this->faker->dateTimeBetween('-60 years', '-20 years'),
             'position' => $this->faker->jobTitle,
             'remember_token' => Str::random(10),
         ];
@@ -41,21 +41,21 @@ class UserFactory extends Factory
     public function admin()
     {
         return $this->state([
-           'type' => 'admin'
+           'role' => 'admin'
         ]);
     }
 
     public function manager()
     {
         return $this->state([
-            'type' => 'manager'
+            'role' => 'manager'
         ]);
     }
 
     public function employee()
     {
         return $this->state([
-            'type' => 'employee'
+            'role' => 'employee'
         ]);
     }
 }

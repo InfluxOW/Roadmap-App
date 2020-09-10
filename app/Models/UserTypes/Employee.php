@@ -8,4 +8,13 @@ use Parental\HasParent;
 class Employee extends User
 {
     use HasParent;
+
+    /*
+     * Relations
+     * */
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }
