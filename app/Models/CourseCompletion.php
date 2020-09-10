@@ -10,6 +10,7 @@ class CourseCompletion extends Model
 {
     use HasFactory;
     protected $table = 'employee_course_completions';
+    public $timestamps = false;
     protected $fillable = ['rating', 'completed_at'];
 
     /*
