@@ -24,7 +24,7 @@ class DevelopmentDirectionFactory extends Factory
     {
         return [
             'name' => Arr::random([
-                'Web Development', 'IoT', 'DevOps', 'Mobile Development', 'Game Development'
+                'Backend', 'Frontend', 'DevOps'
             ]),
         ];
     }

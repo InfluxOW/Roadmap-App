@@ -20,7 +20,6 @@ class CreateCoursesTable extends Migration
             $table->text('description');
             $table->string('source')->unique();
             $table->foreignId('employee_level_id')->index()->constrained();
-            $table->foreignId('technology_id')->index()->constrained();
             $table->timestamps();
         });
     }

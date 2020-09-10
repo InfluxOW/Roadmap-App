@@ -25,9 +25,4 @@ class DevelopmentDirection extends Model
     /*
      * Relations
      * */
-
-    public function technologies()
-    {
-        return $this->hasMany(Technology::class);
-    }
 }

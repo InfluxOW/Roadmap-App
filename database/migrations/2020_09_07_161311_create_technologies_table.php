@@ -18,7 +18,6 @@ class CreateTechnologiesTable extends Migration
             $table->string('name')->unique();
             $table->string('slug');
             $table->text('description');
-            $table->foreignId('development_direction_id')->nullable()->index()->constrained();
             $table->timestamps();
         });
     }

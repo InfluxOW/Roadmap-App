@@ -29,7 +29,6 @@ class CourseFactory extends Factory
             'description' => $this->faker->paragraph,
             'source' => $this->faker->unique()->url,
             'employee_level_id' => EmployeeLevel::factory(),
-            'technology_id' => Technology::factory(),
         ];
     }
 }

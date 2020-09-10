@@ -56,6 +56,16 @@ ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 
 
 --
+-- Name: course_technologies; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.course_technologies (
+    technology_id bigint NOT NULL,
+    course_id bigint NOT NULL
+);
+
+
+--
 -- Name: courses; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -66,7 +76,6 @@ CREATE TABLE public.courses (
     description text NOT NULL,
     source character varying(255) NOT NULL,
     employee_level_id bigint NOT NULL,
-    technology_id bigint NOT NULL,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone
 );
@@ -483,7 +492,6 @@ CREATE TABLE public.technologies (
     name character varying(255) NOT NULL,
     slug character varying(255) NOT NULL,
     description text NOT NULL,
-    development_direction_id bigint,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone
 );
@@ -509,6 +517,16 @@ ALTER SEQUENCE public.technologies_id_seq OWNED BY public.technologies.id;
 
 
 --
+-- Name: technology_development_directions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.technology_development_directions (
+    technology_id bigint NOT NULL,
+    development_direction_id bigint NOT NULL
+);
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -519,7 +537,7 @@ CREATE TABLE public.users (
     email character varying(255) NOT NULL,
     password character varying(255) NOT NULL,
     role character varying(255) NOT NULL,
-    company_id bigint NOT NULL,
+    company_id bigint,
     sex character varying(255),
     birthday timestamp(0) without time zone,
     "position" character varying(255),
@@ -656,6 +674,14 @@ ALTER TABLE ONLY public.companies
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_website_unique UNIQUE (website);
+
+
+--
+-- Name: course_technologies course_technologies_technology_id_course_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.course_technologies
+    ADD CONSTRAINT course_technologies_technology_id_course_id_unique UNIQUE (technology_id, course_id);
 
 
 --
@@ -875,6 +901,14 @@ ALTER TABLE ONLY public.technologies
 
 
 --
+-- Name: technology_development_directions technology_development_directions_technology_id_development_dir; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.technology_development_directions
+    ADD CONSTRAINT technology_development_directions_technology_id_development_dir UNIQUE (technology_id, development_direction_id);
+
+
+--
 -- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -899,17 +933,24 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: course_technologies_course_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX course_technologies_course_id_index ON public.course_technologies USING btree (course_id);
+
+
+--
+-- Name: course_technologies_technology_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX course_technologies_technology_id_index ON public.course_technologies USING btree (technology_id);
+
+
+--
 -- Name: courses_employee_level_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX courses_employee_level_id_index ON public.courses USING btree (employee_level_id);
-
-
---
--- Name: courses_technology_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX courses_technology_id_index ON public.courses USING btree (technology_id);
 
 
 --
@@ -1060,10 +1101,17 @@ CREATE INDEX teams_owner_id_index ON public.teams USING btree (owner_id);
 
 
 --
--- Name: technologies_development_direction_id_index; Type: INDEX; Schema: public; Owner: -
+-- Name: technology_development_directions_development_direction_id_inde; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX technologies_development_direction_id_index ON public.technologies USING btree (development_direction_id);
+CREATE INDEX technology_development_directions_development_direction_id_inde ON public.technology_development_directions USING btree (development_direction_id);
+
+
+--
+-- Name: technology_development_directions_technology_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX technology_development_directions_technology_id_index ON public.technology_development_directions USING btree (technology_id);
 
 
 --
@@ -1074,19 +1122,27 @@ CREATE INDEX users_company_id_index ON public.users USING btree (company_id);
 
 
 --
+-- Name: course_technologies course_technologies_course_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.course_technologies
+    ADD CONSTRAINT course_technologies_course_id_foreign FOREIGN KEY (course_id) REFERENCES public.courses(id) ON DELETE CASCADE;
+
+
+--
+-- Name: course_technologies course_technologies_technology_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.course_technologies
+    ADD CONSTRAINT course_technologies_technology_id_foreign FOREIGN KEY (technology_id) REFERENCES public.technologies(id) ON DELETE CASCADE;
+
+
+--
 -- Name: courses courses_employee_level_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.courses
     ADD CONSTRAINT courses_employee_level_id_foreign FOREIGN KEY (employee_level_id) REFERENCES public.employee_levels(id);
-
-
---
--- Name: courses courses_technology_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.courses
-    ADD CONSTRAINT courses_technology_id_foreign FOREIGN KEY (technology_id) REFERENCES public.technologies(id);
 
 
 --
@@ -1218,11 +1274,19 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: technologies technologies_development_direction_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: technology_development_directions technology_development_directions_development_direction_id_fore; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.technologies
-    ADD CONSTRAINT technologies_development_direction_id_foreign FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id);
+ALTER TABLE ONLY public.technology_development_directions
+    ADD CONSTRAINT technology_development_directions_development_direction_id_fore FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id);
+
+
+--
+-- Name: technology_development_directions technology_development_directions_technology_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.technology_development_directions
+    ADD CONSTRAINT technology_development_directions_technology_id_foreign FOREIGN KEY (technology_id) REFERENCES public.technologies(id);
 
 
 --
@@ -1258,3 +1322,5 @@ INSERT INTO public.migrations VALUES (18, '2020_09_07_173017_create_preset_cours
 INSERT INTO public.migrations VALUES (19, '2020_09_07_173944_create_team_members_table', 1);
 INSERT INTO public.migrations VALUES (20, '2020_09_07_180958_create_employee_technologies_table', 1);
 INSERT INTO public.migrations VALUES (21, '2020_09_09_150026_create_employee_development_directions_table', 1);
+INSERT INTO public.migrations VALUES (22, '2020_09_10_065837_create_technology_development_directions_table', 1);
+INSERT INTO public.migrations VALUES (23, '2020_09_10_070100_create_course_technologies_table', 1);

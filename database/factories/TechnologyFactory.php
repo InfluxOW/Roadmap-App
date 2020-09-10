@@ -26,7 +26,6 @@ class TechnologyFactory extends Factory
         return [
             'name' => $this->faker->unique()->words(2, true),
             'description' => $this->faker->paragraph,
-            'development_direction_id' => DevelopmentDirection::factory(),
         ];
     }
 }

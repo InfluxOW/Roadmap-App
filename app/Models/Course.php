@@ -29,9 +29,4 @@ class Course extends Model
     {
         return $this->belongsTo(EmployeeLevel::class, 'employee_level_id');
     }
-
-    public function technology()
-    {
-        return $this->belongsTo(Technology::class);
-    }
 }

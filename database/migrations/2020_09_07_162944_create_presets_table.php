@@ -18,7 +18,7 @@ class CreatePresetsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('description')->nullable();
-            $table->foreignId('manager_id')->nullable()->index()->constrained('users');
+            $table->foreignId('manager_id')->nullable()->index()->constrained('users'); // nullable because we will have some default presets that doesn't belong to anyone
             $table->unique(['name', 'manager_id']);
             $table->timestamps();
         });
