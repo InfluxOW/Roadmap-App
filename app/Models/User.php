@@ -52,4 +52,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'birthday' => 'datetime',
     ];
+
+    /*
+     * Role Checks
+     * */
+
+    public function isAdmin()
+    {
+        return $this instanceof Admin;
+    }
+
+    public function isManager()
+    {
+        return $this instanceof Manager;
+    }
+
+    public function isEmployee()
+    {
+        return $this instanceof Employee;
+    }
 }

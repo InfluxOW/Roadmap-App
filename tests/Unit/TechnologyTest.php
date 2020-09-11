@@ -11,9 +11,9 @@ use Tests\TestCase;
 class TechnologyTest extends TestCase
 {
     /** @test */
-    public function it_belongs_to_many_courses()
+    public function it_may_belong_to_many_courses()
     {
-        $technology = Technology::factory()->has(
+        $technology = Technology::factory()->hasAttached(
             Course::factory()->count($count = 3)
         )->create();
 
@@ -23,10 +23,10 @@ class TechnologyTest extends TestCase
    }
 
     /** @test */
-    public function it_belongs_to_many_directions()
+    public function it_may_belong_to_many_directions()
     {
-        $technology = Technology::factory()->has(
-            DevelopmentDirection::factory()->count($count = 3), 'directions'
+        $technology = Technology::factory()->hasAttached(
+            DevelopmentDirection::factory()->count($count = 3), [], 'directions'
         )->create();
 
         $this->assertTrue($technology->directions->contains(DevelopmentDirection::first()));
@@ -35,9 +35,9 @@ class TechnologyTest extends TestCase
    }
 
     /** @test */
-    public function it_belongs_to_many_employees()
+    public function it_may_belong_to_many_employees()
     {
-        $technology = Technology::factory()->has(
+        $technology = Technology::factory()->hasAttached(
             Employee::factory()->count($count = 3)
         )->create();
 

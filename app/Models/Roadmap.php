@@ -12,6 +12,7 @@ class Roadmap extends Model
     use HasFactory;
     protected $table = 'employee_roadmaps';
     protected $fillable = ['assigned_at'];
+    public $timestamps = false;
 
     /*
      * Relations

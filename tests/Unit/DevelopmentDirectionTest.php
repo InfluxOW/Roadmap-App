@@ -10,9 +10,9 @@ use Tests\TestCase;
 class DevelopmentDirectionTest extends TestCase
 {
     /** @test */
-    public function it_belongs_to_many_technologies()
+    public function it_may_belong_to_many_technologies()
     {
-        $direction = DevelopmentDirection::factory()->has(
+        $direction = DevelopmentDirection::factory()->hasAttached(
             Technology::factory()->count($count = 3)
         )->create();
 
@@ -22,10 +22,10 @@ class DevelopmentDirectionTest extends TestCase
     }
 
     /** @test */
-    public function it_belongs_to_many_employees()
+    public function it_may_belong_to_many_employees()
     {
-        $direction = DevelopmentDirection::factory()->has(
-            Employee::factory()->count($count = 3), 'employees'
+        $direction = DevelopmentDirection::factory()->hasAttached(
+            Employee::factory()->count($count = 3)
         )->create();
 
         $this->assertTrue($direction->employees->contains(Employee::first()));

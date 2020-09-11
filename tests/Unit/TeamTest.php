@@ -34,7 +34,7 @@ class TeamTest extends TestCase
     }
 
     /** @test */
-    public function it_has_managers_as_team_members()
+    public function it_may_have_managers_as_team_members()
     {
         $team = Team::factory()
             ->hasAttached(
@@ -49,7 +49,7 @@ class TeamTest extends TestCase
     }
 
     /** @test */
-    public function it_has_employees_as_team_members()
+    public function it_may_have_employees_as_team_members()
     {
         $team = Team::factory()
             ->hasAttached(

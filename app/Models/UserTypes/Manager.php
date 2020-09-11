@@ -29,16 +29,16 @@ class Manager extends User
 
     public function presets()
     {
-        return $this->hasMany(Preset::class);
-    }
-
-    public function teams()
-    {
-        return $this->belongsToMany(Team::class, 'team_members', 'user_id')->withPivot('assigned_at');
+        return $this->hasMany(Preset::class, 'manager_id');
     }
 
     public function roadmaps()
     {
         return $this->hasMany(Roadmap::class, 'manager_id');
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_members', 'user_id')->withPivot('assigned_at');
     }
 }

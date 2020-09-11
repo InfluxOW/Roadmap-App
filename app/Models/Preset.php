@@ -31,13 +31,13 @@ class Preset extends Model
         return $this->belongsTo(Manager::class);
     }
 
-    public function courses()
-    {
-        return $this->belongsToMany(Course::class, 'preset_courses')->withPivot('assigned_at');
-    }
-
     public function roadmaps()
     {
         return $this->hasMany(Roadmap::class);
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'preset_courses')->withPivot('assigned_at');
     }
 }

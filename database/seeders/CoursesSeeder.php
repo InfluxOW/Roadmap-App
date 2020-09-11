@@ -32,7 +32,9 @@ class CoursesSeeder extends Seeder
             $course->level()->associate($attributes['employee_level_id']);
             $course->save();
 
-            $course->technologies()->attach(Technology::whereName($attributes['technology'])->first());
+            foreach (explode(',', $attributes['technology']) as $technology) {
+                $course->technologies()->attach(Technology::whereName($technology)->first());
+            }
         }
     }
 }

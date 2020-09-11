@@ -32,6 +32,11 @@ class Course extends Model
         return $this->belongsTo(EmployeeLevel::class, 'employee_level_id');
     }
 
+    public function completions()
+    {
+        return $this->hasMany(CourseCompletion::class);
+    }
+
     public function technologies()
     {
         return $this->belongsToMany(Technology::class, 'course_technologies');
@@ -42,23 +47,18 @@ class Course extends Model
         return $this->belongsToMany(Preset::class, 'preset_courses')->withPivot('assigned_at');
     }
 
-    public function completions()
-    {
-        return $this->hasMany(CourseCompletion::class);
-    }
-
     /*
-     *
+     * Completion Check
      * */
 
     public function isCompletedBy(Employee $employee)
     {
-        return $employee->hasCompleted($this);
+        return $this->completions->where('employee_id', $employee->id)->isNotEmpty();
     }
 
     public function isIncompletedBy(Employee $employee)
     {
-        return $employee->hasNotCompleted($this);
+        return ! $this->isCompletedBy($employee);
     }
 
     public function scopeCompletedBy(Builder $query, Employee $employee)
@@ -66,5 +66,21 @@ class Course extends Model
         return $query->whereHas('completions', function (Builder $query) use ($employee) {
             return $query->where('employee_id', $employee->id);
         });
+    }
+
+    public function scopeIncompletedBy(Builder $query, Employee $employee)
+    {
+        return $query->whereDoesntHave('completions', function (Builder $query) use ($employee) {
+            return $query->where('employee_id', $employee->id);
+        });
+    }
+
+    /*
+     * Getters
+     * */
+
+    public function getRatingAttribute()
+    {
+        return $this->completions->pluck('rating')->sum() / $this->completions->count();
     }
 }

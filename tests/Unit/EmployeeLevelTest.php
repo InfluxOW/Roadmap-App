@@ -9,7 +9,7 @@ use Tests\TestCase;
 class EmployeeLevelTest extends TestCase
 {
     /** @test */
-    public function it_has_courses()
+    public function it_may_have_courses()
     {
         $level = EmployeeLevel::factory()->has(
             Course::factory()->count($count = 3)

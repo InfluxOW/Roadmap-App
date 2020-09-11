@@ -11,7 +11,7 @@ use Tests\TestCase;
 class CompanyTest extends TestCase
 {
     /** @test */
-    public function it_has_managers()
+    public function it_may_have_managers()
     {
         $company = Company::factory()->has(
             Manager::factory()->count($count = 3)
@@ -23,7 +23,7 @@ class CompanyTest extends TestCase
     }
 
     /** @test */
-    public function it_has_employees()
+    public function it_may_have_employees()
     {
         $company = Company::factory()->has(
             Employee::factory()->count($count = 3)
@@ -35,7 +35,7 @@ class CompanyTest extends TestCase
     }
 
     /** @test */
-    public function it_has_teams()
+    public function it_may_have_teams()
     {
         $company = Company::factory()->has(
             Team::factory()->count($count = 3)
