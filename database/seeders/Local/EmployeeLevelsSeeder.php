@@ -1,18 +1,18 @@
 <?php
 
-namespace Database\Seeders\Production;
+namespace Database\Seeders\Local;
 
 use App\Models\EmployeeLevel;
 use Illuminate\Database\Seeder;
 
 class EmployeeLevelsSeeder extends Seeder
 {
-    public const LEVELS = ['junior', 'middle', 'senior'];
+    public const LEVELS = ['Junior', 'Middle', 'Senior'];
 
     public function run()
     {
         foreach (self::LEVELS as $level) {
-            EmployeeLevel::create(['name' => $level]);
+            EmployeeLevel::factory(['name' => $level])->create();
         }
     }
 }
