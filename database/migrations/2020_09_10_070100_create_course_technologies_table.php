@@ -14,8 +14,8 @@ class CreateCourseTechnologiesTable extends Migration
     public function up()
     {
         Schema::create('course_technologies', function (Blueprint $table) {
-            $table->foreignId('technology_id')->index()->constrained()->cascadeOnDelete();
             $table->foreignId('course_id')->index()->constrained()->cascadeOnDelete();
+            $table->foreignId('technology_id')->index()->constrained()->cascadeOnDelete();
             $table->unique(['technology_id', 'course_id']);
         });
     }
