@@ -19,7 +19,8 @@ class EmployeeLevel extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->allowDuplicateSlugs();
     }
 
     /*
