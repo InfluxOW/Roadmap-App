@@ -17,6 +17,6 @@ class EmployeeLevelTest extends TestCase
 
         $this->assertTrue($level->courses->contains(Course::first()));
         $this->assertInstanceOf(Course::class, $level->courses->first());
-        $this->assertCount($count,  $level->courses);
+        $this->assertCount($count, $level->courses);
     }
 }

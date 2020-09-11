@@ -88,7 +88,7 @@ class Employee extends User
     public function scopeWithCompletedCourse(Builder $query, Course $course)
     {
         return $query->whereHas('completions', function (Builder $query) use ($course) {
-           return $query->where('course_id', $course->id);
+            return $query->where('course_id', $course->id);
         });
     }
 

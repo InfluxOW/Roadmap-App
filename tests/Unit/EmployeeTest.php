@@ -26,7 +26,8 @@ class EmployeeTest extends TestCase
     public function it_may_have_many_course_completions()
     {
         $employee = Employee::factory()->has(
-            CourseCompletion::factory()->count($count = 3), 'completions'
+            CourseCompletion::factory()->count($count = 3),
+            'completions'
         )->create();
 
         $this->assertTrue($employee->completions->contains(CourseCompletion::first()));
@@ -38,7 +39,8 @@ class EmployeeTest extends TestCase
     public function it_may_have_many_roadmaps()
     {
         $employee = Employee::factory()->has(
-            CourseCompletion::factory()->count($count = 3), 'completions'
+            CourseCompletion::factory()->count($count = 3),
+            'completions'
         )->create();
 
         $this->assertTrue($employee->completions->contains(CourseCompletion::first()));
@@ -50,7 +52,9 @@ class EmployeeTest extends TestCase
     public function it_may_belong_to_many_development_directions()
     {
         $employee = Employee::factory()->hasAttached(
-            DevelopmentDirection::factory()->count($count = 3), [], 'directions'
+            DevelopmentDirection::factory()->count($count = 3),
+            [],
+            'directions'
         )->create();
 
         $this->assertTrue($employee->directions->contains(DevelopmentDirection::first()));
@@ -74,7 +78,8 @@ class EmployeeTest extends TestCase
     public function it_may_belong_to_many_teams()
     {
         $employee = Employee::factory()->hasAttached(
-            Team::factory()->count($count = 3), ['assigned_at' => now()]
+            Team::factory()->count($count = 3),
+            ['assigned_at' => now()]
         )->create();
 
         $this->assertTrue($employee->teams->contains(Team::first()));

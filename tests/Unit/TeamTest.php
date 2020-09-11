@@ -14,7 +14,8 @@ class TeamTest extends TestCase
     public function it_belongs_to_a_manager()
     {
         $team = Team::factory()->for(
-            Manager::factory(), 'owner'
+            Manager::factory(),
+            'owner'
         )->create();
 
         $this->assertEquals(Manager::first(), $team->owner);
@@ -25,7 +26,8 @@ class TeamTest extends TestCase
     public function it_belongs_to_a_company()
     {
         $team = Team::factory()->for(Company::factory())->for(
-            Manager::factory(['company_id' => Company::first()]), 'owner'
+            Manager::factory(['company_id' => Company::first()]),
+            'owner'
         )
             ->create();
 
@@ -38,7 +40,8 @@ class TeamTest extends TestCase
     {
         $team = Team::factory()
             ->hasAttached(
-                Manager::factory()->count($count = 3), ['assigned_at' => now()]
+                Manager::factory()->count($count = 3),
+                ['assigned_at' => now()]
             )
             ->create();
 
@@ -53,7 +56,8 @@ class TeamTest extends TestCase
     {
         $team = Team::factory()
             ->hasAttached(
-                Employee::factory()->count($count = 3), ['assigned_at' => now()]
+                Employee::factory()->count($count = 3),
+                ['assigned_at' => now()]
             )
             ->create();
 

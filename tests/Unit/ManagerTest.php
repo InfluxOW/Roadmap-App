@@ -24,7 +24,8 @@ class ManagerTest extends TestCase
     public function it_may_own_many_teams()
     {
         $manager = Manager::factory()->has(
-            Team::factory()->count($count = 3), 'ownedTeams'
+            Team::factory()->count($count = 3),
+            'ownedTeams'
         )->create();
 
         $this->assertTrue($manager->ownedTeams->contains(Team::first()));
@@ -60,7 +61,8 @@ class ManagerTest extends TestCase
     public function it_may_belong_to_many_teams()
     {
         $manager = Manager::factory()->hasAttached(
-            Team::factory()->count($count = 3), ['assigned_at' => now()]
+            Team::factory()->count($count = 3),
+            ['assigned_at' => now()]
         )->create();
 
         $this->assertTrue($manager->teams->contains(Team::first()));

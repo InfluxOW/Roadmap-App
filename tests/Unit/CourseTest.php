@@ -16,7 +16,8 @@ class CourseTest extends TestCase
     public function it_belongs_to_an_employee_level()
     {
         $course = Course::factory()->for(
-            EmployeeLevel::factory(), 'level'
+            EmployeeLevel::factory(),
+            'level'
         )->create();
 
         $this->assertEquals(EmployeeLevel::first(), $course->level);
@@ -27,7 +28,8 @@ class CourseTest extends TestCase
     public function it_may_have_many_completions()
     {
         $course = Course::factory()->has(
-            CourseCompletion::factory()->count($count = 3), 'completions'
+            CourseCompletion::factory()->count($count = 3),
+            'completions'
         )->create();
 
         $this->assertTrue($course->completions->contains(CourseCompletion::first()));
@@ -51,7 +53,8 @@ class CourseTest extends TestCase
     public function it_may_belong_to_many_presets()
     {
         $course = Course::factory()->hasAttached(
-            Preset::factory()->count($count = 3), ['assigned_at' => now()]
+            Preset::factory()->count($count = 3),
+            ['assigned_at' => now()]
         )->create();
 
         $this->assertTrue($course->presets->contains(Preset::first()));

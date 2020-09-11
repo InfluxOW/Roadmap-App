@@ -33,7 +33,8 @@ class PresetTest extends TestCase
     public function it_may_belong_to_many_courses()
     {
         $preset = Preset::factory()->hasAttached(
-            Course::factory()->count($count = 3), ['assigned_at' => now()]
+            Course::factory()->count($count = 3),
+            ['assigned_at' => now()]
         )->create();
 
         $this->assertTrue($preset->courses->contains(Course::first()));
