@@ -12,7 +12,7 @@ class CourseCompletionsSeeder extends Seeder
     {
         foreach (Employee::all() as $employee) {
             $courses = $employee->roadmaps->map(function ($roadmap) {
-               return $roadmap->preset->courses;
+                return $roadmap->preset->courses;
             })->flatten()->unique('id', true);
             $take = $courses->random(random_int(1, $courses->count() - 6));
 

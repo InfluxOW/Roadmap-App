@@ -14,12 +14,22 @@ use App\Http\Controllers\Api;
 |
 */
 
-/* Auth */
+/*
+ * Auth
+ *  */
 Route::middleware('guest')->group(function () {
     Route::post('login', Api\Auth\LoginController::class)->name('login');
     Route::post('register', Api\Auth\RegisterController::class)->name('register');
 });
 Route::middleware('auth:api')->post('logout', Api\Auth\LogoutController::class)->name('logout');
+
+Route::middleware('auth:api')->group(function () {
+    /*
+     * Courses
+     *  */
+    Route::apiResource('courses', Api\CoursesController::class)->parameters(['courses' => 'course:slug']);
+});
+
 
 //GET /profiles/{user:username} - для разрабов и менеджеров
 //профили пользователей с общей информацией
@@ -33,10 +43,10 @@ Route::middleware('auth:api')->post('logout', Api\Auth\LogoutController::class)-
 //GET /dashboard/{team:slug} - для менеджеров
 //выводится состав конкретной команды с роадмапами, как выше
 //
-//POST /courses/{course:slug}/complete - для разрабов
+//POST /courses/{course:slug}/completions - для разрабов
 //отметить курс как завершённый
 //
-//POST /courses/{course:slug}/incomplete - для разрабов
+//DELETE /courses/{course:slug}/completions - для разрабов
 //отметить курс как незавершённый
 //
 //GET /presets - для менеджеров
@@ -47,15 +57,6 @@ Route::middleware('auth:api')->post('logout', Api\Auth\LogoutController::class)-
 //
 //POST /presets - для менеджеров
 //создать новый пресет
-//
-//GET /courses - для менеджеров
-//выводится список курсов
-//
-//GET /courses/{course:slug} - для менеджеров
-//выводится информация о конкретном курсе, а также список разработчиков, которые его завершили
-//
-//POST /courses - для менеджеров
-//создать новый курс
-//
+
 //POST /presets/{preset:slug}/courses/{course:slug} - для менеджеров
 //добавить указанный курс в указанный пресет

@@ -47,4 +47,18 @@ class Manager extends User
     {
         return $this->belongsToMany(Team::class, 'team_members', 'user_id')->withPivot('assigned_at');
     }
+
+    /*
+     * Getters
+     * */
+
+    public function getEmployees()
+    {
+        return $this->ownedTeams->merge($this->teams)->unique('id', true)
+            ->map(function ($team) {
+                return $team->employees;
+            })
+            ->flatten()
+            ->unique('id', true);
+    }
 }
