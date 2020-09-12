@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\UserTypes\Employee;
+use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,6 +28,11 @@ class Course extends Model
     /*
      * Relations
      * */
+
+    public function manager()
+    {
+        return $this->belongsTo(Manager::class);
+    }
 
     public function level()
     {

@@ -8,6 +8,7 @@ use App\Models\EmployeeLevel;
 use App\Models\Preset;
 use App\Models\Technology;
 use App\Models\UserTypes\Employee;
+use App\Models\UserTypes\Manager;
 use Tests\TestCase;
 
 class CourseTest extends TestCase
@@ -22,6 +23,15 @@ class CourseTest extends TestCase
 
         $this->assertEquals(EmployeeLevel::first(), $course->level);
         $this->assertTrue($course->level->is(EmployeeLevel::first()));
+    }
+
+    /** @test */
+    public function it_may_belong_to_a_manager()
+    {
+        $course = Course::factory()->for(Manager::factory())->create();
+
+        $this->assertEquals(Manager::first(), $course->manager);
+        $this->assertTrue($course->manager->is(Manager::first()));
     }
 
     /** @test */

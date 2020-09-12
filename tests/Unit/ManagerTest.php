@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Company;
+use App\Models\Course;
 use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\Team;
@@ -43,6 +44,18 @@ class ManagerTest extends TestCase
         $this->assertTrue($manager->presets->contains(Preset::first()));
         $this->assertInstanceOf(Preset::class, $manager->presets->first());
         $this->assertCount($count, $manager->presets);
+    }
+
+    /** @test */
+    public function it_hay_have_many_courses()
+    {
+        $manager = Manager::factory()->has(
+            Course::factory()->count($count = 3)
+        )->create();
+
+        $this->assertTrue($manager->courses->contains(Course::first()));
+        $this->assertInstanceOf(Course::class, $manager->courses->first());
+        $this->assertCount($count, $manager->courses);
     }
 
     /** @test */

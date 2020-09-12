@@ -3,6 +3,7 @@
 namespace App\Models\UserTypes;
 
 use App\Models\Company;
+use App\Models\Course;
 use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\Team;
@@ -30,6 +31,11 @@ class Manager extends User
     public function presets()
     {
         return $this->hasMany(Preset::class, 'manager_id');
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'manager_id');
     }
 
     public function roadmaps()
