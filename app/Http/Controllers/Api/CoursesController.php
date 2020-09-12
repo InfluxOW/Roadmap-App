@@ -33,7 +33,9 @@ class CoursesController extends Controller
 
     public function store(CourseRequest $request)
     {
-        $course = $request->user()->courses()->create($request->validated());
+        $course = $request->user()->isAdmin() ?
+            Course::create($request->validated()) :
+            $request->user()->courses()->create($request->validated());
 
         return redirect()->route('courses.show', compact('course'));
     }
@@ -45,7 +47,7 @@ class CoursesController extends Controller
         return redirect()->route('courses.show', compact('course'));
     }
 
-    public function delete(Course $course)
+    public function destroy(Course $course)
     {
         $course->delete();
 

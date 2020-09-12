@@ -45,7 +45,7 @@ class Manager extends User
 
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'team_members', 'user_id')->withPivot('assigned_at');
+        return $this->belongsToMany(Team::class, 'team_members')->withPivot('assigned_at');
     }
 
     /*

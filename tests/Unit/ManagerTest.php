@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\Team;
+use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
 use Tests\TestCase;
 
@@ -81,5 +82,31 @@ class ManagerTest extends TestCase
         $this->assertTrue($manager->teams->contains(Team::first()));
         $this->assertInstanceOf(Team::class, $manager->teams->first());
         $this->assertCount($count, $manager->teams);
+    }
+
+    /** @test */
+    public function it_knows_all_its_employees()
+    {
+        $manager = Manager::factory()
+            ->has(
+                Team::factory()->count(1)->hasAttached(
+                    Employee::factory()->count(3),
+                    ['assigned_at' => now()]
+                ),
+                'ownedTeams'
+            )
+            ->hasAttached(
+                Team::factory()->count(1)->hasAttached(
+                    Employee::factory()->count(3),
+                    ['assigned_at' => now()]
+                ),
+                ['assigned_at' => now()]
+            )
+            ->create();
+
+        $this->assertCount(
+            $manager->ownedTeams->first()->employees->count() + $manager->teams->first()->employees->count(),
+            $manager->getEmployees()
+        );
     }
 }

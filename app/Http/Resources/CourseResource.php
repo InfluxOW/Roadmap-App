@@ -28,8 +28,15 @@ class CourseResource extends JsonResource
 
     private function completedBy()
     {
+        $user = Auth::user();
+
+        if ($user->isManager()) {
+            return $this->completions
+                ->whereIn('employee_id', $user->getEmployees()->pluck('id'))
+                ->map(fn($completion) => $completion->employee);
+        }
+
         return $this->completions
-            ->whereIn('employee_id', Auth::user()->getEmployees()->pluck('id'))
             ->map(fn($completion) => $completion->employee);
     }
 }
