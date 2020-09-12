@@ -11,9 +11,7 @@ class EmployeeRoadmapsSeeder extends Seeder
 {
     public function run()
     {
-        $employees = Employee::all();
-
-        foreach ($employees as $employee) {
+        foreach (Employee::all() as $employee) {
             $presets = Preset::inRandomOrder()->take(2)->get();
             $manager = $employee->teams->first()->owner;
 

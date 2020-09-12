@@ -10,9 +10,7 @@ class PresetCoursesSeeder extends Seeder
 {
     public function run()
     {
-        $presets = Preset::all();
-
-        foreach ($presets as $preset) {
+        foreach (Preset::all() as $preset) {
             $courses = Course::inRandomOrder()->take(10)->get();
             $preset->courses()->attach($courses, ['assigned_at' => now()]);
         }

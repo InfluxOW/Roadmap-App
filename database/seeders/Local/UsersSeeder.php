@@ -11,10 +11,8 @@ class UsersSeeder extends Seeder
 {
     public function run()
     {
-        $companies = Company::all();
-
-        foreach ($companies as $company) {
-            Manager::factory(['company_id' => $company])->create();
+        foreach (Company::all() as $company) {
+            Manager::factory(['company_id' => $company])->count(2)->create();
             Employee::factory(['company_id' => $company])->count(4)->create();
         }
     }

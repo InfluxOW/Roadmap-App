@@ -10,9 +10,7 @@ class TeamsSeeder extends Seeder
 {
     public function run()
     {
-        $companies = Company::all();
-
-        foreach ($companies as $company) {
+        foreach (Company::all() as $company) {
             Team::factory([
                 'owner_id' => $company->managers->first(),
                 'company_id' => $company

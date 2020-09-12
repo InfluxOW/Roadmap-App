@@ -3,15 +3,20 @@
 namespace Database\Seeders;
 
 use Database\Seeders\Local\CompaniesSeeder;
+use Database\Seeders\Local\CourseCompletionsSeeder;
 use Database\Seeders\Local\CoursesSeeder;
+use Database\Seeders\Local\CourseTechnologiesSeeder;
 use Database\Seeders\Local\DevelopmentDirectionsSeeder;
+use Database\Seeders\Local\EmployeeDevelopmentDirectionsSeeder;
 use Database\Seeders\Local\EmployeeLevelsSeeder;
 use Database\Seeders\Local\EmployeeRoadmapsSeeder;
+use Database\Seeders\Local\EmployeeTechnologiesSeeder;
 use Database\Seeders\Local\PresetCoursesSeeder;
 use Database\Seeders\Local\PresetsSeeder;
 use Database\Seeders\Local\TeamMembersSeeder;
 use Database\Seeders\Local\TeamsSeeder;
 use Database\Seeders\Local\TechnologiesSeeder;
+use Database\Seeders\Local\TechnologyDevelopmentDirectionsSeeder;
 use Database\Seeders\Local\UsersSeeder;
 use Illuminate\Database\Seeder;
 
@@ -37,6 +42,11 @@ class DatabaseSeeder extends Seeder
                 PresetCoursesSeeder::class,
                 TeamMembersSeeder::class,
                 EmployeeRoadmapsSeeder::class,
+                CourseTechnologiesSeeder::class,
+                TechnologyDevelopmentDirectionsSeeder::class,
+                EmployeeDevelopmentDirectionsSeeder::class,
+                EmployeeTechnologiesSeeder::class,
+                CourseCompletionsSeeder::class
             ]);
         }
 

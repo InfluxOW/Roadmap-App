@@ -60,8 +60,8 @@ ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 --
 
 CREATE TABLE public.course_technologies (
-    technology_id bigint NOT NULL,
-    course_id bigint NOT NULL
+    course_id bigint NOT NULL,
+    technology_id bigint NOT NULL
 );
 
 

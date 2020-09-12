@@ -10,9 +10,7 @@ class CoursesSeeder extends Seeder
 {
     public function run()
     {
-        $levels = EmployeeLevel::all();
-
-        foreach ($levels as $level) {
+        foreach (EmployeeLevel::all() as $level) {
             Course::factory(['employee_level_id' => $level])->count(20)->create();
         }
     }
