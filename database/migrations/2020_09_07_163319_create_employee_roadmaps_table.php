@@ -15,10 +15,10 @@ class CreateEmployeeRoadmapsTable extends Migration
     {
         Schema::create('employee_roadmaps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->index()->constrained('users');
-            $table->foreignId('preset_id')->index()->constrained();
+            $table->foreignId('employee_id')->index()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('preset_id')->index()->constrained()->cascadeOnDelete();
             $table->unique(['employee_id', 'preset_id']);
-            $table->foreignId('manager_id')->index()->constrained('users');
+            $table->foreignId('manager_id')->index()->constrained('users')->cascadeOnDelete();
             $table->timestamp('assigned_at');
         });
     }

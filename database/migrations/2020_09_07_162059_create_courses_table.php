@@ -20,7 +20,7 @@ class CreateCoursesTable extends Migration
             $table->text('description');
             $table->string('source')->unique();
             $table->foreignId('employee_level_id')->index()->constrained();
-            $table->foreignId('manager_id')->nullable()->index()->constrained('users'); // nullable because we will have some default courses that doesn't belong to anyone
+            $table->foreignId('manager_id')->nullable()->index()->constrained('users')->nullOnDelete(); // nullable because we will have some default courses that doesn't belong to anyone
             $table->timestamps();
         });
     }

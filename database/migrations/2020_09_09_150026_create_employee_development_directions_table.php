@@ -14,8 +14,8 @@ class CreateEmployeeDevelopmentDirectionsTable extends Migration
     public function up()
     {
         Schema::create('employee_development_directions', function (Blueprint $table) {
-            $table->foreignId('employee_id')->index()->constrained('users');
-            $table->foreignId('development_direction_id')->index()->constrained();
+            $table->foreignId('employee_id')->index()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('development_direction_id')->index()->constrained()->cascadeOnDelete();
             $table->unique(['employee_id', 'development_direction_id']);
         });
     }
