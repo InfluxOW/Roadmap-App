@@ -150,10 +150,10 @@ class EmployeeTest extends TestCase
         $course = Course::factory()->create();
         $employee->complete($course);
 
-        $this->assertEquals(0, $course->rating);
+        $this->assertEquals(0, $course->average_rating);
 
         $employee->fresh()->rate($course, $rating = 10);
 
-        $this->assertEquals($rating, $course->fresh()->rating);
+        $this->assertEquals($rating, $course->fresh()->average_rating);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Course;
+use App\Models\Preset;
 use App\Models\User;
 
-class CoursesPolicy extends Policy
+class PresetsPolicy extends Policy
 {
     public function viewAny(User $user)
     {
@@ -22,13 +22,13 @@ class CoursesPolicy extends Policy
         return $user->isManager();
     }
 
-    public function update(User $user, Course $course)
+    public function update(User $user, Preset $preset)
     {
-        return isset($course->manager) && $course->manager->is($user);
+        return isset($preset->manager) && $preset->manager->is($user);
     }
 
-    public function delete(User $user, Course $course)
+    public function delete(User $user, Preset $preset)
     {
-        return isset($course->manager) && $course->manager->is($user);
+        return isset($preset->manager) && $preset->manager->is($user);
     }
 }

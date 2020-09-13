@@ -37,13 +37,13 @@ class CoursesControllerTest extends TestCase
         $this->get(route('courses.show', $this->courses->first()))
             ->assertRedirect(route('login'));
 
-        $this->post(route('courses.store'))
+        $this->post(route('courses.store'), $this->attributes)
             ->assertRedirect(route('login'));
 
-        $this->patch(route('courses.update', $this->courses->first()))
+        $this->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertRedirect(route('login'));
 
-        $this->delete(route('courses.update', $this->courses->first()))
+        $this->delete(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertRedirect(route('login'));
     }
 
@@ -59,15 +59,15 @@ class CoursesControllerTest extends TestCase
             ->assertForbidden();
 
         $this->actingAs($this->employee, 'api')
-            ->post(route('courses.store'))
+            ->post(route('courses.store'), $this->attributes)
             ->assertForbidden();
 
         $this->actingAs($this->employee, 'api')
-            ->patch(route('courses.update', $this->courses->first()))
+            ->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertForbidden();
 
         $this->actingAs($this->employee, 'api')
-            ->delete(route('courses.update', $this->courses->first()))
+            ->delete(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertForbidden();
     }
 
@@ -80,7 +80,7 @@ class CoursesControllerTest extends TestCase
             ->assertJsonCount($this->courses->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['name', 'description', 'source', 'level', 'completed_by']
+                    '*' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating']
                 ]
             ]);
     }
@@ -95,7 +95,7 @@ class CoursesControllerTest extends TestCase
             ->assertJsonCount($this->courses->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['name', 'description', 'source', 'level', 'completed_by']
+                    '*' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating']
                 ]
             ]);
     }
@@ -106,7 +106,7 @@ class CoursesControllerTest extends TestCase
         $this->actingAs($this->admin, 'api')
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
-            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by']]);
+            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating']]);
     }
 
     /** @test */
@@ -115,7 +115,7 @@ class CoursesControllerTest extends TestCase
         $this->actingAs($this->manager, 'api')
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
-            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by']]);
+            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating']]);
     }
 
     /** @test */
@@ -201,7 +201,7 @@ class CoursesControllerTest extends TestCase
     {
         $course = $this->courses->first();
         $this->actingAs($this->manager, 'api')
-            ->patch(route('courses.update', $course))
+            ->delete(route('courses.update', $course))
             ->assertForbidden();
 
         $this->assertDatabaseHas('courses', ['id' => $course->id]);

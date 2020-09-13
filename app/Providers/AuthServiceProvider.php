@@ -3,9 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Course;
+use App\Models\Preset;
 use App\Policies\CoursesPolicy;
+use App\Policies\PresetsPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -16,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-         Course::class => CoursesPolicy::class,
+        Course::class => CoursesPolicy::class,
+        Preset::class => PresetsPolicy::class,
     ];
 
     /**

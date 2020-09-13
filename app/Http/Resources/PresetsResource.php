@@ -5,38 +5,37 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
-class CourseResource extends JsonResource
+class PresetsResource extends JsonResource
 {
     public function toArray($request)
     {
         return [
             'name' => $this->name,
             'description' => $this->description,
-            'source' => $this->source,
-            'level' => $this->level->name,
             'link' => $this->when(
-                ! $request->is('api/courses/*'),
-                route('courses.show', ['course' => $this->resource])
+                ! $request->is('api/presets/*'),
+                route('presets.show', ['preset' => $this->resource])
             ),
             'manager' => $this->when(
                 isset($this->manager) && $this->manager->company->is($request->user()->company),
-                new UserResource($this->manager)
+                new UsersResource($this->manager)
             ),
-            'completed_by' => $this->completedBy(),
+            'courses' => CoursesResource::collection($this->courses),
+            'assigned_to' => UsersResource::collection($this->assignedTo())
         ];
     }
 
-    private function completedBy()
+    private function assignedTo()
     {
         $user = Auth::user();
 
         if ($user->isManager()) {
-            return $this->completions
+            return $this->roadmaps
                 ->whereIn('employee_id', $user->getEmployees()->pluck('id'))
-                ->map(fn($completion) => $completion->employee);
+                ->map(fn($roadmap) => $roadmap->employee);
         }
 
-        return $this->completions
-            ->map(fn($completion) => $completion->employee);
+        return $this->roadmaps
+            ->map(fn($roadmap) => $roadmap->employee);
     }
 }

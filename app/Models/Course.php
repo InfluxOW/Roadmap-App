@@ -86,8 +86,8 @@ class Course extends Model
      * Getters
      * */
 
-    public function getRatingAttribute()
+    public function getAverageRatingAttribute()
     {
-        return $this->completions->pluck('rating')->sum() / $this->completions->count();
+        return $this->completions->count() > 0 ? $this->completions->average('rating') : 0;
     }
 }

@@ -28,6 +28,11 @@ Route::middleware('auth:api')->group(function () {
      * Courses
      *  */
     Route::apiResource('courses', Api\CoursesController::class)->parameters(['courses' => 'course:slug']);
+
+    /*
+     * Presets
+     *  */
+    Route::apiResource('presets', Api\PresetsController::class)->parameters(['presets' => 'preset:slug']);
 });
 
 
@@ -49,14 +54,5 @@ Route::middleware('auth:api')->group(function () {
 //DELETE /courses/{course:slug}/completions - для разрабов
 //отметить курс как незавершённый
 //
-//GET /presets - для менеджеров
-//выводится список пресетов
-//
-//GET /presets/{preset:slug} - для менеджеров
-//выводится список курсов данного пресета, а также список разработчиков, которым он назначен
-//
-//POST /presets - для менеджеров
-//создать новый пресет
-
 //POST /presets/{preset:slug}/courses/{course:slug} - для менеджеров
 //добавить указанный курс в указанный пресет

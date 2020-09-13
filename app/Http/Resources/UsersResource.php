@@ -7,14 +7,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  *
  * @OA\Schema(
- * @OA\Xml(name="UserResource"),
+ * @OA\Xml(name="UsersResource"),
  * @OA\Property(property="name", type="string", readOnly="true", example="John Doe"),
  * @OA\Property(property="username", type="string", example="john_doe"),
  * @OA\Property(property="email", type="string", readOnly="true", format="email", example="john_doe@gmail.com"),
  * )
  *
  */
-class UserResource extends JsonResource
+class UsersResource extends JsonResource
 {
     public function toArray($request)
     {
