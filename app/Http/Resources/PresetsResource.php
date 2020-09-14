@@ -9,20 +9,27 @@ class PresetsResource extends JsonResource
 {
     public function toArray($request)
     {
-        return [
+        $default = [
             'name' => $this->name,
             'description' => $this->description,
             'link' => $this->when(
                 ! $request->is('api/presets/*'),
                 route('presets.show', ['preset' => $this->resource])
             ),
-            'manager' => $this->when(
-                isset($this->manager) && $this->manager->company->is($request->user()->company),
-                new UsersResource($this->manager)
-            ),
             'courses' => CoursesResource::collection($this->courses),
-            'assigned_to' => UsersResource::collection($this->assignedTo())
         ];
+
+        $attributes = $default;
+
+        if (isset($this->manager)) {
+            $attributes['manager'] = $this->manager->name;
+        }
+
+        if (Auth::user()->isManager() || Auth::user()->isAdmin()) {
+            $attributes['assigned_to'] = UsersResource::collection($this->assignedTo());
+        }
+
+        return $attributes;
     }
 
     private function assignedTo()

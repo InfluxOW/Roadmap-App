@@ -14,6 +14,9 @@ class Roadmap extends Model
     protected $table = 'employee_roadmaps';
     protected $fillable = ['assigned_at'];
     public $timestamps = false;
+    protected $casts = [
+        'assigned_at' => 'datetime',
+    ];
 
     /*
      * Relations

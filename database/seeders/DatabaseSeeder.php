@@ -29,33 +29,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (app('env') === 'local') {
-            $this->call([
-                EmployeeLevelsSeeder::class,
-                DevelopmentDirectionsSeeder::class,
-                CompaniesSeeder::class,
-                UsersSeeder::class,
-                TeamsSeeder::class,
-                TechnologiesSeeder::class,
-                CoursesSeeder::class,
-                PresetsSeeder::class,
-                PresetCoursesSeeder::class,
-                TeamMembersSeeder::class,
-                EmployeeRoadmapsSeeder::class,
-                CourseTechnologiesSeeder::class,
-                TechnologyDevelopmentDirectionsSeeder::class,
-                EmployeeDevelopmentDirectionsSeeder::class,
-                EmployeeTechnologiesSeeder::class,
-                CourseCompletionsSeeder::class
-            ]);
-        }
-
-        if (app('env') === 'production') {
-            $this->call([
-                SkillsSeeder::class,
-                EmployeeLevelsSeeder::class,
-                CoursesSeeder::class
-            ]);
+        switch (app('env')) {
+            case 'production':
+                $this->call([
+                    SkillsSeeder::class,
+                    EmployeeLevelsSeeder::class,
+                    CoursesSeeder::class
+                ]);
+                break;
+            default:
+                $this->call([
+                    EmployeeLevelsSeeder::class,
+                    DevelopmentDirectionsSeeder::class,
+                    CompaniesSeeder::class,
+                    UsersSeeder::class,
+                    TeamsSeeder::class,
+                    TechnologiesSeeder::class,
+                    CoursesSeeder::class,
+                    PresetsSeeder::class,
+                    PresetCoursesSeeder::class,
+                    TeamMembersSeeder::class,
+                    EmployeeRoadmapsSeeder::class,
+                    CourseTechnologiesSeeder::class,
+                    TechnologyDevelopmentDirectionsSeeder::class,
+                    EmployeeDevelopmentDirectionsSeeder::class,
+                    EmployeeTechnologiesSeeder::class,
+                    CourseCompletionsSeeder::class
+                ]);
+                break;
         }
     }
 }

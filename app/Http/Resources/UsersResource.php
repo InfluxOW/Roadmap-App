@@ -22,6 +22,11 @@ class UsersResource extends JsonResource
             'name' => $this->name,
             'username' => $this->username,
             'email' => $this->email,
+            'role' => $this->role,
+            'company' => $this->company->name,
+            'sex' => $this->when(isset($this->sex), $this->sex),
+            'birthday' => $this->when(isset($this->birthday), $this->birthday->format('d-M-Y')),
+            'position' => $this->when(isset($this->position), $this->position),
         ];
     }
 }

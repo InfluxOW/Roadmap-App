@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api;
 
@@ -33,6 +34,11 @@ Route::middleware('auth:api')->group(function () {
      * Presets
      *  */
     Route::apiResource('presets', Api\PresetsController::class)->parameters(['presets' => 'preset:slug']);
+
+    /*
+     * Dashboards
+     * */
+    Route::get('dashboard/employees/{employee:username}', Api\Dashboards\EmployeeDashboardController::class)->name('dashboard.employee');
 });
 
 
@@ -41,9 +47,6 @@ Route::middleware('auth:api')->group(function () {
 //
 //GET /dashboard - для менеджеров
 //выводится список всех команд менеджера, в рамках каждой команды выводится состав команды, у каждого юзера в составе выводятся его роадмапы, в рамках каждого роадмапа выводится список курсов, где указывается название, описание, источник и пройден ли курс этим юзером
-//
-//GET /dashboard/{user:username} - для разрабов и менеджеров
-//выводится список роадмапов разработчика с курсами, как выше
 //
 //GET /dashboard/{team:slug} - для менеджеров
 //выводится состав конкретной команды с роадмапами, как выше
