@@ -95,7 +95,7 @@ class CoursesControllerTest extends TestCase
             ->assertJsonCount($this->courses->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating']
+                    '*' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']
                 ]
             ]);
     }
@@ -106,7 +106,7 @@ class CoursesControllerTest extends TestCase
         $this->actingAs($this->admin, 'api')
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
-            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating']]);
+            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
     }
 
     /** @test */
@@ -115,7 +115,7 @@ class CoursesControllerTest extends TestCase
         $this->actingAs($this->manager, 'api')
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
-            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating']]);
+            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
     }
 
     /** @test */

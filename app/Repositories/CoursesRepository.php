@@ -9,8 +9,9 @@ class CoursesRepository
 {
     private const WITH = [
         'level',
-        'completions.employee',
-        'manager.company'
+        'completions.employee.company',
+        'manager.company',
+        'technologies'
     ];
 
     public function index(Request $request)

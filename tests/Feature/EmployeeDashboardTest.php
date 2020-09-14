@@ -36,12 +36,16 @@ class EmployeeDashboardTest extends TestCase
                                 'link',
                                 'courses' => [
                                     '*' => [
-                                        'name',
-                                        'description',
-                                        'source',
-                                        'level',
-                                        'link',
-                                        'average_rating'
+                                        '*' => [
+                                            '*' => [
+                                                'name',
+                                                'description',
+                                                'source',
+                                                'level',
+                                                'link',
+                                                'average_rating'
+                                            ]
+                                        ]
                                     ]
                                 ]
                             ],
@@ -85,12 +89,16 @@ class EmployeeDashboardTest extends TestCase
                                 'link',
                                 'courses' => [
                                     '*' => [
-                                        'name',
-                                        'description',
-                                        'source',
-                                        'level',
-                                        'link',
-                                        'average_rating'
+                                        '*' => [
+                                            '*' => [
+                                                'name',
+                                                'description',
+                                                'source',
+                                                'level',
+                                                'link',
+                                                'average_rating'
+                                            ]
+                                        ]
                                     ]
                                 ]
                             ],
@@ -137,12 +145,16 @@ class EmployeeDashboardTest extends TestCase
                                 'link',
                                 'courses' => [
                                     '*' => [
-                                        'name',
-                                        'description',
-                                        'source',
-                                        'level',
-                                        'link',
-                                        'average_rating'
+                                        '*' => [
+                                            '*' => [
+                                                'name',
+                                                'description',
+                                                'source',
+                                                'level',
+                                                'link',
+                                                'average_rating'
+                                            ]
+                                        ]
                                     ]
                                 ]
                             ],

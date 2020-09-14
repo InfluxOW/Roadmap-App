@@ -80,7 +80,26 @@ class PresetsControllerTest extends TestCase
             ->assertJsonCount($this->presets->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['name', 'description', 'courses', 'assigned_to']
+                    '*' => [
+                        'name',
+                        'description',
+                        'link',
+                        'courses' => [
+                            '*' => [
+                                '*' => [
+                                    '*' => [
+                                        'name',
+                                        'description',
+                                        'source',
+                                        'level',
+                                        'link',
+                                        'average_rating'
+                                    ]
+                                ]
+                            ]
+                        ],
+                        'assigned_to'
+                    ],
                 ]
             ]);
     }
@@ -95,7 +114,26 @@ class PresetsControllerTest extends TestCase
             ->assertJsonCount($this->presets->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['name', 'description', 'courses', 'assigned_to']
+                    '*' => [
+                        'name',
+                        'description',
+                        'link',
+                        'courses' => [
+                            '*' => [
+                                '*' => [
+                                    '*' => [
+                                        'name',
+                                        'description',
+                                        'source',
+                                        'level',
+                                        'link',
+                                        'average_rating'
+                                    ]
+                                ]
+                            ]
+                        ],
+                        'assigned_to'
+                    ],
                 ]
             ]);
     }
@@ -106,7 +144,27 @@ class PresetsControllerTest extends TestCase
         $this->actingAs($this->admin, 'api')
             ->get(route('presets.show', $this->presets->first()))
             ->assertOk()
-            ->assertJsonStructure(['data' => ['name', 'description', 'courses', 'assigned_to']]);
+            ->assertJsonStructure([
+                'data' => [
+                    'name',
+                    'description',
+                    'courses' => [
+                        '*' => [
+                            '*' => [
+                                '*' => [
+                                    'name',
+                                    'description',
+                                    'source',
+                                    'level',
+                                    'link',
+                                    'average_rating'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'assigned_to'
+                ]
+            ]);
     }
 
     /** @test */
@@ -115,7 +173,27 @@ class PresetsControllerTest extends TestCase
         $this->actingAs($this->manager, 'api')
             ->get(route('presets.show', $this->presets->first()))
             ->assertOk()
-            ->assertJsonStructure(['data' => ['name', 'description', 'courses', 'assigned_to']]);
+            ->assertJsonStructure([
+                'data' => [
+                    'name',
+                    'description',
+                    'courses' => [
+                        '*' => [
+                            '*' => [
+                                '*' => [
+                                    'name',
+                                    'description',
+                                    'source',
+                                    'level',
+                                    'link',
+                                    'average_rating'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'assigned_to'
+                ]
+            ]);
     }
 
     /** @test */

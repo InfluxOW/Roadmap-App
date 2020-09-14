@@ -16,7 +16,7 @@ class PresetsResource extends JsonResource
                 ! $request->is('api/presets/*'),
                 route('presets.show', ['preset' => $this->resource])
             ),
-            'courses' => CoursesResource::collection($this->courses),
+            'courses' => $this->courses(),
         ];
 
         $attributes = $default;
@@ -44,5 +44,18 @@ class PresetsResource extends JsonResource
 
         return $this->roadmaps
             ->map(fn($roadmap) => $roadmap->employee);
+    }
+
+    private function courses()
+    {
+        return $this->courses->groupBy(function ($course) {
+            return $course->level->name;
+        })->map(function($courses, $level) {
+            return $courses->groupBy(function ($course) {
+                return $course->technologies->implode('name', ', ');
+            })->map(function ($courses, $technologies) {
+                return CoursesResource::collection($courses);
+            });
+        });
     }
 }

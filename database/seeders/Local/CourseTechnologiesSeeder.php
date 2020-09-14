@@ -10,9 +10,9 @@ class CourseTechnologiesSeeder extends Seeder
 {
     public function run()
     {
-        foreach (Technology::all() as $technology) {
-            $courses = Course::inRandomOrder()->take(random_int(1, 3))->get();
-            $technology->courses()->attach($courses);
+        foreach (Course::all() as $course) {
+            $technologies = Technology::inRandomOrder()->take(random_int(1, 3))->get();
+            $course->technologies()->attach($technologies);
         }
     }
 }
