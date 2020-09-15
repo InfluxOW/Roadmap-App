@@ -50,23 +50,23 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function an_employee_cannot_perform_any_actions()
     {
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->get(route('presets.index'))
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->get(route('presets.show', $this->presets->first()))
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->post(route('presets.store'), $this->attributes)
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->patch(route('presets.update', $this->presets->first()), $this->attributes)
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->delete(route('presets.update', $this->presets->first()), $this->attributes)
             ->assertForbidden();
     }
@@ -74,7 +74,7 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function an_admin_can_view_presets()
     {
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->get(route('presets.index'))
             ->assertOk()
             ->assertJsonCount($this->presets->count(), 'data')
@@ -108,7 +108,7 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function a_manager_can_view_presets()
     {
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->get(route('presets.index'))
             ->assertOk()
             ->assertJsonCount($this->presets->count(), 'data')
@@ -141,7 +141,7 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function an_admin_can_view_a_specific_preset()
     {
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->get(route('presets.show', $this->presets->first()))
             ->assertOk()
             ->assertJsonStructure([
@@ -170,7 +170,7 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function a_manager_can_view_a_specific_preset()
     {
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->get(route('presets.show', $this->presets->first()))
             ->assertOk()
             ->assertJsonStructure([
@@ -199,7 +199,7 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function an_admin_can_create_a_new_preset()
     {
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->post(route('presets.store'), $this->attributes)
             ->assertRedirect();
 
@@ -210,7 +210,7 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function a_manager_can_create_a_new_preset()
     {
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->post(route('presets.store'), $this->attributes)
             ->assertRedirect();
 
@@ -221,7 +221,7 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function an_admin_can_update_a_specific_preset()
     {
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->patch(route('presets.update', $this->presets->first()), $this->attributes)
             ->assertRedirect();
 
@@ -233,7 +233,7 @@ class PresetsControllerTest extends TestCase
     {
         $preset = Preset::factory()->create(['manager_id' => $this->manager]);
 
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->patch(route('presets.update', $preset), $this->attributes)
             ->assertRedirect();
 
@@ -243,7 +243,7 @@ class PresetsControllerTest extends TestCase
     /** @test */
     public function a_manager_cannot_update_a_preset_that_doesnt_belongs_to_him()
     {
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->patch(route('presets.update', $this->presets->first()), $this->attributes)
             ->assertForbidden();
 
@@ -255,7 +255,7 @@ class PresetsControllerTest extends TestCase
     public function an_admin_can_delete_a_specific_preset()
     {
         $preset = $this->presets->first();
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->delete(route('presets.destroy', $preset))
             ->assertRedirect();
 
@@ -267,7 +267,7 @@ class PresetsControllerTest extends TestCase
     {
         $preset = Preset::factory()->create(['manager_id' => $this->manager]);
 
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->delete(route('presets.destroy', $preset))
             ->assertRedirect();
 
@@ -278,7 +278,7 @@ class PresetsControllerTest extends TestCase
     public function a_manager_cannot_delete_a_preset_that_doesnt_belongs_to_him()
     {
         $preset = $this->presets->first();
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->delete(route('presets.update', $preset))
             ->assertForbidden();
 

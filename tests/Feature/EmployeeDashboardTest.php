@@ -21,7 +21,7 @@ class EmployeeDashboardTest extends TestCase
     {
         $employee = Employee::first();
 
-        $this->actingAs($employee, 'api')
+        $this->actingAs($employee, 'sanctum')
             ->get(route('dashboard.employee', $employee))
             ->assertOk()
             ->assertJsonStructure([
@@ -59,7 +59,7 @@ class EmployeeDashboardTest extends TestCase
     /** @test */
     public function an_employee_cannot_view_anyone_else_dashboard()
     {
-        $this->actingAs(Employee::first(), 'api')
+        $this->actingAs(Employee::first(), 'sanctum')
             ->get(route('dashboard.employee', Employee::all()->second()))
             ->assertForbidden();
     }
@@ -74,7 +74,7 @@ class EmployeeDashboardTest extends TestCase
             $manager->getEmployees()->pluck('id')->contains($employee->id)
         );
 
-        $this->actingAs($employee, 'api')
+        $this->actingAs($employee, 'sanctum')
             ->get(route('dashboard.employee', $employee))
             ->assertOk()
             ->assertJsonStructure([
@@ -119,7 +119,7 @@ class EmployeeDashboardTest extends TestCase
             $manager->getEmployees()->pluck('id')->contains($employee->id)
         );
 
-        $this->actingAs($manager, 'api')
+        $this->actingAs($manager, 'sanctum')
             ->get(route('dashboard.employee', $employee))
             ->assertForbidden();
     }
@@ -130,7 +130,7 @@ class EmployeeDashboardTest extends TestCase
         $admin = Admin::factory()->create();
         $employee = Employee::first();
 
-        $this->actingAs($admin, 'api')
+        $this->actingAs($admin, 'sanctum')
             ->get(route('dashboard.employee', $employee))
             ->assertOk()
             ->assertJsonStructure([

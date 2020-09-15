@@ -22,9 +22,9 @@ Route::middleware('guest')->group(function () {
     Route::post('login', Api\Auth\LoginController::class)->name('login');
     Route::post('register', Api\Auth\RegisterController::class)->name('register');
 });
-Route::middleware('auth:api')->post('logout', Api\Auth\LogoutController::class)->name('logout');
+Route::middleware('auth:sanctum')->post('logout', Api\Auth\LogoutController::class)->name('logout');
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     /*
      * Courses
      *  */

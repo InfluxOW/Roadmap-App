@@ -50,23 +50,23 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_employee_cannot_perform_any_actions()
     {
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->get(route('courses.index'))
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->get(route('courses.show', $this->courses->first()))
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->post(route('courses.store'), $this->attributes)
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'api')
+        $this->actingAs($this->employee, 'sanctum')
             ->delete(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertForbidden();
     }
@@ -74,7 +74,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_view_courses()
     {
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->get(route('courses.index'))
             ->assertOk()
             ->assertJsonCount($this->courses->count(), 'data')
@@ -89,7 +89,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function a_manager_can_view_courses()
     {
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->get(route('courses.index'))
             ->assertOk()
             ->assertJsonCount($this->courses->count(), 'data')
@@ -103,7 +103,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_view_a_specific_course()
     {
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
             ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
@@ -112,7 +112,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function a_manager_can_view_a_specific_course()
     {
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
             ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
@@ -121,7 +121,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_create_a_new_course()
     {
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->post(route('courses.store'), $this->attributes)
             ->assertRedirect();
 
@@ -132,7 +132,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function a_manager_can_create_a_new_course()
     {
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->post(route('courses.store'), $this->attributes)
             ->assertRedirect();
 
@@ -143,7 +143,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_update_a_specific_course()
     {
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertRedirect();
 
@@ -155,7 +155,7 @@ class CoursesControllerTest extends TestCase
     {
         $course = Course::factory()->create(['manager_id' => $this->manager]);
 
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->patch(route('courses.update', $course), $this->attributes)
             ->assertRedirect();
 
@@ -165,7 +165,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function a_manager_cannot_update_a_course_that_doesnt_belongs_to_him()
     {
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertForbidden();
 
@@ -177,7 +177,7 @@ class CoursesControllerTest extends TestCase
     public function an_admin_can_delete_a_specific_course()
     {
         $course = $this->courses->first();
-        $this->actingAs($this->admin, 'api')
+        $this->actingAs($this->admin, 'sanctum')
             ->delete(route('courses.destroy', $course))
             ->assertRedirect();
 
@@ -189,7 +189,7 @@ class CoursesControllerTest extends TestCase
     {
         $course = Course::factory()->create(['manager_id' => $this->manager]);
 
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->delete(route('courses.destroy', $course))
             ->assertRedirect();
 
@@ -200,7 +200,7 @@ class CoursesControllerTest extends TestCase
     public function a_manager_cannot_delete_a_course_that_doesnt_belongs_to_him()
     {
         $course = $this->courses->first();
-        $this->actingAs($this->manager, 'api')
+        $this->actingAs($this->manager, 'sanctum')
             ->delete(route('courses.update', $course))
             ->assertForbidden();
 

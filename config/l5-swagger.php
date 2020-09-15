@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\ApiLogin;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 return [
     'default' => 'default',
@@ -60,7 +61,7 @@ return [
                     \Illuminate\View\Middleware\ShareErrorsFromSession::class,
                     \App\Http\Middleware\VerifyCsrfToken::class,
                     \Illuminate\Routing\Middleware\SubstituteBindings::class,
-                    \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
+                    EnsureFrontendRequestsAreStateful::class,
                 ],
                 'asset' => [],
                 'docs' => [],

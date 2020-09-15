@@ -25,7 +25,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "itsgoingd/clockwork": "^4.1",
         "laravel/framework": "^8.0",
-        "laravel/passport": "^10.0",
+        "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
         "rollbar/rollbar-laravel": "^7.0",
         "spatie/laravel-collection-macros": "^7.0",
