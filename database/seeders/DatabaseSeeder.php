@@ -30,13 +30,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         switch (app('env')) {
-            case 'production':
-                $this->call([
-                    SkillsSeeder::class,
-                    EmployeeLevelsSeeder::class,
-                    CoursesSeeder::class
-                ]);
-                break;
+//            case 'production':
+//                $this->call([
+//                    SkillsSeeder::class,
+//                    EmployeeLevelsSeeder::class,
+//                    CoursesSeeder::class
+//                ]);
+//                break;
             default:
                 $this->call([
                     EmployeeLevelsSeeder::class,
