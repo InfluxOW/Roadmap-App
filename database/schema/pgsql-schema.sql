@@ -76,6 +76,7 @@ CREATE TABLE public.courses (
     description text NOT NULL,
     source character varying(255) NOT NULL,
     employee_level_id bigint NOT NULL,
+    manager_id bigint,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone
 );
@@ -311,118 +312,6 @@ ALTER SEQUENCE public.migrations_id_seq OWNED BY public.migrations.id;
 
 
 --
--- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.oauth_access_tokens (
-    id character varying(100) NOT NULL,
-    user_id bigint,
-    client_id bigint NOT NULL,
-    name character varying(255),
-    scopes text,
-    revoked boolean NOT NULL,
-    created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone,
-    expires_at timestamp(0) without time zone
-);
-
-
---
--- Name: oauth_auth_codes; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.oauth_auth_codes (
-    id character varying(100) NOT NULL,
-    user_id bigint NOT NULL,
-    client_id bigint NOT NULL,
-    scopes text,
-    revoked boolean NOT NULL,
-    expires_at timestamp(0) without time zone
-);
-
-
---
--- Name: oauth_clients; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.oauth_clients (
-    id bigint NOT NULL,
-    user_id bigint,
-    name character varying(255) NOT NULL,
-    secret character varying(100),
-    provider character varying(255),
-    redirect text NOT NULL,
-    personal_access_client boolean NOT NULL,
-    password_client boolean NOT NULL,
-    revoked boolean NOT NULL,
-    created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone
-);
-
-
---
--- Name: oauth_clients_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.oauth_clients_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: oauth_clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.oauth_clients_id_seq OWNED BY public.oauth_clients.id;
-
-
---
--- Name: oauth_personal_access_clients; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.oauth_personal_access_clients (
-    id bigint NOT NULL,
-    client_id bigint NOT NULL,
-    created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone
-);
-
-
---
--- Name: oauth_personal_access_clients_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.oauth_personal_access_clients_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: oauth_personal_access_clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.oauth_personal_access_clients_id_seq OWNED BY public.oauth_personal_access_clients.id;
-
-
---
--- Name: oauth_refresh_tokens; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.oauth_refresh_tokens (
-    id character varying(100) NOT NULL,
-    access_token_id character varying(100) NOT NULL,
-    revoked boolean NOT NULL,
-    expires_at timestamp(0) without time zone
-);
-
-
---
 -- Name: password_resets; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -431,6 +320,42 @@ CREATE TABLE public.password_resets (
     token character varying(255) NOT NULL,
     created_at timestamp(0) without time zone
 );
+
+
+--
+-- Name: personal_access_tokens; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.personal_access_tokens (
+    id bigint NOT NULL,
+    tokenable_type character varying(255) NOT NULL,
+    tokenable_id bigint NOT NULL,
+    name character varying(255) NOT NULL,
+    token character varying(64) NOT NULL,
+    abilities text,
+    last_used_at timestamp(0) without time zone,
+    created_at timestamp(0) without time zone,
+    updated_at timestamp(0) without time zone
+);
+
+
+--
+-- Name: personal_access_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.personal_access_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: personal_access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.personal_access_tokens_id_seq OWNED BY public.personal_access_tokens.id;
 
 
 --
@@ -665,17 +590,10 @@ ALTER TABLE ONLY public.migrations ALTER COLUMN id SET DEFAULT nextval('public.m
 
 
 --
--- Name: oauth_clients id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: personal_access_tokens id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.oauth_clients ALTER COLUMN id SET DEFAULT nextval('public.oauth_clients_id_seq'::regclass);
-
-
---
--- Name: oauth_personal_access_clients id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.oauth_personal_access_clients ALTER COLUMN id SET DEFAULT nextval('public.oauth_personal_access_clients_id_seq'::regclass);
+ALTER TABLE ONLY public.personal_access_tokens ALTER COLUMN id SET DEFAULT nextval('public.personal_access_tokens_id_seq'::regclass);
 
 
 --
@@ -867,43 +785,19 @@ ALTER TABLE ONLY public.migrations
 
 
 --
--- Name: oauth_access_tokens oauth_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: personal_access_tokens personal_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.oauth_access_tokens
-    ADD CONSTRAINT oauth_access_tokens_pkey PRIMARY KEY (id);
-
-
---
--- Name: oauth_auth_codes oauth_auth_codes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.oauth_auth_codes
-    ADD CONSTRAINT oauth_auth_codes_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.personal_access_tokens
+    ADD CONSTRAINT personal_access_tokens_pkey PRIMARY KEY (id);
 
 
 --
--- Name: oauth_clients oauth_clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: personal_access_tokens personal_access_tokens_token_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.oauth_clients
-    ADD CONSTRAINT oauth_clients_pkey PRIMARY KEY (id);
-
-
---
--- Name: oauth_personal_access_clients oauth_personal_access_clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.oauth_personal_access_clients
-    ADD CONSTRAINT oauth_personal_access_clients_pkey PRIMARY KEY (id);
-
-
---
--- Name: oauth_refresh_tokens oauth_refresh_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.oauth_refresh_tokens
-    ADD CONSTRAINT oauth_refresh_tokens_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.personal_access_tokens
+    ADD CONSTRAINT personal_access_tokens_token_unique UNIQUE (token);
 
 
 --
@@ -1024,6 +918,13 @@ CREATE INDEX courses_employee_level_id_index ON public.courses USING btree (empl
 
 
 --
+-- Name: courses_manager_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX courses_manager_id_index ON public.courses USING btree (manager_id);
+
+
+--
 -- Name: employee_course_completions_course_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1087,38 +988,17 @@ CREATE INDEX employee_technologies_technology_id_index ON public.employee_techno
 
 
 --
--- Name: oauth_access_tokens_user_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX oauth_access_tokens_user_id_index ON public.oauth_access_tokens USING btree (user_id);
-
-
---
--- Name: oauth_auth_codes_user_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX oauth_auth_codes_user_id_index ON public.oauth_auth_codes USING btree (user_id);
-
-
---
--- Name: oauth_clients_user_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX oauth_clients_user_id_index ON public.oauth_clients USING btree (user_id);
-
-
---
--- Name: oauth_refresh_tokens_access_token_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX oauth_refresh_tokens_access_token_id_index ON public.oauth_refresh_tokens USING btree (access_token_id);
-
-
---
 -- Name: password_resets_email_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX password_resets_email_index ON public.password_resets USING btree (email);
+
+
+--
+-- Name: personal_access_tokens_tokenable_type_tokenable_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX personal_access_tokens_tokenable_type_tokenable_id_index ON public.personal_access_tokens USING btree (tokenable_type, tokenable_id);
 
 
 --
@@ -1216,6 +1096,14 @@ ALTER TABLE ONLY public.courses
 
 
 --
+-- Name: courses courses_manager_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT courses_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id) ON DELETE SET NULL;
+
+
+--
 -- Name: employee_course_completions employee_course_completions_course_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1236,7 +1124,7 @@ ALTER TABLE ONLY public.employee_course_completions
 --
 
 ALTER TABLE ONLY public.employee_development_directions
-    ADD CONSTRAINT employee_development_directions_development_direction_id_foreig FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id);
+    ADD CONSTRAINT employee_development_directions_development_direction_id_foreig FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id) ON DELETE CASCADE;
 
 
 --
@@ -1244,7 +1132,7 @@ ALTER TABLE ONLY public.employee_development_directions
 --
 
 ALTER TABLE ONLY public.employee_development_directions
-    ADD CONSTRAINT employee_development_directions_employee_id_foreign FOREIGN KEY (employee_id) REFERENCES public.users(id);
+    ADD CONSTRAINT employee_development_directions_employee_id_foreign FOREIGN KEY (employee_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -1252,7 +1140,7 @@ ALTER TABLE ONLY public.employee_development_directions
 --
 
 ALTER TABLE ONLY public.employee_roadmaps
-    ADD CONSTRAINT employee_roadmaps_employee_id_foreign FOREIGN KEY (employee_id) REFERENCES public.users(id);
+    ADD CONSTRAINT employee_roadmaps_employee_id_foreign FOREIGN KEY (employee_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -1260,7 +1148,7 @@ ALTER TABLE ONLY public.employee_roadmaps
 --
 
 ALTER TABLE ONLY public.employee_roadmaps
-    ADD CONSTRAINT employee_roadmaps_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id);
+    ADD CONSTRAINT employee_roadmaps_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -1268,7 +1156,7 @@ ALTER TABLE ONLY public.employee_roadmaps
 --
 
 ALTER TABLE ONLY public.employee_roadmaps
-    ADD CONSTRAINT employee_roadmaps_preset_id_foreign FOREIGN KEY (preset_id) REFERENCES public.presets(id);
+    ADD CONSTRAINT employee_roadmaps_preset_id_foreign FOREIGN KEY (preset_id) REFERENCES public.presets(id) ON DELETE CASCADE;
 
 
 --
@@ -1308,7 +1196,7 @@ ALTER TABLE ONLY public.preset_courses
 --
 
 ALTER TABLE ONLY public.presets
-    ADD CONSTRAINT presets_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id);
+    ADD CONSTRAINT presets_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id) ON DELETE SET NULL;
 
 
 --
@@ -1348,7 +1236,7 @@ ALTER TABLE ONLY public.teams
 --
 
 ALTER TABLE ONLY public.technology_development_directions
-    ADD CONSTRAINT technology_development_directions_development_direction_id_fore FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id);
+    ADD CONSTRAINT technology_development_directions_development_direction_id_fore FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id) ON DELETE CASCADE;
 
 
 --
@@ -1356,7 +1244,7 @@ ALTER TABLE ONLY public.technology_development_directions
 --
 
 ALTER TABLE ONLY public.technology_development_directions
-    ADD CONSTRAINT technology_development_directions_technology_id_foreign FOREIGN KEY (technology_id) REFERENCES public.technologies(id);
+    ADD CONSTRAINT technology_development_directions_technology_id_foreign FOREIGN KEY (technology_id) REFERENCES public.technologies(id) ON DELETE CASCADE;
 
 
 --
@@ -1377,20 +1265,16 @@ INSERT INTO public.migrations VALUES (3, '2013_09_08_053914_create_companies_tab
 INSERT INTO public.migrations VALUES (4, '2014_10_12_000000_create_users_table', 1);
 INSERT INTO public.migrations VALUES (5, '2014_10_12_100000_create_password_resets_table', 1);
 INSERT INTO public.migrations VALUES (6, '2015_09_07_171813_create_teams_table', 1);
-INSERT INTO public.migrations VALUES (7, '2016_06_01_000001_create_oauth_auth_codes_table', 1);
-INSERT INTO public.migrations VALUES (8, '2016_06_01_000002_create_oauth_access_tokens_table', 1);
-INSERT INTO public.migrations VALUES (9, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1);
-INSERT INTO public.migrations VALUES (10, '2016_06_01_000004_create_oauth_clients_table', 1);
-INSERT INTO public.migrations VALUES (11, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1);
-INSERT INTO public.migrations VALUES (12, '2019_08_19_000000_create_failed_jobs_table', 1);
-INSERT INTO public.migrations VALUES (13, '2020_09_07_161311_create_technologies_table', 1);
-INSERT INTO public.migrations VALUES (14, '2020_09_07_162059_create_courses_table', 1);
-INSERT INTO public.migrations VALUES (15, '2020_09_07_162944_create_presets_table', 1);
-INSERT INTO public.migrations VALUES (16, '2020_09_07_163319_create_employee_roadmaps_table', 1);
-INSERT INTO public.migrations VALUES (17, '2020_09_07_163327_create_employee_course_completions_table', 1);
-INSERT INTO public.migrations VALUES (18, '2020_09_07_173017_create_preset_courses_table', 1);
-INSERT INTO public.migrations VALUES (19, '2020_09_07_173944_create_team_members_table', 1);
-INSERT INTO public.migrations VALUES (20, '2020_09_07_180958_create_employee_technologies_table', 1);
-INSERT INTO public.migrations VALUES (21, '2020_09_09_150026_create_employee_development_directions_table', 1);
-INSERT INTO public.migrations VALUES (22, '2020_09_10_065837_create_technology_development_directions_table', 1);
-INSERT INTO public.migrations VALUES (23, '2020_09_10_070100_create_course_technologies_table', 1);
+INSERT INTO public.migrations VALUES (7, '2019_08_19_000000_create_failed_jobs_table', 1);
+INSERT INTO public.migrations VALUES (8, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+INSERT INTO public.migrations VALUES (9, '2020_09_07_161311_create_technologies_table', 1);
+INSERT INTO public.migrations VALUES (10, '2020_09_07_162059_create_courses_table', 1);
+INSERT INTO public.migrations VALUES (11, '2020_09_07_162944_create_presets_table', 1);
+INSERT INTO public.migrations VALUES (12, '2020_09_07_163319_create_employee_roadmaps_table', 1);
+INSERT INTO public.migrations VALUES (13, '2020_09_07_163327_create_employee_course_completions_table', 1);
+INSERT INTO public.migrations VALUES (14, '2020_09_07_173017_create_preset_courses_table', 1);
+INSERT INTO public.migrations VALUES (15, '2020_09_07_173944_create_team_members_table', 1);
+INSERT INTO public.migrations VALUES (16, '2020_09_07_180958_create_employee_technologies_table', 1);
+INSERT INTO public.migrations VALUES (17, '2020_09_09_150026_create_employee_development_directions_table', 1);
+INSERT INTO public.migrations VALUES (18, '2020_09_10_065837_create_technology_development_directions_table', 1);
+INSERT INTO public.migrations VALUES (19, '2020_09_10_070100_create_course_technologies_table', 1);
