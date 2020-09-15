@@ -42,7 +42,7 @@ class CoursesController extends Controller
 
         $course = $this->repository->store($request);
 
-        return redirect()->route('courses.show', compact('course'));
+        return new CoursesResource($course);
     }
 
     public function update(CourseRequest $request, Course $course)
@@ -51,7 +51,7 @@ class CoursesController extends Controller
 
         $course->update($request->validated());
 
-        return redirect()->route('courses.show', compact('course'));
+        return new CoursesResource($course);
     }
 
     public function destroy(Course $course)
@@ -60,6 +60,6 @@ class CoursesController extends Controller
 
         $course->delete();
 
-        return redirect()->route('courses.index');
+        return response()->noContent();
     }
 }

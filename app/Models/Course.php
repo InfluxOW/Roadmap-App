@@ -29,11 +29,6 @@ class Course extends Model
      * Relations
      * */
 
-    public function manager()
-    {
-        return $this->belongsTo(Manager::class);
-    }
-
     public function level()
     {
         return $this->belongsTo(EmployeeLevel::class, 'employee_level_id');

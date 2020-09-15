@@ -50,7 +50,7 @@ class PresetsResource extends JsonResource
     {
         return $this->courses->groupBy(function ($course) {
             return $course->level->name;
-        })->map(function($courses, $level) {
+        })->map(function ($courses, $level) {
             return $courses->groupBy(function ($course) {
                 return $course->technologies->implode('name', ', ');
             })->map(function ($courses, $technologies) {

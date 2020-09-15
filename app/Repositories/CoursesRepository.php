@@ -10,7 +10,6 @@ class CoursesRepository
     private const WITH = [
         'level',
         'completions.employee.company',
-        'manager.company',
         'technologies'
     ];
 

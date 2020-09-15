@@ -27,8 +27,9 @@ class CourseCompletionFactory extends Factory
         return [
             'employee_id' => User::factory()->employee(),
             'course_id' => Course::factory(),
-            'rating' => $this->faker->numberBetween(1, 10),
+            'rating' => $this->faker->numberBetween(0, 10),
             'completed_at' => $this->faker->dateTimeBetween('-1 year'),
+            'certificate' => $this->faker->imageUrl(),
         ];
     }
 }

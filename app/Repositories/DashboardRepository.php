@@ -10,7 +10,7 @@ class DashboardRepository
     private const WITH = [
         'roadmaps.preset.courses.completions.employee',
         'roadmaps.preset.courses.level',
-        'roadmaps.preset.courses.manager',
+        'roadmaps.preset.courses.technologies',
         'roadmaps.preset.manager',
         'roadmaps.preset.roadmaps.employee.company'
     ];

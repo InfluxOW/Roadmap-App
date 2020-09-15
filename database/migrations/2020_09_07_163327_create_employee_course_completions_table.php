@@ -18,7 +18,8 @@ class CreateEmployeeCourseCompletionsTable extends Migration
             $table->foreignId('employee_id')->index()->constrained('users')->cascadeOnDelete();
             $table->foreignId('course_id')->index()->constrained()->cascadeOnDelete();
             $table->unique(['employee_id', 'course_id']);
-            $table->enum('rating', range(1, 10))->nullable();
+            $table->enum('rating', range(0, 10))->nullable();
+            $table->string('certificate')->nullable();
             $table->timestamp('completed_at');
         });
     }

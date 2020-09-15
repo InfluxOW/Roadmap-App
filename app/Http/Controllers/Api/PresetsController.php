@@ -42,7 +42,7 @@ class PresetsController extends Controller
 
         $preset = $this->repository->store($request);
 
-        return redirect()->route('presets.show', compact('preset'));
+        return new PresetsResource($preset);
     }
 
     public function update(PresetRequest $request, Preset $preset)
@@ -51,7 +51,7 @@ class PresetsController extends Controller
 
         $preset->update($request->validated());
 
-        return redirect()->route('presets.show', compact('preset'));
+        return new PresetsResource($preset);
     }
 
     public function destroy(Preset $preset)
@@ -60,6 +60,6 @@ class PresetsController extends Controller
 
         $preset->delete();
 
-        return redirect()->route('presets.index');
+        return response()->noContent();
     }
 }

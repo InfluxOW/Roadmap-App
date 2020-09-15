@@ -74,6 +74,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_view_courses()
     {
+        $this->withoutExceptionHandling();
         $this->actingAs($this->admin, 'sanctum')
             ->get(route('courses.index'))
             ->assertOk()
@@ -123,21 +124,18 @@ class CoursesControllerTest extends TestCase
     {
         $this->actingAs($this->admin, 'sanctum')
             ->post(route('courses.store'), $this->attributes)
-            ->assertRedirect();
+            ->assertCreated();
 
         $this->assertDatabaseCount('courses', $this->courses->count() + 1);
         $this->assertDatabaseHas('courses', $this->attributes);
     }
 
     /** @test */
-    public function a_manager_can_create_a_new_course()
+    public function a_manager_cannot_create_a_new_course()
     {
         $this->actingAs($this->manager, 'sanctum')
             ->post(route('courses.store'), $this->attributes)
-            ->assertRedirect();
-
-        $this->assertDatabaseCount('courses', $this->courses->count() + 1);
-        $this->assertDatabaseHas('courses', $this->attributes);
+            ->assertForbidden();
     }
 
     /** @test */
@@ -145,31 +143,17 @@ class CoursesControllerTest extends TestCase
     {
         $this->actingAs($this->admin, 'sanctum')
             ->patch(route('courses.update', $this->courses->first()), $this->attributes)
-            ->assertRedirect();
+            ->assertOk();
 
         $this->assertDatabaseHas('courses', $this->attributes);
     }
 
     /** @test */
-    public function a_course_owner_can_update_it()
-    {
-        $course = Course::factory()->create(['manager_id' => $this->manager]);
-
-        $this->actingAs($this->manager, 'sanctum')
-            ->patch(route('courses.update', $course), $this->attributes)
-            ->assertRedirect();
-
-        $this->assertDatabaseHas('courses', $this->attributes);
-    }
-
-    /** @test */
-    public function a_manager_cannot_update_a_course_that_doesnt_belongs_to_him()
+    public function a_manager_cannot_update_a_course()
     {
         $this->actingAs($this->manager, 'sanctum')
             ->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertForbidden();
-
-        $this->assertDatabaseMissing('courses', $this->attributes);
     }
 
 
@@ -179,31 +163,16 @@ class CoursesControllerTest extends TestCase
         $course = $this->courses->first();
         $this->actingAs($this->admin, 'sanctum')
             ->delete(route('courses.destroy', $course))
-            ->assertRedirect();
+            ->assertNoContent();
 
         $this->assertDatabaseMissing('courses', ['id' => $course->id]);
     }
 
     /** @test */
-    public function a_course_owner_can_delete_it()
+    public function a_manager_cannot_delete_a_course()
     {
-        $course = Course::factory()->create(['manager_id' => $this->manager]);
-
         $this->actingAs($this->manager, 'sanctum')
-            ->delete(route('courses.destroy', $course))
-            ->assertRedirect();
-
-        $this->assertDatabaseMissing('courses', ['id' => $course->id]);
-    }
-
-    /** @test */
-    public function a_manager_cannot_delete_a_course_that_doesnt_belongs_to_him()
-    {
-        $course = $this->courses->first();
-        $this->actingAs($this->manager, 'sanctum')
-            ->delete(route('courses.update', $course))
+            ->delete(route('courses.update', $this->courses->first()))
             ->assertForbidden();
-
-        $this->assertDatabaseHas('courses', ['id' => $course->id]);
     }
 }

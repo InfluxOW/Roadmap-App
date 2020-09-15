@@ -9,9 +9,9 @@ class PresetsRepository
 {
     private const WITH = [
         'manager.company',
-        'roadmaps.employee',
+        'roadmaps.employee.company',
         'courses.level',
-        'courses.manager.company',
+        'courses.technologies',
         'courses.completions.employee'
     ];
 

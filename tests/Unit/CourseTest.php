@@ -26,15 +26,6 @@ class CourseTest extends TestCase
     }
 
     /** @test */
-    public function it_may_belong_to_a_manager()
-    {
-        $course = Course::factory()->for(Manager::factory())->create();
-
-        $this->assertEquals(Manager::first(), $course->manager);
-        $this->assertTrue($course->manager->is(Manager::first()));
-    }
-
-    /** @test */
     public function it_may_have_many_completions()
     {
         $course = Course::factory()->has(

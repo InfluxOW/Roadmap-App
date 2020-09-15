@@ -19,16 +19,16 @@ class CoursesPolicy extends Policy
 
     public function create(User $user)
     {
-        return $user->isManager();
+        return false;
     }
 
     public function update(User $user, Course $course)
     {
-        return isset($course->manager) && $course->manager->is($user);
+        return false;
     }
 
     public function delete(User $user, Course $course)
     {
-        return isset($course->manager) && $course->manager->is($user);
+        return false;
     }
 }

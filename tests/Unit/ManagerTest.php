@@ -48,18 +48,6 @@ class ManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_hay_have_many_courses()
-    {
-        $manager = Manager::factory()->has(
-            Course::factory()->count($count = 3)
-        )->create();
-
-        $this->assertTrue($manager->courses->contains(Course::first()));
-        $this->assertInstanceOf(Course::class, $manager->courses->first());
-        $this->assertCount($count, $manager->courses);
-    }
-
-    /** @test */
     public function it_may_have_many_roadmaps()
     {
         $manager = Manager::factory()->has(

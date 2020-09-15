@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -33,5 +35,18 @@ class Handler extends ExceptionHandler
     public function register()
     {
         //
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof \LogicException || $e instanceof  \InvalidArgumentException) {
+            return response(['error' => $e->getMessage()], 400);
+        }
+
+        if ($e instanceof ModelNotFoundException) {
+            return response(['error' => $e->getMessage()], 404);
+        }
+
+        return parent::render($request, $e);
     }
 }

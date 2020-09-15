@@ -201,7 +201,7 @@ class PresetsControllerTest extends TestCase
     {
         $this->actingAs($this->admin, 'sanctum')
             ->post(route('presets.store'), $this->attributes)
-            ->assertRedirect();
+            ->assertCreated();
 
         $this->assertDatabaseCount('presets', $this->presets->count() + 1);
         $this->assertDatabaseHas('presets', $this->attributes);
@@ -212,7 +212,7 @@ class PresetsControllerTest extends TestCase
     {
         $this->actingAs($this->manager, 'sanctum')
             ->post(route('presets.store'), $this->attributes)
-            ->assertRedirect();
+            ->assertCreated();
 
         $this->assertDatabaseCount('presets', $this->presets->count() + 1);
         $this->assertDatabaseHas('presets', $this->attributes);
@@ -223,7 +223,7 @@ class PresetsControllerTest extends TestCase
     {
         $this->actingAs($this->admin, 'sanctum')
             ->patch(route('presets.update', $this->presets->first()), $this->attributes)
-            ->assertRedirect();
+            ->assertOk();
 
         $this->assertDatabaseHas('presets', $this->attributes);
     }
@@ -235,7 +235,7 @@ class PresetsControllerTest extends TestCase
 
         $this->actingAs($this->manager, 'sanctum')
             ->patch(route('presets.update', $preset), $this->attributes)
-            ->assertRedirect();
+            ->assertOk();
 
         $this->assertDatabaseHas('presets', $this->attributes);
     }
@@ -257,7 +257,7 @@ class PresetsControllerTest extends TestCase
         $preset = $this->presets->first();
         $this->actingAs($this->admin, 'sanctum')
             ->delete(route('presets.destroy', $preset))
-            ->assertRedirect();
+            ->assertNoContent();
 
         $this->assertDatabaseMissing('presets', ['id' => $preset->id]);
     }
@@ -269,7 +269,7 @@ class PresetsControllerTest extends TestCase
 
         $this->actingAs($this->manager, 'sanctum')
             ->delete(route('presets.destroy', $preset))
-            ->assertRedirect();
+            ->assertNoContent();
 
         $this->assertDatabaseMissing('presets', ['id' => $preset->id]);
     }

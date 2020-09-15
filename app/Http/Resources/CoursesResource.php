@@ -24,10 +24,6 @@ class CoursesResource extends JsonResource
 
         $attributes = $default;
 
-        if (isset($this->manager)) {
-            $attributes['manager'] = $this->manager->name;
-        }
-
         if ($request->is('api/dashboard/employees/*')) {
             $completion = $this->completions->where(
                 'employee_id',

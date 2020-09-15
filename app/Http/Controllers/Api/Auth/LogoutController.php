@@ -9,7 +9,7 @@ class LogoutController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->user()->token()->revoke();
+        $request->user()->currentAccessToken()->delete();
 
         return response(['message' => 'You are successfully logged out.'], 200);
     }

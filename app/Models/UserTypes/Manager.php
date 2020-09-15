@@ -33,11 +33,6 @@ class Manager extends User
         return $this->hasMany(Preset::class, 'manager_id');
     }
 
-    public function courses()
-    {
-        return $this->hasMany(Course::class, 'manager_id');
-    }
-
     public function roadmaps()
     {
         return $this->hasMany(Roadmap::class, 'manager_id');

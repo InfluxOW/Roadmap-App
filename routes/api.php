@@ -29,6 +29,9 @@ Route::middleware('auth:sanctum')->group(function () {
      * Courses
      *  */
     Route::apiResource('courses', Api\CoursesController::class)->parameters(['courses' => 'course:slug']);
+    Route::post('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'store'])->name('course.complete');
+    Route::put('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'update'])->name('completion.update');
+    Route::delete('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'destroy'])->name('course.incomplete');
 
     /*
      * Presets
@@ -50,12 +53,6 @@ Route::middleware('auth:sanctum')->group(function () {
 //
 //GET /dashboard/{team:slug} - для менеджеров
 //выводится состав конкретной команды с роадмапами, как выше
-//
-//POST /courses/{course:slug}/completions - для разрабов
-//отметить курс как завершённый
-//
-//DELETE /courses/{course:slug}/completions - для разрабов
-//отметить курс как незавершённый
 //
 //POST /presets/{preset:slug}/courses/{course:slug} - для менеджеров
 //добавить указанный курс в указанный пресет

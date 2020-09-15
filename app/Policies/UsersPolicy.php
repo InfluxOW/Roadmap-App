@@ -17,4 +17,9 @@ class UsersPolicy extends Policy
     {
         return $user->is($manager);
     }
+
+    public function manageCompletions(User $user)
+    {
+        return $user->isEmployee();
+    }
 }
