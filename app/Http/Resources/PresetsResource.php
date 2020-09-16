@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Course;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,14 +49,14 @@ class PresetsResource extends JsonResource
 
     private function courses()
     {
-        return $this->courses->groupBy(function ($course) {
-            return $course->level->name;
-        })->map(function ($courses, $level) {
-            return $courses->groupBy(function ($course) {
-                return $course->technologies->implode('name', ', ');
-            })->map(function ($courses, $technologies) {
-                return CoursesResource::collection($courses);
-            });
-        });
+        $courses = [];
+
+        foreach ($this->courses as $course) {
+            foreach ($course->technologies as $technology) {
+                $courses[$course->level->name][$technology->name][] = new CoursesResource($course);
+            }
+        }
+
+        return $courses;
     }
 }
