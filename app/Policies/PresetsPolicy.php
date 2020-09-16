@@ -4,9 +4,19 @@ namespace App\Policies;
 
 use App\Models\Preset;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PresetsPolicy extends Policy
+class PresetsPolicy
 {
+    use HandlesAuthorization;
+
+    public function before(User $user, $ability)
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+    }
+
     public function viewAny(User $user)
     {
         return $user->isManager();

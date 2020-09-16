@@ -71,7 +71,7 @@ class Employee extends User
             throw new \LogicException("You can't complete a completed course");
         }
 
-        if ($this->getCourses()->pluck('id')->contains($course->id)) {
+        if ($this->doesntHaveCourse($course)) {
             throw new \LogicException("You can't complete a course that doesn't belong to any of your roadmaps");
         }
 
@@ -88,7 +88,7 @@ class Employee extends User
             throw new \LogicException("You can't incomplete an incompleted course");
         }
 
-        if ($this->getCourses()->pluck('id')->contains($course->id)) {
+        if ($this->doesntHaveCourse($course)) {
             throw new \LogicException("You can't incomplete a course that doesn't belong to any of your roadmaps");
         }
 
@@ -110,7 +110,7 @@ class Employee extends User
             throw new \LogicException("You can't rate an incompleted course");
         }
 
-        if ($this->getCourses()->pluck('id')->contains($course->id)) {
+        if ($this->doesntHaveCourse($course)) {
             throw new \LogicException("You can't rate a course that doesn't belong to any of your roadmaps");
         }
 
@@ -129,13 +129,27 @@ class Employee extends User
             throw new \LogicException("You can't attach a certificate to an incompleted course");
         }
 
-        if ($this->getCourses()->pluck('id')->contains($course->id)) {
+        if ($this->doesntHaveCourse($course)) {
             throw new \LogicException("You can't attach a certificate to a course that doesn't belong to any of your roadmaps");
         }
 
         $completion = CourseCompletion::where('course_id', $course->id)->where('employee_id', $this->id)->first();
 
         return $completion->update(['certificate' => $certificate]);
+    }
+
+    /*
+     * Helpers
+     * */
+
+    public function doesntHaveCourse(Course $course)
+    {
+        return ! $this->hasCourse($course);
+    }
+
+    public function hasCourse(Course $course)
+    {
+        return $this->getCourses()->pluck('id')->contains($course->id);
     }
 
     /*

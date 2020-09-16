@@ -12,7 +12,7 @@ class CourseCompletion extends Model
 
     protected $table = 'employee_course_completions';
     public $timestamps = false;
-    protected $fillable = ['rating', 'completed_at'];
+    protected $fillable = ['rating', 'completed_at', 'certificate'];
     protected $casts = [
         'rating' => 'integer',
         'completed_at' => 'datetime'

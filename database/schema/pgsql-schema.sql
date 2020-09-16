@@ -76,7 +76,6 @@ CREATE TABLE public.courses (
     description text NOT NULL,
     source character varying(255) NOT NULL,
     employee_level_id bigint NOT NULL,
-    manager_id bigint,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone
 );
@@ -140,8 +139,9 @@ CREATE TABLE public.employee_course_completions (
     employee_id bigint NOT NULL,
     course_id bigint NOT NULL,
     rating character varying(255),
+    certificate character varying(255),
     completed_at timestamp(0) without time zone NOT NULL,
-    CONSTRAINT employee_course_completions_rating_check CHECK (((rating)::text = ANY ((ARRAY['1'::character varying, '2'::character varying, '3'::character varying, '4'::character varying, '5'::character varying, '6'::character varying, '7'::character varying, '8'::character varying, '9'::character varying, '10'::character varying])::text[])))
+    CONSTRAINT employee_course_completions_rating_check CHECK (((rating)::text = ANY ((ARRAY['0'::character varying, '1'::character varying, '2'::character varying, '3'::character varying, '4'::character varying, '5'::character varying, '6'::character varying, '7'::character varying, '8'::character varying, '9'::character varying, '10'::character varying])::text[])))
 );
 
 
@@ -918,13 +918,6 @@ CREATE INDEX courses_employee_level_id_index ON public.courses USING btree (empl
 
 
 --
--- Name: courses_manager_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX courses_manager_id_index ON public.courses USING btree (manager_id);
-
-
---
 -- Name: employee_course_completions_course_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1093,14 +1086,6 @@ ALTER TABLE ONLY public.course_technologies
 
 ALTER TABLE ONLY public.courses
     ADD CONSTRAINT courses_employee_level_id_foreign FOREIGN KEY (employee_level_id) REFERENCES public.employee_levels(id);
-
-
---
--- Name: courses courses_manager_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.courses
-    ADD CONSTRAINT courses_manager_id_foreign FOREIGN KEY (manager_id) REFERENCES public.users(id) ON DELETE SET NULL;
 
 
 --

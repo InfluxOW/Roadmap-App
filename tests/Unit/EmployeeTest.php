@@ -110,50 +110,13 @@ class EmployeeTest extends TestCase
     {
         $employees = Employee::factory()->count($count = 3)->create();
         $course = Course::factory()->create();
-        $employees->first()->complete($course);
+
+        CourseCompletion::factory([
+            'course_id' => $course,
+            'employee_id' => $employees->first()
+        ])->create();
 
         $this->assertCount($count, Employee::all());
         $this->assertCount(1, Employee::withCompletedCourse($course)->get());
-    }
-
-    /** @test */
-    public function it_can_complete_an_incompleted_course()
-    {
-        $employee = Employee::factory()->create();
-        $course = Course::factory()->create();
-
-        $this->assertFalse($employee->hasCompletedCourse($course));
-
-        $employee->complete($course);
-
-        $this->assertTrue($employee->fresh()->hasCompletedCourse($course));
-    }
-
-    /** @test */
-    public function it_can_incomplete_a_completed_course()
-    {
-        $employee = Employee::factory()->create();
-        $course = Course::factory()->create();
-        $employee->complete($course);
-
-        $this->assertTrue($employee->fresh()->hasCompletedCourse($course));
-
-        $employee->fresh()->incomplete($course);
-
-        $this->assertFalse($employee->fresh()->hasCompletedCourse($course));
-    }
-
-    /** @test */
-    public function it_can_rate_a_completed_course()
-    {
-        $employee = Employee::factory()->create();
-        $course = Course::factory()->create();
-        $employee->complete($course);
-
-        $this->assertEquals(0, $course->average_rating);
-
-        $employee->fresh()->rate($course, $rating = 10);
-
-        $this->assertEquals($rating, $course->fresh()->average_rating);
     }
 }

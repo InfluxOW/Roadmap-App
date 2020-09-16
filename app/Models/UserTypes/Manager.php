@@ -44,6 +44,15 @@ class Manager extends User
     }
 
     /*
+     * Helpers
+     * */
+
+    public function hasEmployee(Employee $employee)
+    {
+        return $this->getEmployees()->pluck('id')->contains($employee->id);
+    }
+
+    /*
      * Getters
      * */
 

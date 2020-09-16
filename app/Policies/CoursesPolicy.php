@@ -4,9 +4,19 @@ namespace App\Policies;
 
 use App\Models\Course;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CoursesPolicy extends Policy
+class CoursesPolicy
 {
+    use HandlesAuthorization;
+
+    public function before(User $user, $ability)
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+    }
+
     public function viewAny(User $user)
     {
         return $user->isManager();
