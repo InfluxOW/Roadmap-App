@@ -16,7 +16,7 @@ class CreatePresetsTable extends Migration
         Schema::create('presets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->foreignId('manager_id')->nullable()->index()->constrained('users')->nullOnDelete(); // nullable because we will have some default presets that doesn't belong to anyone
             $table->unique(['name', 'manager_id']);

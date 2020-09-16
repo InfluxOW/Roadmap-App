@@ -40,6 +40,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('presets', Api\PresetsController::class)->parameters(['presets' => 'preset:slug']);
 
     /*
+     * Roadmaps
+     * */
+    Route::post('roadmaps', [Api\RoadmapsController::class, 'store'])->name('roadmaps.store');
+    Route::delete('roadmaps/{preset:slug}/{employee:username}', [Api\RoadmapsController::class, 'destroy'])->name('roadmaps.destroy');
+
+    /*
      * Dashboards
      * */
     Route::get('dashboard/employees/{employee:username}', Api\Dashboards\EmployeeDashboardController::class)->name('dashboard.employee');

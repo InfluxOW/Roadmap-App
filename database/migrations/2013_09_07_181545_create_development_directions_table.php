@@ -15,8 +15,8 @@ class CreateDevelopmentDirectionsTable extends Migration
     {
         Schema::create('development_directions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug');
+            $table->string('name');
+            $table->string('slug')->unique();
         });
     }
 

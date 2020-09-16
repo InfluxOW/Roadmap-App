@@ -18,7 +18,7 @@ class Preset extends Model
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom(['name', 'manager.name'])
             ->saveSlugsTo('slug')
             ->allowDuplicateSlugs();
     }

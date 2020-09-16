@@ -44,12 +44,50 @@ class Manager extends User
     }
 
     /*
+     * Roadmap Assignments
+     * */
+
+    public function createRoadmap(Preset $preset, Employee $employee)
+    {
+        if ($this->doesntHaveEmployee($employee)) {
+            throw new \LogicException("You can't create a roadmap for the employee which doesn't belong to any of your teams.");
+        }
+
+        $roadmap = $this->roadmaps()->make();
+        $roadmap->employee()->associate($employee);
+        $roadmap->preset()->associate($preset);
+        $roadmap->assigned_at = now();
+
+        return $roadmap->save();
+    }
+
+    public function deleteRoadmap(Preset $preset, Employee $employee)
+    {
+        if ($this->doesntHaveEmployee($employee)) {
+            throw new \LogicException("You can't delete a roadmap of the employee which doesn't belong to any of your teams.");
+        }
+
+        $roadmap = Roadmap::where('employee_id', $employee->id)->where('preset_id', $preset->id);
+
+        if ($roadmap->doesntExist()) {
+            throw new \LogicException("You can't delete nonexistent roadmap");
+        }
+
+        return $roadmap->delete();
+    }
+
+    /*
      * Helpers
      * */
 
     public function hasEmployee(Employee $employee)
     {
         return $this->getEmployees()->pluck('id')->contains($employee->id);
+    }
+
+    public function doesntHaveEmployee(Employee $employee)
+    {
+        return ! $this->hasEmployee($employee);
     }
 
     /*

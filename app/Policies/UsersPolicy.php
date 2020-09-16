@@ -28,8 +28,13 @@ class UsersPolicy
         return $user->isEmployee();
     }
 
-    public function suggestCourse(User $user)
+    public function suggestCourse()
     {
         return true;
+    }
+
+    public function manageRoadmaps(User $user)
+    {
+        return $user->isManager();
     }
 }

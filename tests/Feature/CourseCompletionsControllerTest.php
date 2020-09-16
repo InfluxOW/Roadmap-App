@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Course;
-use App\Models\CourseCompletion;
 use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\UserTypes\Admin;
@@ -11,6 +10,7 @@ use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class CourseCompletionsControllerTest extends TestCase
@@ -18,7 +18,6 @@ class CourseCompletionsControllerTest extends TestCase
     public $employee;
     public $manager;
     public $admin;
-    public $courses;
 
     protected function setUp(): void
     {
@@ -99,7 +98,7 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee->fresh(), 'sanctum')
             ->post(route('courses.complete', Course::first()))
-            ->assertStatus(422);
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -109,7 +108,7 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee->fresh(), 'sanctum')
             ->post(route('courses.complete', $course))
-            ->assertStatus(422);
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -130,7 +129,7 @@ class CourseCompletionsControllerTest extends TestCase
     {
         $this->actingAs($this->employee, 'sanctum')
             ->delete(route('courses.incomplete', Course::first()))
-            ->assertStatus(422);
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -140,7 +139,7 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee, 'sanctum')
             ->delete(route('courses.incomplete', $course))
-            ->assertStatus(422);
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -165,7 +164,7 @@ class CourseCompletionsControllerTest extends TestCase
     {
         $this->actingAs($this->employee, 'sanctum')
             ->put(route('completions.update', Course::first()), ['rating' => $rating = 5])
-            ->assertStatus(422);
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -175,7 +174,7 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee, 'sanctum')
             ->put(route('completions.update', $course), ['rating' => $rating = 5])
-            ->assertStatus(422);
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -199,7 +198,7 @@ class CourseCompletionsControllerTest extends TestCase
     {
         $this->actingAs($this->employee, 'sanctum')
             ->put(route('completions.update', Course::first()), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
-            ->assertStatus(422);
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -209,6 +208,6 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee, 'sanctum')
             ->put(route('completions.update', $course), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
-            ->assertStatus(422);
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

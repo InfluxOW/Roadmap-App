@@ -16,7 +16,7 @@ class CreateTeamsTable extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->foreignId('owner_id')->index()->constrained('users');
             $table->foreignId('company_id')->index()->constrained();
             $table->unique(['name', 'company_id']);
