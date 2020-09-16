@@ -27,4 +27,9 @@ class UsersPolicy
     {
         return $user->isEmployee();
     }
+
+    public function suggestCourse(User $user)
+    {
+        return true;
+    }
 }

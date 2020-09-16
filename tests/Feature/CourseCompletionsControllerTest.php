@@ -39,13 +39,13 @@ class CourseCompletionsControllerTest extends TestCase
     /** @test */
     public function a_guest_cannot_perform_any_actions()
     {
-        $this->post(route('course.complete', Course::first()))
+        $this->post(route('courses.complete', Course::first()))
             ->assertRedirect(route('login'));
 
-        $this->delete(route('course.incomplete', Course::first()))
+        $this->delete(route('courses.incomplete', Course::first()))
             ->assertRedirect(route('login'));
 
-        $this->put(route('completion.update', Course::first()))
+        $this->put(route('completions.update', Course::first()))
             ->assertRedirect(route('login'));
     }
 
@@ -53,15 +53,15 @@ class CourseCompletionsControllerTest extends TestCase
     public function a_manager_cannot_perform_any_actions()
     {
         $this->actingAs($this->manager, 'sanctum')
-            ->post(route('course.complete', Course::first()))
+            ->post(route('courses.complete', Course::first()))
             ->assertForbidden();
 
         $this->actingAs($this->manager, 'sanctum')
-            ->delete(route('course.incomplete', Course::first()))
+            ->delete(route('courses.incomplete', Course::first()))
             ->assertForbidden();
 
         $this->actingAs($this->manager, 'sanctum')
-            ->put(route('completion.update', Course::first()), ['rating' => 5])
+            ->put(route('completions.update', Course::first()), ['rating' => 5])
             ->assertForbidden();
     }
 
@@ -69,15 +69,15 @@ class CourseCompletionsControllerTest extends TestCase
     public function an_admin_cannot_perform_any_actions()
     {
         $this->actingAs($this->admin, 'sanctum')
-            ->post(route('course.complete', Course::first()))
+            ->post(route('courses.complete', Course::first()))
             ->assertForbidden();
 
         $this->actingAs($this->admin, 'sanctum')
-            ->delete(route('course.incomplete', Course::first()))
+            ->delete(route('courses.incomplete', Course::first()))
             ->assertForbidden();
 
         $this->actingAs($this->admin, 'sanctum')
-            ->put(route('completion.update', Course::first()), ['rating' => 5])
+            ->put(route('completions.update', Course::first()), ['rating' => 5])
             ->assertForbidden();
     }
 
@@ -85,7 +85,7 @@ class CourseCompletionsControllerTest extends TestCase
     public function an_employee_can_complete_an_incompleted_course()
     {
         $this->actingAs($this->employee, 'sanctum')
-            ->post(route('course.complete', Course::first()))
+            ->post(route('courses.complete', Course::first()))
             ->assertOk();
 
         $this->assertTrue($this->employee->fresh()->hasCompletedCourse(Course::first()));
@@ -98,7 +98,7 @@ class CourseCompletionsControllerTest extends TestCase
         $this->employee->complete(Course::first());
 
         $this->actingAs($this->employee->fresh(), 'sanctum')
-            ->post(route('course.complete', Course::first()))
+            ->post(route('courses.complete', Course::first()))
             ->assertStatus(422);
     }
 
@@ -108,7 +108,7 @@ class CourseCompletionsControllerTest extends TestCase
         $course = Course::factory()->create();
 
         $this->actingAs($this->employee->fresh(), 'sanctum')
-            ->post(route('course.complete', $course))
+            ->post(route('courses.complete', $course))
             ->assertStatus(422);
     }
 
@@ -118,7 +118,7 @@ class CourseCompletionsControllerTest extends TestCase
         $this->employee->complete(Course::first());
 
         $this->actingAs($this->employee->fresh(), 'sanctum')
-            ->delete(route('course.incomplete', Course::first()))
+            ->delete(route('courses.incomplete', Course::first()))
             ->assertOk();
 
         $this->assertTrue($this->employee->fresh()->hasNotCompletedCourse(Course::first()));
@@ -129,7 +129,7 @@ class CourseCompletionsControllerTest extends TestCase
     public function an_employee_cannot_incomplete_an_incompleted_course()
     {
         $this->actingAs($this->employee, 'sanctum')
-            ->delete(route('course.incomplete', Course::first()))
+            ->delete(route('courses.incomplete', Course::first()))
             ->assertStatus(422);
     }
 
@@ -139,7 +139,7 @@ class CourseCompletionsControllerTest extends TestCase
         $course = Course::factory()->create();
 
         $this->actingAs($this->employee, 'sanctum')
-            ->delete(route('course.incomplete', $course))
+            ->delete(route('courses.incomplete', $course))
             ->assertStatus(422);
     }
 
@@ -149,7 +149,7 @@ class CourseCompletionsControllerTest extends TestCase
         $this->employee->complete(Course::first());
 
         $this->actingAs($this->employee->fresh(), 'sanctum')
-            ->put(route('completion.update', Course::first()), ['rating' => $rating = 5])
+            ->put(route('completions.update', Course::first()), ['rating' => $rating = 5])
             ->assertOk();
 
         $this->assertEquals(Course::first()->average_rating, $rating);
@@ -164,7 +164,7 @@ class CourseCompletionsControllerTest extends TestCase
     public function an_employee_cannot_rate_an_incompleted_course()
     {
         $this->actingAs($this->employee, 'sanctum')
-            ->put(route('completion.update', Course::first()), ['rating' => $rating = 5])
+            ->put(route('completions.update', Course::first()), ['rating' => $rating = 5])
             ->assertStatus(422);
     }
 
@@ -174,7 +174,7 @@ class CourseCompletionsControllerTest extends TestCase
         $course = Course::factory()->create();
 
         $this->actingAs($this->employee, 'sanctum')
-            ->put(route('completion.update', $course), ['rating' => $rating = 5])
+            ->put(route('completions.update', $course), ['rating' => $rating = 5])
             ->assertStatus(422);
     }
 
@@ -184,7 +184,7 @@ class CourseCompletionsControllerTest extends TestCase
         $this->employee->complete(Course::first());
 
         $this->actingAs($this->employee->fresh(), 'sanctum')
-            ->put(route('completion.update', Course::first()), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
+            ->put(route('completions.update', Course::first()), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
             ->assertOk();
 
         $this->assertDatabaseHas('employee_course_completions', [
@@ -198,7 +198,7 @@ class CourseCompletionsControllerTest extends TestCase
     public function an_employee_cannot_attach_a_certificate_to_an_incompleted_course()
     {
         $this->actingAs($this->employee, 'sanctum')
-            ->put(route('completion.update', Course::first()), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
+            ->put(route('completions.update', Course::first()), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
             ->assertStatus(422);
     }
 
@@ -208,7 +208,7 @@ class CourseCompletionsControllerTest extends TestCase
         $course = Course::factory()->create();
 
         $this->actingAs($this->employee, 'sanctum')
-            ->put(route('completion.update', $course), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
+            ->put(route('completions.update', $course), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
             ->assertStatus(422);
     }
 }

@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Jobs\ProcessSuggestedCourse;
 use App\Models\Course;
 use App\Models\UserTypes\Admin;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
+use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 
 class CoursesControllerTest extends TestCase
@@ -40,6 +42,9 @@ class CoursesControllerTest extends TestCase
         $this->post(route('courses.store'), $this->attributes)
             ->assertRedirect(route('login'));
 
+        $this->post(route('courses.suggest'), ['source' => 'http://test.com'])
+            ->assertRedirect(route('login'));
+
         $this->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertRedirect(route('login'));
 
@@ -48,7 +53,7 @@ class CoursesControllerTest extends TestCase
     }
 
     /** @test */
-    public function an_employee_cannot_perform_any_actions()
+    public function an_employee_cannot_perform_any_course_crud_actions()
     {
         $this->actingAs($this->employee, 'sanctum')
             ->get(route('courses.index'))
@@ -174,5 +179,37 @@ class CoursesControllerTest extends TestCase
         $this->actingAs($this->manager, 'sanctum')
             ->delete(route('courses.update', $this->courses->first()))
             ->assertForbidden();
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_suggest_a_new_course()
+    {
+        Bus::fake();
+        $course = ['source' => 'http://test.com'];
+
+        $this->actingAs($this->employee, 'sanctum')
+            ->post(route('courses.suggest'), $course)
+            ->assertOk();
+
+        $this->actingAs($this->manager, 'sanctum')
+            ->post(route('courses.suggest'), $course)
+            ->assertOk();
+
+        $this->actingAs($this->admin, 'sanctum')
+            ->post(route('courses.suggest'), $course)
+            ->assertOk();
+    }
+
+    /** @test */
+    public function course_suggestion_dispatches_process_suggested_course_job()
+    {
+        Bus::fake();
+        $course = ['source' => 'http://test.com'];
+
+        $this->actingAs($this->employee, 'sanctum')
+            ->post(route('courses.suggest'), $course)
+            ->assertOk();
+
+        Bus::assertDispatched(ProcessSuggestedCourse::class);
     }
 }
