@@ -67,12 +67,12 @@ class Employee extends User
 
     public function complete(Course $course)
     {
-        if ($this->hasCompletedCourse($course)) {
-            throw new \LogicException("You can't complete a completed course");
-        }
-
         if ($this->doesntHaveCourse($course)) {
             throw new \LogicException("You can't complete a course that doesn't belong to any of your roadmaps");
+        }
+
+        if ($this->hasCompletedCourse($course)) {
+            throw new \LogicException("You can't complete a completed course");
         }
 
         $completion = $this->completions()->make();
@@ -84,12 +84,12 @@ class Employee extends User
 
     public function incomplete(Course $course)
     {
-        if ($this->hasNotCompletedCourse($course)) {
-            throw new \LogicException("You can't incomplete an incompleted course");
-        }
-
         if ($this->doesntHaveCourse($course)) {
             throw new \LogicException("You can't incomplete a course that doesn't belong to any of your roadmaps");
+        }
+
+        if ($this->hasNotCompletedCourse($course)) {
+            throw new \LogicException("You can't incomplete an incompleted course");
         }
 
         $completion = CourseCompletion::where('course_id', $course->id)->where('employee_id', $this->id)->firstOrFail();
@@ -106,12 +106,12 @@ class Employee extends User
 
     public function rate(Course $course, int $rating)
     {
-        if ($this->hasNotCompletedCourse($course)) {
-            throw new \LogicException("You can't rate an incompleted course");
-        }
-
         if ($this->doesntHaveCourse($course)) {
             throw new \LogicException("You can't rate a course that doesn't belong to any of your roadmaps");
+        }
+
+        if ($this->hasNotCompletedCourse($course)) {
+            throw new \LogicException("You can't rate an incompleted course");
         }
 
         if ($rating > 10 || $rating < 0) {
@@ -125,12 +125,12 @@ class Employee extends User
 
     public function attachCertificateTo(Course $course, string $certificate)
     {
-        if ($this->hasNotCompletedCourse($course)) {
-            throw new \LogicException("You can't attach a certificate to an incompleted course");
-        }
-
         if ($this->doesntHaveCourse($course)) {
             throw new \LogicException("You can't attach a certificate to a course that doesn't belong to any of your roadmaps");
+        }
+
+        if ($this->hasNotCompletedCourse($course)) {
+            throw new \LogicException("You can't attach a certificate to an incompleted course");
         }
 
         $completion = CourseCompletion::where('course_id', $course->id)->where('employee_id', $this->id)->first();
