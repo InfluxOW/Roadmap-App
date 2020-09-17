@@ -24,10 +24,10 @@ class CoursesResource extends JsonResource
 
         $attributes = $default;
 
-        if ($request->is('api/dashboard/employees/*')) {
+        if (isset($this->additional['employee'])) {
             $completion = $this->completions->where(
                 'employee_id',
-                $request->employee->id ?? Employee::whereUsername($request->route('employee'))->first()->id
+                $this->additional['employee']->id
             )->first();
 
             if ($completion) {
@@ -35,6 +35,10 @@ class CoursesResource extends JsonResource
 
                 if (isset($completion->rating)) {
                     $attributes['employee_rating'] = $completion->rating;
+                }
+
+                if (isset($completion->certificate)) {
+                    $attributes['certificate'] = $completion->certificate;
                 }
             }
         }

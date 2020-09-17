@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Course;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +25,8 @@ class PresetsResource extends JsonResource
             $attributes['manager'] = $this->manager->name;
         }
 
-        if (Auth::user()->isManager() || Auth::user()->isAdmin()) {
+        if (($request->is('api/presets/*') || $request->is('api/presets')) &&
+            (Auth::user()->isManager() || Auth::user()->isAdmin())) {
             $attributes['assigned_to'] = UsersResource::collection($this->assignedTo());
         }
 
@@ -50,10 +50,12 @@ class PresetsResource extends JsonResource
     private function courses()
     {
         $courses = [];
-
         foreach ($this->courses as $course) {
             foreach ($course->technologies as $technology) {
-                $courses[$course->level->name][$technology->name][] = new CoursesResource($course);
+                $courses[$course->level->name][$technology->name][] =
+                    isset($this->additional['employee']) ?
+                        (new CoursesResource($course))->additional(['employee' => $this->additional['employee']]) :
+                        (new CoursesResource($course));
             }
         }
 

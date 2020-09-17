@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
      * Dashboards
      * */
     Route::get('dashboard/employees/{employee:username}', Api\Dashboards\EmployeeDashboardController::class)->name('dashboard.employee');
+    Route::get('dashboard/managers/{manager:username}', Api\Dashboards\ManagerDashboardController::class)->name('dashboard.manager');
 });
 
 

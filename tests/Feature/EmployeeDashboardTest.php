@@ -19,6 +19,7 @@ class EmployeeDashboardTest extends TestCase
     /** @test */
     public function an_employee_can_view_his_dashboard()
     {
+        $this->withoutExceptionHandling();
         $employee = Employee::first();
 
         $this->actingAs($employee, 'sanctum')
