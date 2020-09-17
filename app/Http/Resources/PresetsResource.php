@@ -25,8 +25,10 @@ class PresetsResource extends JsonResource
             $attributes['manager'] = $this->manager->name;
         }
 
-        if (($request->is('api/presets/*') || $request->is('api/presets')) &&
-            (Auth::user()->isManager() || Auth::user()->isAdmin())) {
+        if (
+            ($request->is('api/presets/*') || $request->is('api/presets')) &&
+            (Auth::user()->isManager() || Auth::user()->isAdmin())
+        ) {
             $attributes['assigned_to'] = UsersResource::collection($this->assignedTo());
         }
 
