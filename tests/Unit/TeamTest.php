@@ -36,22 +36,6 @@ class TeamTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_managers_as_team_members()
-    {
-        $team = Team::factory()
-            ->hasAttached(
-                Manager::factory()->count($count = 3),
-                ['assigned_at' => now()]
-            )
-            ->create();
-
-        /* Second because first is a Manager who owns the Team */
-        $this->assertTrue($team->managers->contains(Manager::find(2)));
-        $this->assertInstanceOf(Manager::class, $team->managers->second());
-        $this->assertCount($count, $team->managers);
-    }
-
-    /** @test */
     public function it_may_have_employees_as_team_members()
     {
         $team = Team::factory()

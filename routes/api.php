@@ -14,7 +14,7 @@ use App\Http\Controllers\Api;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+//Auth::loginUsingId(1);
 /*
  * Auth
  *  */

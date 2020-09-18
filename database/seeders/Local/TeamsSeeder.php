@@ -14,7 +14,12 @@ class TeamsSeeder extends Seeder
             Team::factory([
                 'owner_id' => $company->managers->first(),
                 'company_id' => $company
-            ])->count(2)->create();
+            ])->create();
+
+            Team::factory([
+                'owner_id' => $company->managers->second(),
+                'company_id' => $company
+            ])->create();
         }
     }
 }

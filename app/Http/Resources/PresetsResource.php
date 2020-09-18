@@ -41,7 +41,7 @@ class PresetsResource extends JsonResource
 
         if ($user->isManager()) {
             return $this->roadmaps
-                ->whereIn('employee_id', $user->getEmployees()->pluck('id'))
+                ->whereIn('employee_id', $user->employees->pluck('id'))
                 ->map(fn($roadmap) => $roadmap->employee);
         }
 

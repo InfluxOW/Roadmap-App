@@ -38,11 +38,6 @@ class Team extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function managers()
-    {
-        return $this->belongsToMany(Manager::class, 'team_members', 'team_id', 'user_id')->withPivot('assigned_at');
-    }
-
     public function employees()
     {
         return $this->belongsToMany(Employee::class, 'team_members', 'team_id', 'user_id')->withPivot('assigned_at');

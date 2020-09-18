@@ -8,20 +8,11 @@ use Illuminate\Http\Request;
 class ManagerDashboardRepository
 {
     private const WITH = [
-        'ownedTeams.employees.roadmaps.preset.courses.completions',
-        'ownedTeams.employees.roadmaps.preset.courses.level',
-        'ownedTeams.employees.roadmaps.preset.courses.technologies',
-        'ownedTeams.employees.roadmaps.preset.manager',
-        'ownedTeams.employees.roadmaps.employee.company',
-        'ownedTeams.employees.company',
-        'ownedTeams.employees.teams',
-        'teams.employees.roadmaps.preset.courses.completions',
-        'teams.employees.roadmaps.preset.courses.level',
-        'teams.employees.roadmaps.preset.courses.technologies',
-        'teams.employees.roadmaps.preset.manager',
-        'teams.employees.roadmaps.employee.company',
-        'teams.employees.company',
-        'teams.employees.teams'
+        'employees.roadmaps.preset.courses.completions',
+        'employees.roadmaps.preset.courses.level',
+        'employees.roadmaps.preset.courses.technologies',
+        'employees.roadmaps.preset.manager',
+        'employees.roadmaps.employee',
     ];
 
     public function index(Request $request)

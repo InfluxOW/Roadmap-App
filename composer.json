@@ -22,6 +22,7 @@
         "darkaonline/l5-swagger": "^8.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
+        "fzaninotto/faker": "^1.9.1",
         "guzzlehttp/guzzle": "^7.0.1",
         "itsgoingd/clockwork": "^4.1",
         "laravel/framework": "^8.0",
@@ -31,7 +32,7 @@
         "spatie/laravel-collection-macros": "^7.0",
         "spatie/laravel-query-builder": "^3.2",
         "spatie/laravel-sluggable": "^2.5",
-        "fzaninotto/faker": "^1.9.1"
+        "staudenmeir/eloquent-has-many-deep": "^1.7"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

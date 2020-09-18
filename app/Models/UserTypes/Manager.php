@@ -3,11 +3,11 @@
 namespace App\Models\UserTypes;
 
 use App\Models\Company;
-use App\Models\Course;
 use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Parental\HasParent;
 
 class Manager extends User
@@ -23,9 +23,19 @@ class Manager extends User
         return $this->belongsTo(Company::class);
     }
 
-    public function ownedTeams()
+    public function teams()
     {
         return $this->hasMany(Team::class, 'owner_id');
+    }
+
+    public function employees()
+    {
+        return $this->hasManyDeep(
+            Employee::class,
+            [Team::class, 'team_members'],
+            ['owner_id', 'team_id', 'id'],
+            ['id', 'id', 'user_id'],
+        );
     }
 
     public function presets()
@@ -36,11 +46,6 @@ class Manager extends User
     public function roadmaps()
     {
         return $this->hasMany(Roadmap::class, 'manager_id');
-    }
-
-    public function teams()
-    {
-        return $this->belongsToMany(Team::class, 'team_members')->withPivot('assigned_at');
     }
 
     /*
@@ -82,25 +87,11 @@ class Manager extends User
 
     public function hasEmployee(Employee $employee)
     {
-        return $this->getEmployees()->pluck('id')->contains($employee->id);
+        return $this->employees->contains($employee);
     }
 
     public function doesntHaveEmployee(Employee $employee)
     {
         return ! $this->hasEmployee($employee);
-    }
-
-    /*
-     * Getters
-     * */
-
-    public function getEmployees()
-    {
-        return $this->ownedTeams->merge($this->teams)->unique('id', true)
-            ->map(function ($team) {
-                return $team->employees;
-            })
-            ->flatten()
-            ->unique('id', true);
     }
 }

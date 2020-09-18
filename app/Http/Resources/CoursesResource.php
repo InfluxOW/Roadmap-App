@@ -60,7 +60,7 @@ class CoursesResource extends JsonResource
 
         if ($user->isManager()) {
             return $this->completions
-                ->whereIn('employee_id', $user->getEmployees()->pluck('id'))
+                ->whereIn('employee_id', $user->employees->pluck('id'))
                 ->map(fn($completion) => $completion->employee);
         }
 

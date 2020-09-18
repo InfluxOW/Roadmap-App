@@ -19,7 +19,6 @@ class EmployeeDashboardTest extends TestCase
     /** @test */
     public function an_employee_can_view_his_dashboard()
     {
-        $this->withoutExceptionHandling();
         $employee = Employee::first();
 
         $this->actingAs($employee, 'sanctum')
@@ -69,11 +68,9 @@ class EmployeeDashboardTest extends TestCase
     public function a_manager_can_view_his_subordinates_dashboard()
     {
         $manager = Manager::first();
-        $employee = Employee::first();
+        $employee = $manager->employees->first();
 
-        $this->assertTrue(
-            $manager->getEmployees()->pluck('id')->contains($employee->id)
-        );
+        $this->assertTrue($manager->hasEmployee($employee));
 
         $this->actingAs($employee, 'sanctum')
             ->get(route('dashboard.employee', $employee))
@@ -116,9 +113,7 @@ class EmployeeDashboardTest extends TestCase
         $manager = Manager::all()->third();
         $employee = Employee::first();
 
-        $this->assertFalse(
-            $manager->getEmployees()->pluck('id')->contains($employee->id)
-        );
+        $this->assertFalse($manager->hasEmployee($employee));
 
         $this->actingAs($manager, 'sanctum')
             ->get(route('dashboard.employee', $employee))

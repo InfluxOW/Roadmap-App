@@ -26,13 +26,12 @@ class ManagerTest extends TestCase
     public function it_may_own_many_teams()
     {
         $manager = Manager::factory()->has(
-            Team::factory()->count($count = 3),
-            'ownedTeams'
+            Team::factory()->count($count = 3)
         )->create();
 
-        $this->assertTrue($manager->ownedTeams->contains(Team::first()));
-        $this->assertInstanceOf(Team::class, $manager->ownedTeams->first());
-        $this->assertCount($count, $manager->ownedTeams);
+        $this->assertTrue($manager->teams->contains(Team::first()));
+        $this->assertInstanceOf(Team::class, $manager->teams->first());
+        $this->assertCount($count, $manager->teams);
     }
 
     /** @test */
@@ -60,41 +59,20 @@ class ManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_may_belong_to_many_teams()
-    {
-        $manager = Manager::factory()->hasAttached(
-            Team::factory()->count($count = 3),
-            ['assigned_at' => now()]
-        )->create();
-
-        $this->assertTrue($manager->teams->contains(Team::first()));
-        $this->assertInstanceOf(Team::class, $manager->teams->first());
-        $this->assertCount($count, $manager->teams);
-    }
-
-    /** @test */
     public function it_knows_all_its_employees()
     {
         $manager = Manager::factory()
             ->has(
-                Team::factory()->count(1)->hasAttached(
+                Team::factory()->hasAttached(
                     Employee::factory()->count(3),
                     ['assigned_at' => now()]
-                ),
-                'ownedTeams'
-            )
-            ->hasAttached(
-                Team::factory()->count(1)->hasAttached(
-                    Employee::factory()->count(3),
-                    ['assigned_at' => now()]
-                ),
-                ['assigned_at' => now()]
+                )
             )
             ->create();
 
         $this->assertCount(
-            $manager->ownedTeams->first()->employees->count() + $manager->teams->first()->employees->count(),
-            $manager->getEmployees()
+            $manager->teams->first()->employees->count(),
+            $manager->employees
         );
     }
 }

@@ -118,6 +118,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function a_manager_can_view_a_specific_course()
     {
+        $this->withoutExceptionHandling();
         $this->actingAs($this->manager, 'sanctum')
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()

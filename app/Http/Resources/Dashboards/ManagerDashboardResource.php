@@ -13,7 +13,7 @@ class ManagerDashboardResource extends JsonResource
             'user' => new UsersResource($this->resource),
 //            'teams' => $this->teams->pluck('name'),
 //            'owned_teams' => $this->ownedTeams->pluck('name'),
-            'employees' => EmployeeDashboardResource::collection($this->getEmployees()),
+            'employees' => EmployeeDashboardResource::collection($this->employees),
         ];
     }
 }
