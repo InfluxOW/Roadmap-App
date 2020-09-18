@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     /*
      * Courses
      *  */
-    Route::apiResource('courses', Api\CoursesController::class)->parameters(['courses' => 'course:slug']);
+    Route::apiResource('courses', Api\CoursesController::class)->parameters(['courses' => 'course:slug'])->only('index', 'show');
     Route::post('courses/suggestions', [Api\CoursesController::class, 'suggest'])->name('courses.suggest');
     Route::post('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'store'])->name('courses.complete');
     Route::put('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'update'])->name('completions.update');
@@ -52,6 +52,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('dashboard/managers/{manager:username}', Api\Dashboards\ManagerDashboardController::class)->name('dashboard.manager');
 });
 
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    Route::apiResource('courses', Api\Admin\CoursesController::class)->parameters(['courses' => 'course:slug'])->only('store', 'update', 'destroy');
+});
 
 //GET /profiles/{user:username} - для разрабов и менеджеров
 //профили пользователей с общей информацией

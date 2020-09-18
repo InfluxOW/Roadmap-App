@@ -45,11 +45,11 @@ class CoursesResource extends JsonResource
         }
 
         if ($request->is('api/courses/*') || $request->is('api/courses')) {
-            $attributes['completed_by'] = UsersResource::collection($this->completedBy());
+            $attributes['technologies'] = $this->technologies->pluck('name');
         }
 
         if ($request->is('api/courses/*') || $request->is('api/courses')) {
-            $attributes['technologies'] = $this->technologies->pluck('name');
+            $attributes['completed_by'] = UsersResource::collection($this->completedBy());
         }
 
         return $attributes;

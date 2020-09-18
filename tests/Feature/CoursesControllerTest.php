@@ -39,58 +39,17 @@ class CoursesControllerTest extends TestCase
         $this->get(route('courses.show', $this->courses->first()))
             ->assertRedirect(route('login'));
 
-        $this->post(route('courses.store'), $this->attributes)
-            ->assertRedirect(route('login'));
-
         $this->post(route('courses.suggest'), ['source' => 'http://test.com'])
             ->assertRedirect(route('login'));
-
-        $this->patch(route('courses.update', $this->courses->first()), $this->attributes)
-            ->assertRedirect(route('login'));
-
-        $this->delete(route('courses.update', $this->courses->first()), $this->attributes)
-            ->assertRedirect(route('login'));
     }
 
     /** @test */
-    public function an_employee_cannot_perform_any_course_crud_actions()
+    public function an_employee_cannot_view_courses()
     {
         $this->actingAs($this->employee, 'sanctum')
             ->get(route('courses.index'))
             ->assertForbidden();
-
-        $this->actingAs($this->employee, 'sanctum')
-            ->get(route('courses.show', $this->courses->first()))
-            ->assertForbidden();
-
-        $this->actingAs($this->employee, 'sanctum')
-            ->post(route('courses.store'), $this->attributes)
-            ->assertForbidden();
-
-        $this->actingAs($this->employee, 'sanctum')
-            ->patch(route('courses.update', $this->courses->first()), $this->attributes)
-            ->assertForbidden();
-
-        $this->actingAs($this->employee, 'sanctum')
-            ->delete(route('courses.update', $this->courses->first()), $this->attributes)
-            ->assertForbidden();
     }
-
-    /** @test */
-    public function an_admin_can_view_courses()
-    {
-        $this->withoutExceptionHandling();
-        $this->actingAs($this->admin, 'sanctum')
-            ->get(route('courses.index'))
-            ->assertOk()
-            ->assertJsonCount($this->courses->count(), 'data')
-            ->assertJsonStructure([
-                'data' => [
-                    '*' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating']
-                ]
-            ]);
-    }
-
 
     /** @test */
     public function a_manager_can_view_courses()
@@ -107,12 +66,11 @@ class CoursesControllerTest extends TestCase
     }
 
     /** @test */
-    public function an_admin_can_view_a_specific_course()
+    public function an_employee_cannot_view_a_specific_course()
     {
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->employee, 'sanctum')
             ->get(route('courses.show', $this->courses->first()))
-            ->assertOk()
-            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
+            ->assertForbidden();
     }
 
     /** @test */
@@ -123,63 +81,6 @@ class CoursesControllerTest extends TestCase
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
             ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
-    }
-
-    /** @test */
-    public function an_admin_can_create_a_new_course()
-    {
-        $this->actingAs($this->admin, 'sanctum')
-            ->post(route('courses.store'), $this->attributes)
-            ->assertCreated();
-
-        $this->assertDatabaseCount('courses', $this->courses->count() + 1);
-        $this->assertDatabaseHas('courses', $this->attributes);
-    }
-
-    /** @test */
-    public function a_manager_cannot_create_a_new_course()
-    {
-        $this->actingAs($this->manager, 'sanctum')
-            ->post(route('courses.store'), $this->attributes)
-            ->assertForbidden();
-    }
-
-    /** @test */
-    public function an_admin_can_update_a_specific_course()
-    {
-        $this->actingAs($this->admin, 'sanctum')
-            ->patch(route('courses.update', $this->courses->first()), $this->attributes)
-            ->assertOk();
-
-        $this->assertDatabaseHas('courses', $this->attributes);
-    }
-
-    /** @test */
-    public function a_manager_cannot_update_a_course()
-    {
-        $this->actingAs($this->manager, 'sanctum')
-            ->patch(route('courses.update', $this->courses->first()), $this->attributes)
-            ->assertForbidden();
-    }
-
-
-    /** @test */
-    public function an_admin_can_delete_a_specific_course()
-    {
-        $course = $this->courses->first();
-        $this->actingAs($this->admin, 'sanctum')
-            ->delete(route('courses.destroy', $course))
-            ->assertNoContent();
-
-        $this->assertDatabaseMissing('courses', ['id' => $course->id]);
-    }
-
-    /** @test */
-    public function a_manager_cannot_delete_a_course()
-    {
-        $this->actingAs($this->manager, 'sanctum')
-            ->delete(route('courses.update', $this->courses->first()))
-            ->assertForbidden();
     }
 
     /** @test */

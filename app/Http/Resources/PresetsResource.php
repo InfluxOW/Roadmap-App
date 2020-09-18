@@ -22,8 +22,7 @@ class PresetsResource extends JsonResource
             ),
             'courses' => $this->courses(),
             'assigned_to' => $this->when(
-                ($request->is('api/presets/*') || $request->is('api/presets')) &&
-                (Auth::user()->isManager() || Auth::user()->isAdmin()),
+                ($request->is('api/presets') || $request->is('api/presets/*')),
                 UsersResource::collection($this->assignedTo())
             )
         ];

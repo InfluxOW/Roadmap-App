@@ -39,15 +39,6 @@ class CoursesController extends Controller
         return new CoursesResource($course);
     }
 
-    public function store(CourseRequest $request)
-    {
-        $this->authorize(Course::class);
-
-        $course = $this->repository->store($request);
-
-        return new CoursesResource($course);
-    }
-
     public function suggest(SuggestCourseRequest $request)
     {
         $this->authorize('suggestCourse', User::class);
@@ -55,23 +46,5 @@ class CoursesController extends Controller
         ProcessSuggestedCourse::dispatch($request->source);
 
         return response(['message' => 'Course has been suggested. Please, wait until we process it.'], 200);
-    }
-
-    public function update(CourseRequest $request, Course $course)
-    {
-        $this->authorize($course);
-
-        $course->update($request->validated());
-
-        return new CoursesResource($course);
-    }
-
-    public function destroy(Course $course)
-    {
-        $this->authorize($course);
-
-        $course->delete();
-
-        return response()->noContent();
     }
 }

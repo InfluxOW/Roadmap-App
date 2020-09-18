@@ -26,19 +26,4 @@ class CoursesPolicy
     {
         return $user->isManager();
     }
-
-    public function create(User $user)
-    {
-        return false;
-    }
-
-    public function update(User $user, Course $course)
-    {
-        return false;
-    }
-
-    public function delete(User $user, Course $course)
-    {
-        return false;
-    }
 }

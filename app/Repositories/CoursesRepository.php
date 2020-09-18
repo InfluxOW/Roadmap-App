@@ -22,11 +22,4 @@ class CoursesRepository
     {
         return Course::whereSlug($request->route('course'))->with(self::WITH)->firstOrFail();
     }
-
-    public function store(Request $request)
-    {
-        return $request->user()->isAdmin() ?
-            Course::create($request->validated()) :
-            $request->user()->courses()->create($request->validated());
-    }
 }
