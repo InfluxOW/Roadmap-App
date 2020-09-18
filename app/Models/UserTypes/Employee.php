@@ -47,6 +47,16 @@ class Employee extends User
         );
     }
 
+    public function courses()
+    {
+        return $this->hasManyDeep(
+            Course::class,
+            ['employee_roadmaps', Preset::class, 'preset_courses'],
+            ['employee_id', 'id', 'preset_id'],
+            ['id', 'preset_id', 'id']
+        )->distinct();
+    }
+
     public function directions()
     {
         return $this->belongsToMany(DevelopmentDirection::class, 'employee_development_directions', 'employee_id');

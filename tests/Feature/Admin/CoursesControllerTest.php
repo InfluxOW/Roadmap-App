@@ -28,7 +28,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_view_courses()
     {
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->admin)
             ->get(route('courses.index'))
             ->assertOk()
             ->assertJsonCount($this->courses->count(), 'data')
@@ -42,7 +42,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_view_a_specific_course()
     {
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->admin)
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
             ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
@@ -51,7 +51,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_create_a_new_course()
     {
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->admin)
             ->post(route('courses.store'), $this->attributes)
             ->assertCreated();
 
@@ -62,7 +62,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_update_a_specific_course()
     {
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->admin)
             ->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertOk();
 
@@ -73,7 +73,7 @@ class CoursesControllerTest extends TestCase
     public function an_admin_can_delete_a_specific_course()
     {
         $course = $this->courses->first();
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->admin)
             ->delete(route('courses.destroy', $course))
             ->assertNoContent();
 

@@ -31,22 +31,9 @@ class CoursesControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_guest_cannot_perform_any_actions()
-    {
-        $this->get(route('courses.index'))
-            ->assertRedirect(route('login'));
-
-        $this->get(route('courses.show', $this->courses->first()))
-            ->assertRedirect(route('login'));
-
-        $this->post(route('courses.suggest'), ['source' => 'http://test.com'])
-            ->assertRedirect(route('login'));
-    }
-
-    /** @test */
     public function an_employee_cannot_view_courses()
     {
-        $this->actingAs($this->employee, 'sanctum')
+        $this->actingAs($this->employee)
             ->get(route('courses.index'))
             ->assertForbidden();
     }
@@ -54,7 +41,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function a_manager_can_view_courses()
     {
-        $this->actingAs($this->manager, 'sanctum')
+        $this->actingAs($this->manager)
             ->get(route('courses.index'))
             ->assertOk()
             ->assertJsonCount($this->courses->count(), 'data')
@@ -68,7 +55,7 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function an_employee_cannot_view_a_specific_course()
     {
-        $this->actingAs($this->employee, 'sanctum')
+        $this->actingAs($this->employee)
             ->get(route('courses.show', $this->courses->first()))
             ->assertForbidden();
     }
@@ -77,7 +64,7 @@ class CoursesControllerTest extends TestCase
     public function a_manager_can_view_a_specific_course()
     {
         $this->withoutExceptionHandling();
-        $this->actingAs($this->manager, 'sanctum')
+        $this->actingAs($this->manager)
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
             ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
@@ -89,15 +76,15 @@ class CoursesControllerTest extends TestCase
         Bus::fake();
         $course = ['source' => 'http://test.com'];
 
-        $this->actingAs($this->employee, 'sanctum')
+        $this->actingAs($this->employee)
             ->post(route('courses.suggest'), $course)
             ->assertOk();
 
-        $this->actingAs($this->manager, 'sanctum')
+        $this->actingAs($this->manager)
             ->post(route('courses.suggest'), $course)
             ->assertOk();
 
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->admin)
             ->post(route('courses.suggest'), $course)
             ->assertOk();
     }
@@ -108,7 +95,7 @@ class CoursesControllerTest extends TestCase
         Bus::fake();
         $course = ['source' => 'http://test.com'];
 
-        $this->actingAs($this->employee, 'sanctum')
+        $this->actingAs($this->employee)
             ->post(route('courses.suggest'), $course)
             ->assertOk();
 

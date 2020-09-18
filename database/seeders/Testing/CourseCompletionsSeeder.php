@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\Local;
+namespace Database\Seeders\Testing;
 
 use App\Models\CourseCompletion;
 use App\Models\UserTypes\Employee;

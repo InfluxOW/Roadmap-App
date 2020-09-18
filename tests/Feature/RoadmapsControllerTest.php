@@ -38,23 +38,13 @@ class RoadmapsControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_guest_cannot_perform_any_actions()
-    {
-        $this->post(route('roadmaps.store'), $this->attributes)
-            ->assertRedirect(route('login'));
-
-        $this->delete(route('roadmaps.destroy', $this->attributes))
-            ->assertRedirect(route('login'));
-    }
-
-    /** @test */
     public function an_employee_cannot_perform_any_actions()
     {
-        $this->actingAs($this->employee, 'sanctum')
+        $this->actingAs($this->employee)
             ->post(route('roadmaps.store'), $this->attributes)
             ->assertForbidden();
 
-        $this->actingAs($this->employee, 'sanctum')
+        $this->actingAs($this->employee)
             ->delete(route('roadmaps.destroy', $this->attributes))
             ->assertForbidden();
     }
@@ -62,11 +52,11 @@ class RoadmapsControllerTest extends TestCase
     /** @test */
     public function an_admin_cannot_perform_any_actions()
     {
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->admin)
             ->post(route('roadmaps.store'), $this->attributes)
             ->assertForbidden();
 
-        $this->actingAs($this->admin, 'sanctum')
+        $this->actingAs($this->admin)
             ->delete(route('roadmaps.destroy', $this->attributes))
             ->assertForbidden();
     }
@@ -74,7 +64,7 @@ class RoadmapsControllerTest extends TestCase
     /** @test */
     public function a_manager_can_create_a_roadmap_for_the_employee()
     {
-        $this->actingAs($this->manager, 'sanctum')
+        $this->actingAs($this->manager)
             ->post(route('roadmaps.store'), $this->attributes)
             ->assertCreated();
 
@@ -93,7 +83,7 @@ class RoadmapsControllerTest extends TestCase
     {
         $manager = Manager::factory()->create();
 
-        $this->actingAs($manager, 'sanctum')
+        $this->actingAs($manager)
             ->post(route('roadmaps.store'), $this->attributes)
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -103,7 +93,7 @@ class RoadmapsControllerTest extends TestCase
     {
         $this->manager->createRoadmap($this->preset, $this->employee);
 
-        $this->actingAs($this->manager, 'sanctum')
+        $this->actingAs($this->manager)
             ->delete(route('roadmaps.destroy', $this->attributes))
             ->assertNoContent();
 
@@ -123,7 +113,7 @@ class RoadmapsControllerTest extends TestCase
         $this->manager->createRoadmap($this->preset, $this->employee);
         $manager = Manager::factory()->create();
 
-        $this->actingAs($manager, 'sanctum')
+        $this->actingAs($manager)
             ->delete(route('roadmaps.destroy', $this->attributes))
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -140,7 +130,7 @@ class RoadmapsControllerTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->manager, 'sanctum')
+        $this->actingAs($this->manager)
             ->delete(route('roadmaps.destroy', $this->attributes))
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }

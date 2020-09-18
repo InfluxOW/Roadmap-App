@@ -9,7 +9,7 @@ use App\Models\UserTypes\Manager;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 
-class RouteWithAdminMiddlewareCanOnlyBeReachedByAdmins extends TestCase
+class RouteWithAdminMiddlewareCanOnlyBeReachedByAdminsTest extends TestCase
 {
     public $employee;
     public $manager;

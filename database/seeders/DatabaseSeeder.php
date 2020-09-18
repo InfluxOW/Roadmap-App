@@ -2,22 +2,9 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\Local\CompaniesSeeder;
-use Database\Seeders\Local\CourseCompletionsSeeder;
-use Database\Seeders\Local\CoursesSeeder;
-use Database\Seeders\Local\CourseTechnologiesSeeder;
-use Database\Seeders\Local\DevelopmentDirectionsSeeder;
-use Database\Seeders\Local\EmployeeDevelopmentDirectionsSeeder;
-use Database\Seeders\Local\EmployeeLevelsSeeder;
-use Database\Seeders\Local\EmployeeRoadmapsSeeder;
-use Database\Seeders\Local\EmployeeTechnologiesSeeder;
-use Database\Seeders\Local\PresetCoursesSeeder;
-use Database\Seeders\Local\PresetsSeeder;
-use Database\Seeders\Local\TeamMembersSeeder;
-use Database\Seeders\Local\TeamsSeeder;
-use Database\Seeders\Local\TechnologiesSeeder;
-use Database\Seeders\Local\TechnologyDevelopmentDirectionsSeeder;
-use Database\Seeders\Local\UsersSeeder;
+use Database\Seeders\Local;
+use Database\Seeders\Testing;
+use Database\Seeders\Production;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,31 +17,51 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         switch (app('env')) {
-//            case 'production':
-//                $this->call([
-//                    SkillsSeeder::class,
-//                    EmployeeLevelsSeeder::class,
-//                    CoursesSeeder::class
-//                ]);
-//                break;
-            default:
+            case 'production':
                 $this->call([
-                    EmployeeLevelsSeeder::class,
-                    DevelopmentDirectionsSeeder::class,
-                    CompaniesSeeder::class,
-                    UsersSeeder::class,
-                    TeamsSeeder::class,
-                    TechnologiesSeeder::class,
-                    CoursesSeeder::class,
-                    PresetsSeeder::class,
-                    PresetCoursesSeeder::class,
-                    TeamMembersSeeder::class,
-                    EmployeeRoadmapsSeeder::class,
-                    CourseTechnologiesSeeder::class,
-                    TechnologyDevelopmentDirectionsSeeder::class,
-                    EmployeeDevelopmentDirectionsSeeder::class,
-                    EmployeeTechnologiesSeeder::class,
-                    CourseCompletionsSeeder::class
+                    Production\SkillsSeeder::class,
+                    Production\EmployeeLevelsSeeder::class,
+                    Production\CoursesSeeder::class
+                ]);
+                break;
+            case 'local':
+                $this->call([
+                    Local\EmployeeLevelsSeeder::class,
+                    Local\DevelopmentDirectionsSeeder::class,
+                    Local\CompaniesSeeder::class,
+                    Local\UsersSeeder::class,
+                    Local\TeamsSeeder::class,
+                    Local\TechnologiesSeeder::class,
+                    Local\CoursesSeeder::class,
+                    Local\PresetsSeeder::class,
+                    Local\PresetCoursesSeeder::class,
+                    Local\TeamMembersSeeder::class,
+                    Local\EmployeeRoadmapsSeeder::class,
+                    Local\CourseTechnologiesSeeder::class,
+                    Local\TechnologyDevelopmentDirectionsSeeder::class,
+                    Local\EmployeeDevelopmentDirectionsSeeder::class,
+                    Local\EmployeeTechnologiesSeeder::class,
+                    Local\CourseCompletionsSeeder::class
+                ]);
+                break;
+            case 'testing':
+                $this->call([
+                    Testing\EmployeeLevelsSeeder::class,
+                    Testing\DevelopmentDirectionsSeeder::class,
+                    Testing\CompaniesSeeder::class,
+                    Testing\UsersSeeder::class,
+                    Testing\TeamsSeeder::class,
+                    Testing\TechnologiesSeeder::class,
+                    Testing\CoursesSeeder::class,
+                    Testing\PresetsSeeder::class,
+                    Testing\PresetCoursesSeeder::class,
+                    Testing\TeamMembersSeeder::class,
+                    Testing\EmployeeRoadmapsSeeder::class,
+                    Testing\CourseTechnologiesSeeder::class,
+                    Testing\TechnologyDevelopmentDirectionsSeeder::class,
+                    Testing\EmployeeDevelopmentDirectionsSeeder::class,
+                    Testing\EmployeeTechnologiesSeeder::class,
+                    Testing\CourseCompletionsSeeder::class
                 ]);
                 break;
         }

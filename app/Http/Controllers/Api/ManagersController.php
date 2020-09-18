@@ -19,9 +19,9 @@ class ManagersController extends Controller
         }
     }
 
-    public function show(Manager $manager, Request $request)
+    public function show(Manager $manager)
     {
-        $this->authorize('viewManager', $request->user());
+        $this->authorize('viewManager', $manager);
 
         return new UsersResource($manager);
     }
