@@ -21,10 +21,8 @@ class EmployeesControllerTest extends TestCase
     {
         $manager = Manager::first();
 
-        $response = $this->actingAs($manager)
-            ->get(route('employees.index'));
-
-        $response->assertOk()
+        $this->actingAs($manager)
+            ->get(route('employees.index'))->assertOk()
             ->assertJsonCount($manager->employees->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
@@ -32,12 +30,8 @@ class EmployeesControllerTest extends TestCase
                         'name', 'username', 'email', 'role', 'sex', 'birthday', 'position', 'teams', 'technologies', 'development_directions'
                     ]
                 ]
-            ]);
-
-        $this->assertEquals(
-            array_column(json_decode($response->content(), true)['data'], 'name'),
-            $manager->employees->pluck('name')->toArray()
-        );
+            ])
+            ->assertJson(['data' => $manager->employees->map->only('name')->toArray()]);
     }
 
     /** @test */
@@ -46,20 +40,15 @@ class EmployeesControllerTest extends TestCase
         $manager = Manager::first();
         $employee = $manager->employees->first();
 
-        $response = $this->actingAs($manager)
-            ->get(route('employees.show', $employee));
-
-        $response->assertOk()
+        $this->actingAs($manager)
+            ->get(route('employees.show', $employee))
+            ->assertOk()
             ->assertJsonStructure([
                 'data' => [
                     'name', 'username', 'email', 'role', 'sex', 'birthday', 'position', 'teams', 'technologies', 'development_directions'
                 ]
-            ]);
-
-        $this->assertEquals(
-            json_decode($response->content(), true)['data']['name'],
-            $employee->name
-        );
+            ])
+            ->assertJsonFragment(['name' => $employee->name]);
     }
 
     /** @test */
@@ -86,20 +75,15 @@ class EmployeesControllerTest extends TestCase
     {
         $employee = Employee::first();
 
-        $response = $this->actingAs($employee)
-            ->get(route('employees.show', $employee));
-
-        $response->assertOk()
+        $this->actingAs($employee)
+            ->get(route('employees.show', $employee))
+            ->assertOk()
             ->assertJsonStructure([
                 'data' => [
                     'name', 'username', 'email', 'role', 'sex', 'birthday', 'position', 'teams', 'technologies', 'development_directions'
                 ]
-            ]);
-
-        $this->assertEquals(
-            json_decode($response->content(), true)['data']['name'],
-            $employee->name
-        );
+            ])
+            ->assertJsonFragment(['name' => $employee->name]);
     }
 
     /** @test */
@@ -115,10 +99,9 @@ class EmployeesControllerTest extends TestCase
     {
         $admin = Admin::factory()->create();
 
-        $response = $this->actingAs($admin)
-            ->get(route('employees.index'));
-
-        $response->assertOk()
+        $this->actingAs($admin)
+            ->get(route('employees.index'))
+            ->assertOk()
             ->assertJsonCount(Employee::count(), 'data')
             ->assertJsonStructure([
                 'data' => [
@@ -127,11 +110,6 @@ class EmployeesControllerTest extends TestCase
                     ]
                 ]
             ]);
-
-        $this->assertEquals(
-            array_column(json_decode($response->content(), true)['data'], 'name'),
-            Employee::all()->pluck('name')->toArray()
-        );
     }
 
     /** @test */
@@ -140,19 +118,14 @@ class EmployeesControllerTest extends TestCase
         $admin = Admin::factory()->create();
         $employee = Employee::first();
 
-        $response = $this->actingAs($admin)
-            ->get(route('employees.show', $employee));
-
-        $response->assertOk()
+        $this->actingAs($admin)
+            ->get(route('employees.show', $employee))
+            ->assertOk()
             ->assertJsonStructure([
                 'data' => [
                     'name', 'username', 'email', 'role', 'sex', 'birthday', 'position', 'teams', 'technologies', 'development_directions', 'company'
                 ]
-            ]);
-
-        $this->assertEquals(
-            json_decode($response->content(), true)['data']['name'],
-            $employee->name
-        );
+            ])
+            ->assertJsonFragment(['name' => $employee->name]);
     }
 }

@@ -41,19 +41,15 @@ class ManagersControllerTest extends TestCase
     {
         $manager = Manager::first();
 
-        $response = $this->actingAs($manager)
-            ->get(route('managers.show', $manager));
-
-        $response->assertOk()
+        $this->actingAs($manager)
+            ->get(route('managers.show', $manager))
+            ->assertOk()
             ->assertJsonStructure([
                 'data' => [
                     'name', 'username', 'email', 'role', 'sex', 'birthday', 'position', 'teams'
                 ]
-            ]);
-        $this->assertEquals(
-            json_decode($response->content(), true)['data']['name'],
-            $manager->name
-        );
+            ])
+            ->assertJsonFragment(['name' => $manager->name]);
     }
 
     /** @test */
@@ -82,18 +78,14 @@ class ManagersControllerTest extends TestCase
         $manager = Manager::first();
         $admin = Admin::factory()->create();
 
-        $response = $this->actingAs($admin)
-            ->get(route('managers.show', $manager));
-
-        $response->assertOk()
+        $this->actingAs($admin)
+            ->get(route('managers.show', $manager))
+            ->assertOk()
             ->assertJsonStructure([
                 'data' => [
                     'name', 'username', 'email', 'role', 'sex', 'birthday', 'position', 'teams'
                 ]
-            ]);
-        $this->assertEquals(
-            json_decode($response->content(), true)['data']['name'],
-            $manager->name
-        );
+            ])
+            ->assertJsonFragment(['name' => $manager->name]);
     }
 }

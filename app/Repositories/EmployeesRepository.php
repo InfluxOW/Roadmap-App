@@ -33,7 +33,7 @@ class EmployeesRepository
 
         return  QueryBuilder::for($query)
             ->allowedFilters([
-                'name',
+                AllowedFilter::exact('name', 'users.name'),
                 'username',
                 'email',
                 'sex',
