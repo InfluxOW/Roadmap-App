@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
      * Employees
      * */
     Route::get('employees', [Api\EmployeesController::class, 'index'])->name('employees.index');
+    Route::get('employees/{employee:username}', [Api\EmployeesController::class, 'show'])->name('employees.show');
 
     /*
      * Managers

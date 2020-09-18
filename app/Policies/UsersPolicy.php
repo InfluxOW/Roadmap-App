@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Database\Eloquent\Model;
 
 class UsersPolicy
 {
@@ -39,9 +38,16 @@ class UsersPolicy
         return $user->isManager();
     }
 
-    public function viewEmployees(User $user)
+    public function viewEmployees()
     {
-        return $user->isManager() || $user->isAdmin();
+        return true;
+    }
+
+    public function viewEmployee(User $user, Employee $employee)
+    {
+        return $user->is($employee) ||
+            ($user->isManager() && $user->hasEmployee($employee)) ||
+            $user->isAdmin();
     }
 
     public function viewManagers(User $user)
