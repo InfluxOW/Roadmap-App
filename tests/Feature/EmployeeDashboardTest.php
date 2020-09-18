@@ -26,7 +26,7 @@ class EmployeeDashboardTest extends TestCase
             ->assertOk()
             ->assertJsonStructure([
                 'data' => [
-                    'user' => ['name', 'username', 'email', 'role', 'company', 'sex', 'birthday', 'position'],
+                    'user' => ['name', 'username', 'email', 'role', 'sex', 'birthday', 'position'],
                     'teams' => ['*' => []],
                     'roadmaps' => [
                         '*' => [
@@ -77,7 +77,7 @@ class EmployeeDashboardTest extends TestCase
             ->assertOk()
             ->assertJsonStructure([
                 'data' => [
-                    'user' => ['name', 'username', 'email', 'role', 'company', 'sex', 'birthday', 'position'],
+                    'user' => ['name', 'username', 'email', 'role', 'sex', 'birthday', 'position'],
                     'teams' => ['*' => []],
                     'roadmaps' => [
                         '*' => [
@@ -131,7 +131,7 @@ class EmployeeDashboardTest extends TestCase
             ->assertOk()
             ->assertJsonStructure([
                 'data' => [
-                    'user' => ['name', 'username', 'email', 'role', 'company', 'sex', 'birthday', 'position'],
+                    'user' => ['name', 'username', 'email', 'role', 'sex', 'birthday', 'position'],
                     'teams' => ['*' => []],
                     'roadmaps' => [
                         '*' => [

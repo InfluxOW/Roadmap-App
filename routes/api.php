@@ -46,6 +46,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('roadmaps/{preset:slug}/{employee:username}', [Api\RoadmapsController::class, 'destroy'])->name('roadmaps.destroy');
 
     /*
+     * Employees
+     * */
+    Route::get('employees', [Api\EmployeesController::class, 'index'])->name('employees.index');
+
+    /*
+     * Managers
+     * */
+    Route::get('managers', [Api\ManagersController::class, 'index'])->name('managers.index');
+    Route::get('managers/{manager:username}', [Api\ManagersController::class, 'show'])->name('managers.show');
+
+    /*
      * Dashboards
      * */
     Route::get('dashboard/employees/{employee:username}', Api\Dashboards\EmployeeDashboardController::class)->name('dashboard.employee');

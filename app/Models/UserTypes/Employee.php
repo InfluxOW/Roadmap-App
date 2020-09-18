@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Course;
 use App\Models\CourseCompletion;
 use App\Models\DevelopmentDirection;
+use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\Team;
 use App\Models\Technology;
@@ -34,6 +35,16 @@ class Employee extends User
     public function roadmaps()
     {
         return $this->hasMany(Roadmap::class, 'employee_id');
+    }
+
+    public function presets()
+    {
+        return $this->hasManyDeep(
+            Preset::class,
+            [Roadmap::class],
+            ['employee_id', 'id'],
+            ['id', 'preset_id']
+        );
     }
 
     public function directions()

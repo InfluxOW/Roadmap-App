@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 /**
  *
@@ -18,24 +19,32 @@ class UsersResource extends JsonResource
 {
     public function toArray($request)
     {
-        return [
+        $attributes = [
             'name' => $this->name,
             'username' => $this->username,
+            'company' => $this->when($request->user()->isAdmin(), $this->company->name),
             'email' => $this->email,
             'role' => $this->role,
-            'company' => $this->company->name,
             'sex' => $this->when(isset($this->sex), $this->sex),
             'birthday' => $this->when(isset($this->birthday), $this->birthday->format('d-M-Y')),
             'position' => $this->when(isset($this->position), $this->position),
-            'technologies' => $this->when($this->isEmployee(), function () {
-                return $this->technologies->pluck('name');
-            }),
-            'development_directions' => $this->when($this->isEmployee(), function () {
-                return $this->directions->pluck('name');
-            }),
-            'teams' => $this->when($this->isEmployee(), function () {
-                return $this->teams->pluck('name');
-            }),
+            'teams' => $this->teams->pluck('name'),
+            'technologies' => $this->when(
+                $this->isEmployee(),
+                function () {
+                    return $this->technologies->pluck('name');
+                }
+            ),
+            'development_directions' => $this->when(
+                $this->isEmployee(),
+                function () {
+                    return $this->directions->pluck('name');
+                }
+            ),
         ];
+
+        return $request->show ?
+            Arr::only($attributes, explode(',', $request->show))
+            : $attributes;
     }
 }
