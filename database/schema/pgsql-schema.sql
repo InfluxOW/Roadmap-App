@@ -281,6 +281,40 @@ ALTER SEQUENCE public.failed_jobs_id_seq OWNED BY public.failed_jobs.id;
 
 
 --
+-- Name: jobs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jobs (
+    id bigint NOT NULL,
+    queue character varying(255) NOT NULL,
+    payload text NOT NULL,
+    attempts smallint NOT NULL,
+    reserved_at integer,
+    available_at integer NOT NULL,
+    created_at integer NOT NULL
+);
+
+
+--
+-- Name: jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.jobs_id_seq OWNED BY public.jobs.id;
+
+
+--
 -- Name: migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -583,6 +617,13 @@ ALTER TABLE ONLY public.failed_jobs ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: jobs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jobs ALTER COLUMN id SET DEFAULT nextval('public.jobs_id_seq'::regclass);
+
+
+--
 -- Name: migrations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -625,19 +666,19 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- Name: companies companies_name_unique; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.companies
-    ADD CONSTRAINT companies_name_unique UNIQUE (name);
-
-
---
 -- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: companies companies_slug_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_slug_unique UNIQUE (slug);
 
 
 --
@@ -657,19 +698,19 @@ ALTER TABLE ONLY public.course_technologies
 
 
 --
--- Name: courses courses_name_unique; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.courses
-    ADD CONSTRAINT courses_name_unique UNIQUE (name);
-
-
---
 -- Name: courses courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.courses
     ADD CONSTRAINT courses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: courses courses_slug_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT courses_slug_unique UNIQUE (slug);
 
 
 --
@@ -681,19 +722,19 @@ ALTER TABLE ONLY public.courses
 
 
 --
--- Name: development_directions development_directions_name_unique; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.development_directions
-    ADD CONSTRAINT development_directions_name_unique UNIQUE (name);
-
-
---
 -- Name: development_directions development_directions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.development_directions
     ADD CONSTRAINT development_directions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: development_directions development_directions_slug_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.development_directions
+    ADD CONSTRAINT development_directions_slug_unique UNIQUE (slug);
 
 
 --
@@ -721,19 +762,19 @@ ALTER TABLE ONLY public.employee_development_directions
 
 
 --
--- Name: employee_levels employee_levels_name_unique; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.employee_levels
-    ADD CONSTRAINT employee_levels_name_unique UNIQUE (name);
-
-
---
 -- Name: employee_levels employee_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.employee_levels
     ADD CONSTRAINT employee_levels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: employee_levels employee_levels_slug_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.employee_levels
+    ADD CONSTRAINT employee_levels_slug_unique UNIQUE (slug);
 
 
 --
@@ -774,6 +815,14 @@ ALTER TABLE ONLY public.failed_jobs
 
 ALTER TABLE ONLY public.failed_jobs
     ADD CONSTRAINT failed_jobs_uuid_unique UNIQUE (uuid);
+
+
+--
+-- Name: jobs jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT jobs_pkey PRIMARY KEY (id);
 
 
 --
@@ -825,6 +874,14 @@ ALTER TABLE ONLY public.presets
 
 
 --
+-- Name: presets presets_slug_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.presets
+    ADD CONSTRAINT presets_slug_unique UNIQUE (slug);
+
+
+--
 -- Name: team_members team_members_user_id_team_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -849,11 +906,11 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: technologies technologies_name_unique; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: teams teams_slug_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.technologies
-    ADD CONSTRAINT technologies_name_unique UNIQUE (name);
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_slug_unique UNIQUE (slug);
 
 
 --
@@ -862,6 +919,14 @@ ALTER TABLE ONLY public.technologies
 
 ALTER TABLE ONLY public.technologies
     ADD CONSTRAINT technologies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: technologies technologies_slug_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.technologies
+    ADD CONSTRAINT technologies_slug_unique UNIQUE (slug);
 
 
 --
@@ -978,6 +1043,13 @@ CREATE INDEX employee_technologies_employee_id_index ON public.employee_technolo
 --
 
 CREATE INDEX employee_technologies_technology_id_index ON public.employee_technologies USING btree (technology_id);
+
+
+--
+-- Name: jobs_queue_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX jobs_queue_index ON public.jobs USING btree (queue);
 
 
 --
@@ -1263,3 +1335,4 @@ INSERT INTO public.migrations VALUES (16, '2020_09_07_180958_create_employee_tec
 INSERT INTO public.migrations VALUES (17, '2020_09_09_150026_create_employee_development_directions_table', 1);
 INSERT INTO public.migrations VALUES (18, '2020_09_10_065837_create_technology_development_directions_table', 1);
 INSERT INTO public.migrations VALUES (19, '2020_09_10_070100_create_course_technologies_table', 1);
+INSERT INTO public.migrations VALUES (20, '2020_09_16_143442_create_jobs_table', 1);
