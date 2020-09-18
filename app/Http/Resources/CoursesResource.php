@@ -12,6 +12,7 @@ class CoursesResource extends JsonResource
     {
         $default = [
             'name' => $this->name,
+            'slug' => $this->slug,
             'description' => $this->description,
             'source' => $this->source,
             'level' => $this->level->name,

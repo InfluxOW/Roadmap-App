@@ -27,6 +27,15 @@ class UsersResource extends JsonResource
             'sex' => $this->when(isset($this->sex), $this->sex),
             'birthday' => $this->when(isset($this->birthday), $this->birthday->format('d-M-Y')),
             'position' => $this->when(isset($this->position), $this->position),
+            'technologies' => $this->when($this->isEmployee(), function () {
+                return $this->technologies->pluck('name');
+            }),
+            'development_directions' => $this->when($this->isEmployee(), function () {
+                return $this->directions->pluck('name');
+            }),
+            'teams' => $this->when($this->isEmployee(), function () {
+                return $this->teams->pluck('name');
+            }),
         ];
     }
 }
