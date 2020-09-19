@@ -14,6 +14,7 @@ class RoadmapResource extends JsonResource
                 ->additional(
                     ['employee' => new UserResource($this->employee)]
                 ),
+            'assigned_by' => $this->manager->name,
             'assigned_at' => $this->assigned_at->format('d-M-Y H:i:s T')
         ];
 

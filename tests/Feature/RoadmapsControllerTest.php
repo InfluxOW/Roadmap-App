@@ -161,7 +161,8 @@ class RoadmapsControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'preset',
-                        'assigned_at'
+                        'assigned_at',
+                        'assigned_by'
                     ]
                 ]
             ]);
@@ -187,6 +188,7 @@ class RoadmapsControllerTest extends TestCase
                     '*' => [
                         'preset',
                         'assigned_at',
+                        'assigned_by',
                     ]
                 ]
             ]);
@@ -203,7 +205,8 @@ class RoadmapsControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'preset',
-                        'assigned_at'
+                        'assigned_at',
+                        'assigned_by'
                     ]
                 ]
             ]);
@@ -230,7 +233,8 @@ class RoadmapsControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'preset',
-                        'assigned_at'
+                        'assigned_at',
+                        'assigned_by'
                     ]
                 ]
             ]);
@@ -247,7 +251,8 @@ class RoadmapsControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'preset',
-                        'assigned_at'
+                        'assigned_at',
+                        'assigned_by'
                     ]
                 ]
             ]);

@@ -30,8 +30,11 @@ class RoadmapsRepository
 
     public function show(Request $request)
     {
-        return $request->route('employee')
-            ->roadmaps()
+        $roadmaps = $request->user()->isManager() ?
+            $request->route('employee')->roadmaps()->where('manager_id', $request->user()->id) :
+            $request->route('employee')->roadmaps();
+
+        return $roadmaps
             ->with(self::WITH)
             ->paginate($request->per ?? 20)
             ->appends(request()->query());
