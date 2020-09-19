@@ -17,7 +17,7 @@ class CourseResource extends JsonResource
             'source' => $this->source,
             'level' => $this->level->name,
             'link' => $this->when(
-                ! $request->is('api/courses/*'),
+                ! ($request->is('api/courses/*') || $request->user()->isEmployee()),
                 route('courses.show', ['course' => $this->resource])
             ),
             'average_rating' => $this->average_rating,

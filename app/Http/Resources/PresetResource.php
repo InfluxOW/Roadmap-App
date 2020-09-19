@@ -18,7 +18,7 @@ class PresetResource extends JsonResource
                 return new UserBasicInformationResource($this->manager);
             }),
             'link' => $this->when(
-                ! $request->is('api/presets/*'),
+                ! ($request->is('api/presets/*') || $request->user()->isEmployee()),
                 route('presets.show', ['preset' => $this->resource])
             ),
             'courses' => $this->courses(),
