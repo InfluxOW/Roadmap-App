@@ -1125,16 +1125,16 @@
         },
         {
             "name": "itsgoingd/clockwork",
-            "version": "v4.1.7",
+            "version": "v4.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itsgoingd/clockwork.git",
-                "reference": "49c28d7c43f6021eca4c290f620f13ee7d15f668"
+                "reference": "0dc2e5be39de88b18719bb4f3cdacfa605ad2146"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itsgoingd/clockwork/zipball/49c28d7c43f6021eca4c290f620f13ee7d15f668",
-                "reference": "49c28d7c43f6021eca4c290f620f13ee7d15f668",
+                "url": "https://api.github.com/repos/itsgoingd/clockwork/zipball/0dc2e5be39de88b18719bb4f3cdacfa605ad2146",
+                "reference": "0dc2e5be39de88b18719bb4f3cdacfa605ad2146",
                 "shasum": ""
             },
             "require": {
@@ -1186,20 +1186,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-25T20:05:21+00:00"
+            "time": "2020-09-17T19:21:25+00:00"
         },
         {
             "name": "laravel/framework",
-            "version": "v8.4.0",
+            "version": "v8.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "1c57ab5e375d0a897c22b29e8352453be514131e"
+                "reference": "5a748eecae35fd453e0b1e4d4b6f4fadf0d3e7ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/1c57ab5e375d0a897c22b29e8352453be514131e",
-                "reference": "1c57ab5e375d0a897c22b29e8352453be514131e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/5a748eecae35fd453e0b1e4d4b6f4fadf0d3e7ac",
+                "reference": "5a748eecae35fd453e0b1e4d4b6f4fadf0d3e7ac",
                 "shasum": ""
             },
             "require": {
@@ -1349,7 +1349,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-09-16T16:13:13+00:00"
+            "time": "2020-09-18T21:27:11+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -3047,16 +3047,16 @@
         },
         {
             "name": "swagger-api/swagger-ui",
-            "version": "v3.33.0",
+            "version": "v3.34.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/swagger-api/swagger-ui.git",
-                "reference": "829d87530030bb5bfa24a5093d098c672adfbb9b"
+                "url": "git@github.com:swagger-api/swagger-ui.git",
+                "reference": "c20a8c479eaa7897a2ddabcaf5f75e6d41f4525c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/829d87530030bb5bfa24a5093d098c672adfbb9b",
-                "reference": "829d87530030bb5bfa24a5093d098c672adfbb9b",
+                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/c20a8c479eaa7897a2ddabcaf5f75e6d41f4525c",
+                "reference": "c20a8c479eaa7897a2ddabcaf5f75e6d41f4525c",
                 "shasum": ""
             },
             "type": "library",
@@ -3100,7 +3100,7 @@
                 "swagger",
                 "ui"
             ],
-            "time": "2020-09-10T23:20:14+00:00"
+            "time": "2020-09-18T18:46:18+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -6512,16 +6512,16 @@
         },
         {
             "name": "facade/flare-client-php",
-            "version": "1.3.5",
+            "version": "1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/flare-client-php.git",
-                "reference": "25907a113bfc212a38d458ae365bfb902b4e7fb8"
+                "reference": "451fadf38e9f635e7f8e1f5b3cf5c9eb82f11799"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/25907a113bfc212a38d458ae365bfb902b4e7fb8",
-                "reference": "25907a113bfc212a38d458ae365bfb902b4e7fb8",
+                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/451fadf38e9f635e7f8e1f5b3cf5c9eb82f11799",
+                "reference": "451fadf38e9f635e7f8e1f5b3cf5c9eb82f11799",
                 "shasum": ""
             },
             "require": {
@@ -6534,7 +6534,6 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
-                "larapack/dd": "^1.1",
                 "phpunit/phpunit": "^7.5.16",
                 "spatie/phpunit-snapshot-assertions": "^2.0"
             },
@@ -6570,7 +6569,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-26T18:06:23+00:00"
+            "time": "2020-09-18T06:35:11+00:00"
         },
         {
             "name": "facade/ignition",
@@ -7227,16 +7226,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.2.1",
+            "version": "5.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "d870572532cd70bc3fab58f2e23ad423c8404c44"
+                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/d870572532cd70bc3fab58f2e23ad423c8404c44",
-                "reference": "d870572532cd70bc3fab58f2e23ad423c8404c44",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/069a785b2141f5bcf49f3e353548dc1cce6df556",
+                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556",
                 "shasum": ""
             },
             "require": {
@@ -7275,20 +7274,20 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2020-08-15T11:14:08+00:00"
+            "time": "2020-09-03T19:13:55+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "e878a14a65245fbe78f8080eba03b47c3b705651"
+                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e878a14a65245fbe78f8080eba03b47c3b705651",
-                "reference": "e878a14a65245fbe78f8080eba03b47c3b705651",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
+                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
                 "shasum": ""
             },
             "require": {
@@ -7320,7 +7319,7 @@
                 }
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
-            "time": "2020-06-27T10:12:23+00:00"
+            "time": "2020-09-17T18:55:26+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -7387,16 +7386,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.1.9",
+            "version": "9.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "cf6582906d4b2502c5f4c6be6a3d0b4cd5b3ef7f"
+                "reference": "c9394cb9d07ecfa9351b96f2e296bad473195f4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/cf6582906d4b2502c5f4c6be6a3d0b4cd5b3ef7f",
-                "reference": "cf6582906d4b2502c5f4c6be6a3d0b4cd5b3ef7f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c9394cb9d07ecfa9351b96f2e296bad473195f4d",
+                "reference": "c9394cb9d07ecfa9351b96f2e296bad473195f4d",
                 "shasum": ""
             },
             "require": {
@@ -7456,7 +7455,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-15T06:14:11+00:00"
+            "time": "2020-09-19T05:29:17+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -7788,12 +7787,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "34a7a7aa563809d603e12e34f0608d5f2da94f7f"
+                "reference": "81cb95735a719403eddb77fc78e21362b56d9ea9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/34a7a7aa563809d603e12e34f0608d5f2da94f7f",
-                "reference": "34a7a7aa563809d603e12e34f0608d5f2da94f7f",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/81cb95735a719403eddb77fc78e21362b56d9ea9",
+                "reference": "81cb95735a719403eddb77fc78e21362b56d9ea9",
                 "shasum": ""
             },
             "conflict": {
@@ -7839,8 +7838,8 @@
                 "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1",
                 "dolibarr/dolibarr": "<11.0.4",
                 "dompdf/dompdf": ">=0.6,<0.6.2",
-                "drupal/core": ">=7,<7.72|>=8,<8.8.8|>=8.9,<8.9.1|>=9,<9.0.1",
-                "drupal/drupal": ">=7,<7.72|>=8,<8.8.8|>=8.9,<8.9.1|>=9,<9.0.1",
+                "drupal/core": ">=7,<7.73|>=8,<8.8.10|>=8.9,<8.9.6|>=9,<9.0.6",
+                "drupal/drupal": ">=7,<7.73|>=8,<8.8.10|>=8.9,<8.9.6|>=9,<9.0.6",
                 "endroid/qr-code-bundle": "<3.4.2",
                 "enshrined/svg-sanitize": "<0.13.1",
                 "erusev/parsedown": "<1.7.2",
@@ -7933,6 +7932,7 @@
                 "pusher/pusher-php-server": "<2.2.1",
                 "rainlab/debugbar-plugin": "<3.1",
                 "robrichards/xmlseclibs": "<3.0.4",
+                "sabberworm/php-css-parser": ">=1,<1.0.1|>=2,<2.0.1|>=3,<3.0.1|>=4,<4.0.1|>=5,<5.0.9|>=5.1,<5.1.3|>=5.2,<5.2.1|>=6,<6.0.2|>=7,<7.0.4|>=8,<8.0.1|>=8.1,<8.1.1|>=8.2,<8.2.1|>=8.3,<8.3.1",
                 "sabre/dav": ">=1.6,<1.6.99|>=1.7,<1.7.11|>=1.8,<1.8.9",
                 "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
                 "sensiolabs/connect": "<4.2.3",
@@ -8081,7 +8081,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-15T19:01:50+00:00"
+            "time": "2020-09-18T13:01:53+00:00"
         },
         {
             "name": "scrivo/highlight.php",

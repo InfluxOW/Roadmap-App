@@ -58,10 +58,15 @@ class EmployeesRepository
                         return $query->whereIn('name', (array) $presets);
                     });
                 }),
+                AllowedFilter::callback('courses', function (Builder $query, $courses) {
+                    return $query->whereHas('courses', function (Builder $query) use ($courses) {
+                        return $query->whereIn('courses.name', (array) $courses);
+                    });
+                }),
                 AllowedFilter::callback('completions', function (Builder $query, $courses) {
                     return $query->whereHas('completions', function (Builder $query) use ($courses) {
                         return $query->whereHas('course', function (Builder $query) use ($courses) {
-                            return $query->whereIn('name', (array) $courses);
+                            return $query->whereIn('courses.name', (array) $courses);
                         });
                     });
                 }),
