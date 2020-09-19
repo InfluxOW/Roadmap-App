@@ -16,7 +16,7 @@ class CourseRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'unique:courses,name'],
             'description' => ['required', 'string'],
-            'source' => ['required', 'string', 'url'],
+            'source' => ['required', 'string', 'url', 'unique:courses,source'],
             'employee_level_id' => ['required', 'integer', 'exists:employee_levels,id']
         ];
     }

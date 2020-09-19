@@ -47,7 +47,21 @@ class CoursesControllerTest extends TestCase
             ->assertJsonCount($this->courses->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']
+                    '*' => ['name', 'slug', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']
+                ]
+            ]);
+    }
+
+    /** @test */
+    public function an_admin_can_view_courses()
+    {
+        $this->actingAs($this->admin)
+            ->get(route('courses.index'))
+            ->assertOk()
+            ->assertJsonCount($this->courses->count(), 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => ['name', 'slug', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']
                 ]
             ]);
     }
@@ -63,11 +77,19 @@ class CoursesControllerTest extends TestCase
     /** @test */
     public function a_manager_can_view_a_specific_course()
     {
-        $this->withoutExceptionHandling();
         $this->actingAs($this->manager)
             ->get(route('courses.show', $this->courses->first()))
             ->assertOk()
-            ->assertJsonStructure(['data' => ['name', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
+            ->assertJsonStructure(['data' => ['name', 'slug', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
+    }
+
+    /** @test */
+    public function an_admin_can_view_a_specific_course()
+    {
+        $this->actingAs($this->admin)
+            ->get(route('courses.show', $this->courses->first()))
+            ->assertOk()
+            ->assertJsonStructure(['data' => ['name', 'slug', 'description', 'source', 'level', 'completed_by', 'average_rating', 'technologies']]);
     }
 
     /** @test */

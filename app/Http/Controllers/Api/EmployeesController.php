@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CoursesResource;
-use App\Http\Resources\UsersResource;
+use App\Http\Resources\CourseResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserTypes\Employee;
 use App\Repositories\EmployeesRepository;
@@ -29,13 +29,13 @@ class EmployeesController extends Controller
 
         $users = $this->repository->index($request);
 
-        return UsersResource::collection($users);
+        return UserResource::collection($users);
     }
 
     public function show(Employee $employee, Request $request)
     {
         $this->authorize('viewEmployee', $employee);
 
-        return new UsersResource($employee);
+        return new UserResource($employee);
     }
 }

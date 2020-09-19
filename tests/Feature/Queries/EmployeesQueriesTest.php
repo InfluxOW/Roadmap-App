@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Queries;
 
 use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
 use Tests\TestCase;
 
 class EmployeesQueriesTest extends TestCase
@@ -278,6 +277,26 @@ class EmployeesQueriesTest extends TestCase
         $this->assertEquals(
             $employees,
             collect(json_decode($response->content(), true)['data'])->pluck('completions_count')
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_what_attributes_should_be_returned()
+    {
+        $attributes = "name,username";
+
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['show[user]' => $attributes]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            json_decode($response->content(), true)['data'],
+            $this->manager->employees->map->only(explode(',', $attributes))->toArray()
         );
     }
 }

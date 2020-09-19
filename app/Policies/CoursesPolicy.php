@@ -10,20 +10,27 @@ class CoursesPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user, $ability)
-    {
-        if ($user->isAdmin()) {
-            return true;
-        }
-    }
-
     public function viewAny(User $user)
     {
-        return $user->isManager();
+        return $user->isManager() || $user->isAdmin();
     }
 
     public function view(User $user)
     {
-        return $user->isManager();
+        return $user->isManager() || $user->isAdmin();
+    }
+
+    /*
+     * Courses (Behind The CRUD)
+     * */
+
+    public function manageCompletions(User $user)
+    {
+        return $user->isEmployee();
+    }
+
+    public function suggestCourse()
+    {
+        return true;
     }
 }

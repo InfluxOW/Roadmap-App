@@ -2,25 +2,38 @@
 
 namespace App\Repositories;
 
-use App\Models\Preset;
-use App\Models\UserTypes\Employee;
+use App\Models\Roadmap;
 use Illuminate\Http\Request;
 
 class RoadmapsRepository
 {
-    public function store(Request $request)
-    {
-        $employee = Employee::whereUsername($request->employee)->firstOrFail();
-        $preset = Preset::whereSlug($request->preset)->firstOrFail();
+    private const WITH = [
+        'preset.courses.completions',
+        'preset.courses.level',
+        'preset.courses.technologies',
+        'preset.manager',
+        'preset.roadmaps.employee',
+        'employee',
+    ];
 
-        return $request->user()->createRoadmap($preset, $employee);
+    public function index(Request $request)
+    {
+        $query = $request->user()->isAdmin() ?
+            Roadmap::query() :
+            $request->user()->roadmaps();
+
+        return $query
+                ->with(self::WITH)
+                ->paginate($request->per ?? 20)
+                ->appends(request()->query());
     }
 
-    public function destroy(Request $request)
+    public function show(Request $request)
     {
-        $employee = Employee::whereUsername($request->route('employee'))->firstOrFail();
-        $preset = Preset::whereSlug($request->route('preset'))->firstOrFail();
-
-        return $request->user()->deleteRoadmap($preset, $employee);
+        return $request->route('employee')
+            ->roadmaps()
+            ->with(self::WITH)
+            ->paginate($request->per ?? 20)
+            ->appends(request()->query());
     }
 }

@@ -25,7 +25,7 @@ class PresetsControllerTest extends TestCase
         $this->admin = Admin::factory()->create();
 
         $this->attributes = Preset::factory()->raw();
-        $this->presets = Preset::factory()->count(3)->create();
+        $this->presets = Preset::factory()->for(Manager::factory())->count(3)->create();
     }
 
     /** @test */
@@ -63,19 +63,14 @@ class PresetsControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'name',
+                        'slug',
                         'description',
+                        'creator',
                         'link',
                         'courses' => [
                             '*' => [
                                 '*' => [
-                                    '*' => [
-                                        'name',
-                                        'description',
-                                        'source',
-                                        'level',
-                                        'link',
-                                        'average_rating'
-                                    ]
+                                    '*' => []
                                 ]
                             ]
                         ],
@@ -97,19 +92,14 @@ class PresetsControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'name',
+                        'slug',
                         'description',
+                        'creator',
                         'link',
                         'courses' => [
                             '*' => [
                                 '*' => [
-                                    '*' => [
-                                        'name',
-                                        'description',
-                                        'source',
-                                        'level',
-                                        'link',
-                                        'average_rating'
-                                    ]
+                                    '*' => []
                                 ]
                             ]
                         ],
@@ -128,18 +118,13 @@ class PresetsControllerTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     'name',
+                    'slug',
+                    'creator',
                     'description',
                     'courses' => [
                         '*' => [
                             '*' => [
-                                '*' => [
-                                    'name',
-                                    'description',
-                                    'source',
-                                    'level',
-                                    'link',
-                                    'average_rating'
-                                ]
+                                '*' => []
                             ]
                         ]
                     ],
@@ -157,18 +142,13 @@ class PresetsControllerTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     'name',
+                    'slug',
+                    'creator',
                     'description',
                     'courses' => [
                         '*' => [
                             '*' => [
-                                '*' => [
-                                    'name',
-                                    'description',
-                                    'source',
-                                    'level',
-                                    'link',
-                                    'average_rating'
-                                ]
+                                '*' => []
                             ]
                         ]
                     ],

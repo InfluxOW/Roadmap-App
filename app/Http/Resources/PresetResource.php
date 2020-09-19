@@ -3,18 +3,19 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
-class PresetsResource extends JsonResource
+class PresetResource extends JsonResource
 {
     public function toArray($request)
     {
-        return [
+        $attributes = [
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
             'creator' => $this->when(isset($this->manager), function () {
-                return $this->manager->name;
+                return new UserBasicInformationResource($this->manager);
             }),
             'link' => $this->when(
                 ! $request->is('api/presets/*'),
@@ -23,34 +24,41 @@ class PresetsResource extends JsonResource
             'courses' => $this->courses(),
             'assigned_to' => $this->when(
                 ($request->is('api/presets') || $request->is('api/presets/*')),
-                UsersResource::collection($this->assignedTo())
+                function () {
+                    return UserBasicInformationResource::collection($this->assignedTo());
+                }
             )
         ];
+
+        return ($request->show && array_key_exists('preset', $request->show)) ?
+            Arr::only($attributes, explode(',', $request->show['preset']))
+            : $attributes;
     }
 
     private function assignedTo()
     {
         $user = Auth::user();
 
-        if ($user->isManager()) {
+        if ($user->isAdmin()) {
             return $this->roadmaps
-                ->whereIn('employee_id', $user->employees->pluck('id'))
                 ->map(fn($roadmap) => $roadmap->employee);
         }
 
         return $this->roadmaps
+            ->whereIn('employee_id', $user->employees->pluck('id'))
             ->map(fn($roadmap) => $roadmap->employee);
     }
 
     private function courses()
     {
         $courses = [];
+
         foreach ($this->courses as $course) {
             foreach ($course->technologies as $technology) {
                 $courses[$course->level->name][$technology->name][] =
                     isset($this->additional['employee']) ?
-                        (new CoursesResource($course))->additional(['employee' => $this->additional['employee']]) :
-                        (new CoursesResource($course));
+                        (new CourseResource($course))->additional(['employee' => $this->additional['employee']]) :
+                        (new CourseResource($course));
             }
         }
 

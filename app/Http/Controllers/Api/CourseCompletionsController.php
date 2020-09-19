@@ -12,7 +12,7 @@ class CourseCompletionsController extends Controller
     public function store(Course $course, Request $request)
     {
         $employee = $request->user();
-        $this->authorize('manageCompletions', $employee);
+        $this->authorize('manageCompletions', Course::class);
 
         $employee->complete($course);
 
@@ -22,7 +22,7 @@ class CourseCompletionsController extends Controller
     public function update(Course $course, CourseCompletionRequest $request)
     {
         $employee = $request->user();
-        $this->authorize('manageCompletions', $employee);
+        $this->authorize('manageCompletions', Course::class);
 
         if ($request->rating) {
             $employee->rate($course, $request->rating);
@@ -38,7 +38,7 @@ class CourseCompletionsController extends Controller
     public function destroy(Course $course, Request $request)
     {
         $employee = $request->user();
-        $this->authorize('manageCompletions', $employee);
+        $this->authorize('manageCompletions', Course::class);
 
         $employee->incomplete($course);
 

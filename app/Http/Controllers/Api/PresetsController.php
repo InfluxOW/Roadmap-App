@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PresetRequest;
-use App\Http\Resources\PresetsResource;
+use App\Http\Resources\PresetResource;
 use App\Models\Preset;
 use App\Repositories\PresetsRepository;
 use Illuminate\Http\Request;
@@ -24,7 +24,7 @@ class PresetsController extends Controller
 
         $presets = $this->repository->index($request);
 
-        return PresetsResource::collection($presets);
+        return PresetResource::collection($presets);
     }
 
     public function show(Request $request)
@@ -33,7 +33,7 @@ class PresetsController extends Controller
 
         $preset = $this->repository->show($request);
 
-        return new PresetsResource($preset);
+        return new PresetResource($preset);
     }
 
     public function store(PresetRequest $request)
@@ -42,7 +42,7 @@ class PresetsController extends Controller
 
         $preset = $this->repository->store($request);
 
-        return new PresetsResource($preset);
+        return new PresetResource($preset);
     }
 
     public function update(PresetRequest $request, Preset $preset)
@@ -51,7 +51,7 @@ class PresetsController extends Controller
 
         $preset->update($request->validated());
 
-        return new PresetsResource($preset);
+        return new PresetResource($preset);
     }
 
     public function destroy(Preset $preset)

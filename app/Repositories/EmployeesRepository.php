@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\UserTypes\Employee;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -36,7 +35,7 @@ class EmployeesRepository
                 AllowedFilter::exact('name', 'users.name'),
                 'username',
                 'email',
-                'sex',
+                AllowedFilter::exact('sex'),
                 'position',
                 AllowedFilter::callback('technologies', function (Builder $query, $technologies) {
                     return $query->whereHas('technologies', function (Builder $query) use ($technologies) {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UsersResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserTypes\Manager;
 use Illuminate\Http\Request;
@@ -23,6 +23,6 @@ class ManagersController extends Controller
     {
         $this->authorize('viewManager', $manager);
 
-        return new UsersResource($manager);
+        return new UserResource($manager);
     }
 }

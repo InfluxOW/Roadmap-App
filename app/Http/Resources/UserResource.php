@@ -8,14 +8,14 @@ use Illuminate\Support\Arr;
 /**
  *
  * @OA\Schema(
- * @OA\Xml(name="UsersResource"),
+ * @OA\Xml(name="UserResource"),
  * @OA\Property(property="name", type="string", readOnly="true", example="John Doe"),
  * @OA\Property(property="username", type="string", example="john_doe"),
  * @OA\Property(property="email", type="string", readOnly="true", format="email", example="john_doe@gmail.com"),
  * )
  *
  */
-class UsersResource extends JsonResource
+class UserResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -43,8 +43,8 @@ class UsersResource extends JsonResource
             ),
         ];
 
-        return $request->show ?
-            Arr::only($attributes, explode(',', $request->show))
+        return ($request->show && array_key_exists('user', $request->show)) ?
+            Arr::only($attributes, explode(',', $request->show['user']))
             : $attributes;
     }
 }

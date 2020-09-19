@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
-use App\Models\UserTypes\Employee;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
-class CoursesResource extends JsonResource
+class CourseResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -49,23 +49,25 @@ class CoursesResource extends JsonResource
         }
 
         if ($request->is('api/courses/*') || $request->is('api/courses')) {
-            $attributes['completed_by'] = UsersResource::collection($this->completedBy());
+            $attributes['completed_by'] = UserBasicInformationResource::collection($this->completedBy());
         }
 
-        return $attributes;
+        return ($request->show && array_key_exists('course', $request->show)) ?
+            Arr::only($attributes, explode(',', $request->show['course']))
+            : $attributes;
     }
 
     private function completedBy()
     {
         $user = Auth::user();
 
-        if ($user->isManager()) {
+        if ($user->isAdmin()) {
             return $this->completions
-                ->whereIn('employee_id', $user->employees->pluck('id'))
                 ->map(fn($completion) => $completion->employee);
         }
 
         return $this->completions
+            ->whereIn('employee_id', $user->employees->pluck('id'))
             ->map(fn($completion) => $completion->employee);
     }
 }

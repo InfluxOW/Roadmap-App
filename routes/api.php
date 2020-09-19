@@ -24,6 +24,10 @@ Route::middleware('guest')->group(function () {
 });
 Route::middleware('auth:sanctum')->post('logout', Api\Auth\LogoutController::class)->name('logout');
 
+/*
+ * Users Routes
+ * */
+
 Route::middleware('auth:sanctum')->group(function () {
     /*
      * Courses
@@ -42,6 +46,8 @@ Route::middleware('auth:sanctum')->group(function () {
     /*
      * Roadmaps
      * */
+    Route::get('roadmaps', [Api\RoadmapsController::class, 'index'])->name('roadmaps.index');
+    Route::get('roadmaps/{employee:username}', [Api\RoadmapsController::class, 'show'])->name('roadmaps.show');
     Route::post('roadmaps', [Api\RoadmapsController::class, 'store'])->name('roadmaps.store');
     Route::delete('roadmaps/{preset:slug}/{employee:username}', [Api\RoadmapsController::class, 'destroy'])->name('roadmaps.destroy');
 
@@ -56,26 +62,18 @@ Route::middleware('auth:sanctum')->group(function () {
      * */
     Route::get('managers', [Api\ManagersController::class, 'index'])->name('managers.index');
     Route::get('managers/{manager:username}', [Api\ManagersController::class, 'show'])->name('managers.show');
-
-    /*
-     * Dashboards
-     * */
-    Route::get('dashboard/employees/{employee:username}', Api\Dashboards\EmployeeDashboardController::class)->name('dashboard.employee');
-    Route::get('dashboard/managers/{manager:username}', Api\Dashboards\ManagerDashboardController::class)->name('dashboard.manager');
 });
 
+/*
+ * Admin Routes
+ * */
+
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    /*
+     * Courses
+     * */
     Route::apiResource('courses', Api\Admin\CoursesController::class)->parameters(['courses' => 'course:slug'])->only('store', 'update', 'destroy');
 });
 
-//GET /profiles/{user:username} - для разрабов и менеджеров
-//профили пользователей с общей информацией
-//
-//GET /dashboard - для менеджеров
-//выводится список всех команд менеджера, в рамках каждой команды выводится состав команды, у каждого юзера в составе выводятся его роадмапы, в рамках каждого роадмапа выводится список курсов, где указывается название, описание, источник и пройден ли курс этим юзером
-//
-//GET /dashboard/{team:slug} - для менеджеров
-//выводится состав конкретной команды с роадмапами, как выше
-//
 //POST /presets/{preset:slug}/courses/{course:slug} - для менеджеров
 //добавить указанный курс в указанный пресет
