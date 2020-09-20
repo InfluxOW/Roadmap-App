@@ -11,9 +11,10 @@ class RoadmapsRepository
         'preset.courses.completions',
         'preset.courses.level',
         'preset.courses.technologies',
-        'preset.manager',
+        'preset.manager.company',
         'preset.roadmaps.employee',
         'employee',
+        'manager.company'
     ];
 
     public function index(Request $request)

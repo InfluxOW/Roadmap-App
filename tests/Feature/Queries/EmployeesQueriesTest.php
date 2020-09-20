@@ -213,7 +213,7 @@ class EmployeesQueriesTest extends TestCase
             ->get(
                 route(
                     'employees.index',
-                    ['filter[completions]' => $course]
+                    ['filter[completed_courses]' => $course]
                 )
             )
             ->assertOk()
