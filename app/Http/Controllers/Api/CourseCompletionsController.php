@@ -11,25 +11,23 @@ class CourseCompletionsController extends Controller
 {
     public function store(Course $course, Request $request)
     {
-        $employee = $request->user();
-        $this->authorize('manageCompletions', Course::class);
+        $this->authorize('complete', $course);
 
-        $employee->complete($course);
+        $request->user()->complete($course);
 
         return response(['message' => "Course has been marked as completed"], 200);
     }
 
     public function update(Course $course, CourseCompletionRequest $request)
     {
-        $employee = $request->user();
-        $this->authorize('manageCompletions', Course::class);
+        $this->authorize('updateCompletion', $course);
 
         if ($request->rating) {
-            $employee->rate($course, $request->rating);
+            $request->user()->rate($course, $request->rating);
         }
 
         if ($request->certificate) {
-            $employee->attachCertificateTo($course, $request->certificate);
+            $request->user()->attachCertificateTo($course, $request->certificate);
         }
 
         return response(['message' => "Course completion information has been updated"], 200);
@@ -37,10 +35,9 @@ class CourseCompletionsController extends Controller
 
     public function destroy(Course $course, Request $request)
     {
-        $employee = $request->user();
-        $this->authorize('manageCompletions', Course::class);
+        $this->authorize('incomplete', $course);
 
-        $employee->incomplete($course);
+        $request->user()->incomplete($course);
 
         return response(['message' => "Course has been marked as incompleted"], 200);
     }

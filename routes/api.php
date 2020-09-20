@@ -34,9 +34,15 @@ Route::middleware('auth:sanctum')->group(function () {
      *  */
     Route::apiResource('courses', Api\CoursesController::class)->parameters(['courses' => 'course:slug'])->only('index', 'show');
     Route::post('courses/suggestions', [Api\CoursesController::class, 'suggest'])->name('courses.suggest');
-    Route::post('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'store'])->name('courses.complete');
-    Route::put('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'update'])->name('completions.update');
-    Route::delete('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'destroy'])->name('courses.incomplete');
+
+    /*
+     * Course Completions
+     * */
+    Route::middleware('employee')->group(function () {
+        Route::post('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'store'])->name('courses.complete');
+        Route::put('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'update'])->name('completions.update');
+        Route::delete('courses/{course:slug}/completions', [Api\CourseCompletionsController::class, 'destroy'])->name('courses.incomplete');
+    });
 
     /*
      * Presets

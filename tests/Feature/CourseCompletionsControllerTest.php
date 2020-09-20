@@ -85,7 +85,7 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee->fresh())
             ->post(route('courses.complete', Course::first()))
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertForbidden();
     }
 
     /** @test */
@@ -95,7 +95,7 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee->fresh())
             ->post(route('courses.complete', $course))
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertForbidden();
     }
 
     /** @test */
@@ -116,7 +116,7 @@ class CourseCompletionsControllerTest extends TestCase
     {
         $this->actingAs($this->employee)
             ->delete(route('courses.incomplete', Course::first()))
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertForbidden();
     }
 
     /** @test */
@@ -126,7 +126,7 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee)
             ->delete(route('courses.incomplete', $course))
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertForbidden();
     }
 
     /** @test */
@@ -151,7 +151,7 @@ class CourseCompletionsControllerTest extends TestCase
     {
         $this->actingAs($this->employee)
             ->put(route('completions.update', Course::first()), ['rating' => $rating = 5])
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertForbidden();
     }
 
     /** @test */
@@ -161,12 +161,13 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee)
             ->put(route('completions.update', $course), ['rating' => $rating = 5])
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertForbidden();
     }
 
     /** @test */
     public function an_employee_can_attach_a_certificate_to_a_completed_course()
     {
+        $this->withoutExceptionHandling();
         $this->employee->complete(Course::first());
 
         $this->actingAs($this->employee->fresh())
@@ -185,7 +186,7 @@ class CourseCompletionsControllerTest extends TestCase
     {
         $this->actingAs($this->employee)
             ->put(route('completions.update', Course::first()), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertForbidden();
     }
 
     /** @test */
@@ -195,6 +196,6 @@ class CourseCompletionsControllerTest extends TestCase
 
         $this->actingAs($this->employee)
             ->put(route('completions.update', $course), ['certificate' => $certificate = "http://test.com/certificate.jpg"])
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertForbidden();
     }
 }

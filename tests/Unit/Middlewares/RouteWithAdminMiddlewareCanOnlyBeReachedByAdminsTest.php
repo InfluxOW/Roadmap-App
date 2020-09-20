@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin;
+namespace Tests\Unit\Middlewares;
 
 use App\Models\Course;
 use App\Models\UserTypes\Admin;

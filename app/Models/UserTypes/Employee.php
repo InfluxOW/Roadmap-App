@@ -86,16 +86,15 @@ class Employee extends User
         return ! $this->hasCompletedCourse($course);
     }
 
+    public function scopeWithCompletedCourse(Builder $query, Course $course)
+    {
+        return $query->whereHas('completions', function (Builder $query) use ($course) {
+            return $query->where('course_id', $course->id);
+        });
+    }
+
     public function complete(Course $course)
     {
-        if ($this->doesntHaveCourse($course)) {
-            throw new \LogicException("You can't complete a course that doesn't belong to any of your roadmaps");
-        }
-
-        if ($this->hasCompletedCourse($course)) {
-            throw new \LogicException("You can't complete a completed course");
-        }
-
         $completion = $this->completions()->make();
         $completion->course()->associate($course);
         $completion->completed_at = now();
@@ -105,36 +104,13 @@ class Employee extends User
 
     public function incomplete(Course $course)
     {
-        if ($this->doesntHaveCourse($course)) {
-            throw new \LogicException("You can't incomplete a course that doesn't belong to any of your roadmaps");
-        }
-
-        if ($this->hasNotCompletedCourse($course)) {
-            throw new \LogicException("You can't incomplete an incompleted course");
-        }
-
         $completion = CourseCompletion::where('course_id', $course->id)->where('employee_id', $this->id)->firstOrFail();
 
         return $completion->delete();
     }
 
-    public function scopeWithCompletedCourse(Builder $query, Course $course)
-    {
-        return $query->whereHas('completions', function (Builder $query) use ($course) {
-            return $query->where('course_id', $course->id);
-        });
-    }
-
     public function rate(Course $course, int $rating)
     {
-        if ($this->doesntHaveCourse($course)) {
-            throw new \LogicException("You can't rate a course that doesn't belong to any of your roadmaps");
-        }
-
-        if ($this->hasNotCompletedCourse($course)) {
-            throw new \LogicException("You can't rate an incompleted course");
-        }
-
         if ($rating > 10 || $rating < 0) {
             throw new \InvalidArgumentException("Please, use ten-point scale for rating.");
         }
@@ -146,14 +122,6 @@ class Employee extends User
 
     public function attachCertificateTo(Course $course, string $certificate)
     {
-        if ($this->doesntHaveCourse($course)) {
-            throw new \LogicException("You can't attach a certificate to a course that doesn't belong to any of your roadmaps");
-        }
-
-        if ($this->hasNotCompletedCourse($course)) {
-            throw new \LogicException("You can't attach a certificate to an incompleted course");
-        }
-
         $completion = CourseCompletion::where('course_id', $course->id)->where('employee_id', $this->id)->first();
 
         return $completion->update(['certificate' => $certificate]);
