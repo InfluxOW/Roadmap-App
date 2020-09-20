@@ -30,9 +30,9 @@ class PresetResource extends JsonResource
             )
         ];
 
-        return ($request->show && array_key_exists('preset', $request->show)) ?
-            Arr::only($attributes, explode(',', $request->show['preset']))
-            : $attributes;
+        return $request->show && is_array($request->show) && array_key_exists('preset', $request->show) ?
+            Arr::only($attributes, explode(',', $request->show['preset'])) :
+            $attributes;
     }
 
     private function assignedTo()

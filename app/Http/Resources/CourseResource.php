@@ -52,9 +52,9 @@ class CourseResource extends JsonResource
             $attributes['completed_by'] = UserBasicInformationResource::collection($this->completedBy());
         }
 
-        return ($request->show && array_key_exists('course', $request->show)) ?
-            Arr::only($attributes, explode(',', $request->show['course']))
-            : $attributes;
+        return $request->show && is_array($request->show) && array_key_exists('course', $request->show) ?
+            Arr::only($attributes, explode(',', $request->show['course'])) :
+            $attributes;
     }
 
     private function completedBy()

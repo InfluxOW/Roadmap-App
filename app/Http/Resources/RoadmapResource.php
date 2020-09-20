@@ -14,12 +14,12 @@ class RoadmapResource extends JsonResource
                 ->additional(
                     ['employee' => new UserResource($this->employee)]
                 ),
-            'assigned_by' => $this->manager->name,
+            'assigned_by' => new UserBasicInformationResource($this->manager),
             'assigned_at' => $this->assigned_at->format('d-M-Y H:i:s T')
         ];
 
-        return ($request->show && array_key_exists('roadmap', $request->show)) ?
-            Arr::only($attributes, explode(',', $request->show['roadmap']))
-            : $attributes;
+        return ($request->show && is_array($request->show) && array_key_exists('roadmap', $request->show)) ?
+            Arr::only($attributes, explode(',', $request->show['roadmap'])) :
+            $attributes;
     }
 }

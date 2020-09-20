@@ -43,8 +43,8 @@ class UserResource extends JsonResource
             ),
         ];
 
-        return ($request->show && array_key_exists('user', $request->show)) ?
-            Arr::only($attributes, explode(',', $request->show['user']))
-            : $attributes;
+        return $request->show && is_array($request->show) && array_key_exists('user', $request->show) ?
+            Arr::only($attributes, explode(',', $request->show['user'])) :
+            $attributes;
     }
 }
