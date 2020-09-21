@@ -6,6 +6,20 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ *
+ * @OA\Schema(
+ * @OA\Xml(name="PresetResource"),
+ * @OA\Property(property="name", type="string", example="Awesome PHP preset"),
+ * @OA\Property(property="slug", type="string", example="awesome-php-preset"),
+ * @OA\Property(property="description", type="string", example="The best PHP preset you've ever seen!"),
+ * @OA\Property(property="creator", type="array", @OA\Items(type="string", ref="#/components/schemas/UserBasicInformationResource")),
+ * @OA\Property(property="link", type="string", example="http://localhost:8000/api/presets/awesome-php-preset"),
+ * @OA\Property(property="courses", type="array", @OA\Items(type="array", @OA\Items(type="string"), ref="#/components/schemas/CourseResource")),
+ * @OA\Property(property="assigned_to", type="array", @OA\Items(type="array", @OA\Items(type="string"), ref="#/components/schemas/UserBasicInformationResource")),
+ * )
+ *
+ */
 class PresetResource extends JsonResource
 {
     public function toArray($request)

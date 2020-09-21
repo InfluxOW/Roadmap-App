@@ -5,6 +5,16 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 
+/**
+ *
+ * @OA\Schema(
+ * @OA\Xml(name="RoadmapResource"),
+ * @OA\Property(property="preset", type="array", @OA\Items(type="array", @OA\Items(type="string"), ref="#/components/schemas/CourseResource")),
+ * @OA\Property(property="assigned_at", type="string", format="date-time", example="2020-09-18 14:33:19"),
+ * @OA\Property(property="assigned_by", type="array", @OA\Items(type="array", @OA\Items(type="string"), ref="#/components/schemas/UserBasicInformationResource")),
+ * )
+ *
+ */
 class RoadmapResource extends JsonResource
 {
     public function toArray($request)

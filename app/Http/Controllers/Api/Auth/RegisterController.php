@@ -14,7 +14,7 @@ class RegisterController extends Controller
      * summary="Register",
      * description="Register a new user",
      * operationId="authRegister",
-     * tags={"Authentication"},
+     * tags={"NOT WORKING"},
      * @OA\RequestBody(
      *    required=true,
      *    description="User data",
