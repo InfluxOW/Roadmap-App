@@ -77,6 +77,16 @@ class RoadmapsControllerTest extends TestCase
     }
 
     /** @test */
+    public function a_roadmap_cannot_be_assigned_twice()
+    {
+        Roadmap::factory()->create(['employee_id' => $this->employee, 'preset_id' => $this->preset]);
+
+        $this->actingAs($this->manager)
+            ->post(route('roadmaps.store'), $this->attributes)
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /** @test */
     public function a_manager_cannot_create_a_roadmap_for_the_employee_which_doesnt_belong_to_any_of_his_teams()
     {
         $manager = Manager::factory()->create();

@@ -42,6 +42,11 @@ class Roadmap extends Model
     {
         $employee = Employee::whereUsername($request->employee)->firstOrFail();
         $preset = Preset::whereSlug($request->preset)->firstOrFail();
+
+        if (self::where('employee_id', $employee->id)->where('preset_id', $preset->id)->exists()) {
+            throw new \LogicException("You can't create the same roadmap twice.");
+        }
+
         $manager = $request->user();
 
         if ($manager->doesntHaveEmployee($employee)) {
