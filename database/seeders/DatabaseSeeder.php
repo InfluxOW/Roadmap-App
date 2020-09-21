@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Database\Seeders\Local;
-use Database\Seeders\Testing;
 use Database\Seeders\Production;
+use Database\Seeders\Testing;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

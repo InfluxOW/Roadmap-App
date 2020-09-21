@@ -4,8 +4,6 @@ namespace Database\Factories;
 
 use App\Models\EmployeeLevel;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class EmployeeLevelFactory extends Factory
 {

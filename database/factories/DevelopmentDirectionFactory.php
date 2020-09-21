@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\DevelopmentDirection;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 
 class DevelopmentDirectionFactory extends Factory
 {

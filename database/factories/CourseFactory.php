@@ -4,9 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Course;
 use App\Models\EmployeeLevel;
-use App\Models\Technology;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class CourseFactory extends Factory
 {

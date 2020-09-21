@@ -6,8 +6,6 @@ use App\Models\Course;
 use App\Models\Preset;
 use App\Models\User;
 use App\Policies\CoursesPolicy;
-use App\Policies\EmployeesPolicy;
-use App\Policies\ManagersPolicy;
 use App\Policies\PresetsPolicy;
 use App\Policies\UsersPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;

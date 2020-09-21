@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CourseResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserTypes\Employee;

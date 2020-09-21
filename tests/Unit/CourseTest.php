@@ -8,7 +8,6 @@ use App\Models\EmployeeLevel;
 use App\Models\Preset;
 use App\Models\Technology;
 use App\Models\UserTypes\Employee;
-use App\Models\UserTypes\Manager;
 use Tests\TestCase;
 
 class CourseTest extends TestCase

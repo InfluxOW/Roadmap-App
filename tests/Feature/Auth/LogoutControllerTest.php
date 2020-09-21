@@ -3,9 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\UserTypes\Employee;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class LogoutControllerTest extends TestCase

@@ -4,7 +4,6 @@ namespace Database\Seeders\Local;
 
 use App\Models\Course;
 use App\Models\EmployeeLevel;
-use App\Models\UserTypes\Manager;
 use Illuminate\Database\Seeder;
 
 class CoursesSeeder extends Seeder

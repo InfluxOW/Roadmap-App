@@ -7,7 +7,6 @@ use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Parental\HasParent;
 
 class Manager extends User

@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Database\Eloquent\Model;
 
 class UsersPolicy
 {

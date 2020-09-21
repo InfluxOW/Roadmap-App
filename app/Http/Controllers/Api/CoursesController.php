@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CourseRequest;
 use App\Http\Requests\SuggestCourseRequest;
 use App\Http\Resources\CourseResource;
 use App\Jobs\ProcessSuggestedCourse;
 use App\Models\Course;
-use App\Models\User;
 use App\Repositories\CoursesRepository;
 use Illuminate\Http\Request;
 

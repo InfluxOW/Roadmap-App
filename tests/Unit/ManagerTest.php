@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Models\Company;
-use App\Models\Course;
 use App\Models\Preset;
 use App\Models\Roadmap;
 use App\Models\Team;

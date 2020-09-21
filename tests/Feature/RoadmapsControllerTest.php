@@ -2,15 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Models\Company;
 use App\Models\Preset;
 use App\Models\Roadmap;
-use App\Models\Team;
 use App\Models\UserTypes\Admin;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\ApiLogin;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 return [

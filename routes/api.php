@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\EmployeeDashboardController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

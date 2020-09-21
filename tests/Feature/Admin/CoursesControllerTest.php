@@ -2,12 +2,8 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Jobs\ProcessSuggestedCourse;
 use App\Models\Course;
 use App\Models\UserTypes\Admin;
-use App\Models\UserTypes\Employee;
-use App\Models\UserTypes\Manager;
-use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 
 class CoursesControllerTest extends TestCase

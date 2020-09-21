@@ -2,10 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\DevelopmentDirection;
 use App\Models\Technology;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class TechnologyFactory extends Factory
 {

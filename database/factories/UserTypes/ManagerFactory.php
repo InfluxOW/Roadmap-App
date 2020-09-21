@@ -2,13 +2,9 @@
 
 namespace Database\Factories\UserTypes;
 
-use App\Models\Model;
 use App\Models\User;
 use App\Models\UserTypes\Manager;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class ManagerFactory extends Factory
 {
