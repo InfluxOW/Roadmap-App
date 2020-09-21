@@ -18,12 +18,27 @@ class RoadmapsController extends Controller
     public function __construct(RoadmapsRepository $repository)
     {
         $this->repository = $repository;
+
+        $this->authorizeResource(User::class, 'employee');
+    }
+
+    protected function resourceAbilityMap()
+    {
+        return [
+            'index' => 'viewEmployeesRoadmaps',
+            'show' => 'viewEmployeeRoadmaps',
+            'store' => 'manageRoadmaps',
+            'destroy' => 'manageRoadmaps',
+        ];
+    }
+
+    protected function resourceMethodsWithoutModels()
+    {
+        return ['index', 'destroy', 'store'];
     }
 
     public function index(Request $request)
     {
-        $this->authorize('viewEmployeesRoadmaps', User::class);
-
         if ($request->user()->isEmployee()) {
             return redirect()->route('roadmaps.show', $request->user());
         }
@@ -33,10 +48,8 @@ class RoadmapsController extends Controller
         return RoadmapResource::collection($roadmaps);
     }
 
-    public function show(Request $request, Employee $employee)
+    public function show(Employee $employee, Request $request)
     {
-        $this->authorize('viewEmployeeRoadmaps', $employee);
-
         $roadmaps = $this->repository->show($request);
 
         return RoadmapResource::collection($roadmaps);
@@ -44,8 +57,6 @@ class RoadmapsController extends Controller
 
     public function store(RoadmapRequest $request)
     {
-        $this->authorize('manageRoadmaps', User::class);
-
         Roadmap::createFromRequest($request);
 
         return response(['message' => "Roadmap for the specified user has been created"], 201);
@@ -53,8 +64,6 @@ class RoadmapsController extends Controller
 
     public function destroy(Request $request)
     {
-        $this->authorize('manageRoadmaps', User::class);
-
         Roadmap::deleteByRequest($request);
 
         return response()->noContent();

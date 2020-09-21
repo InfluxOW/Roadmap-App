@@ -17,12 +17,26 @@ class CoursesController extends Controller
     public function __construct(CoursesRepository $repository)
     {
         $this->repository = $repository;
+
+        $this->authorizeResource(Course::class);
+    }
+
+    protected function resourceAbilityMap()
+    {
+        return [
+            'index' => 'viewAny',
+            'show' => 'view',
+            'suggest' => 'suggest',
+        ];
+    }
+
+    protected function resourceMethodsWithoutModels()
+    {
+        return ['index', 'show', 'suggest'];
     }
 
     public function index(Request $request)
     {
-        $this->authorize(Course::class);
-
         $courses = $this->repository->index($request);
 
         return CourseResource::collection($courses);
@@ -30,8 +44,6 @@ class CoursesController extends Controller
 
     public function show(Request $request)
     {
-        $this->authorize(Course::class);
-
         $course = $this->repository->show($request);
 
         return new CourseResource($course);
@@ -39,8 +51,6 @@ class CoursesController extends Controller
 
     public function suggest(SuggestCourseRequest $request)
     {
-        $this->authorize('suggestCourse', Course::class);
-
         ProcessSuggestedCourse::dispatch($request->source);
 
         return response(['message' => 'Course has been suggested. Please, wait until we process it.'], 200);

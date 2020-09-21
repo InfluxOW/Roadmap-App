@@ -182,7 +182,6 @@ class EmployeesQueriesTest extends TestCase
     /** @test */
     public function employees_can_be_filtered_by_assigned_courses()
     {
-        $this->withoutExceptionHandling();
         $course = $this->manager->employees->first()->courses->first()->name;
         $employees = $this->manager->employees()->whereHas('courses', function (Builder $query) use ($course) {
             return $query->where('courses.name', $course);

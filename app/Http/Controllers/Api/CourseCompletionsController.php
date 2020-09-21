@@ -9,10 +9,27 @@ use Illuminate\Http\Request;
 
 class CourseCompletionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Course::class);
+    }
+
+    protected function resourceAbilityMap()
+    {
+        return [
+            'store' => 'complete',
+            'update' => 'updateCompletion',
+            'destroy' => 'incomplete',
+        ];
+    }
+
+    protected function resourceMethodsWithoutModels()
+    {
+        return [];
+    }
+
     public function store(Course $course, Request $request)
     {
-        $this->authorize('complete', $course);
-
         $request->user()->complete($course);
 
         return response(['message' => "Course has been marked as completed"], 200);
@@ -20,8 +37,6 @@ class CourseCompletionsController extends Controller
 
     public function update(Course $course, CourseCompletionRequest $request)
     {
-        $this->authorize('updateCompletion', $course);
-
         if ($request->rating) {
             $request->user()->rate($course, $request->rating);
         }
@@ -35,8 +50,6 @@ class CourseCompletionsController extends Controller
 
     public function destroy(Course $course, Request $request)
     {
-        $this->authorize('incomplete', $course);
-
         $request->user()->incomplete($course);
 
         return response(['message' => "Course has been marked as incompleted"], 200);

@@ -68,7 +68,7 @@ class CoursesPolicy
      * Courses (Behind the CRUD)
      * */
 
-    public function suggestCourse()
+    public function suggest()
     {
         return true;
     }

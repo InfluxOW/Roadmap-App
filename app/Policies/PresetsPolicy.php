@@ -10,7 +10,7 @@ class PresetsPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user, $ability)
+    public function before(User $user)
     {
         if ($user->isAdmin()) {
             return true;

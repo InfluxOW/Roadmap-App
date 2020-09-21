@@ -164,7 +164,6 @@ class CourseCompletionsControllerTest extends TestCase
     /** @test */
     public function an_employee_can_attach_a_certificate_to_a_completed_course()
     {
-        $this->withoutExceptionHandling();
         $this->employee->complete(Course::first());
 
         $this->actingAs($this->employee->fresh())

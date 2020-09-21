@@ -15,16 +15,16 @@ class UsersPolicy
      * Roadmaps
      * */
 
+    public function viewEmployeesRoadmaps()
+    {
+        return true;
+    }
+
     public function viewEmployeeRoadmaps(User $user, Employee $employee)
     {
         return $user->is($employee) ||
             ($user->isManager() && $user->hasEmployee($employee)) ||
             $user->isAdmin();
-    }
-
-    public function viewEmployeesRoadmaps()
-    {
-        return true;
     }
 
     public function manageRoadmaps(User $user)

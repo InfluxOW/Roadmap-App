@@ -10,19 +10,35 @@ use Illuminate\Http\Request;
 
 class ManagersController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'manager');
+    }
+
+    protected function resourceAbilityMap()
+    {
+        return [
+            'index' => 'viewManagers',
+            'show' => 'viewManager',
+        ];
+    }
+
+    protected function resourceMethodsWithoutModels()
+    {
+        return ['index'];
+    }
+
     public function index(Request $request)
     {
-        $this->authorize('viewManagers', User::class);
-
         if ($request->user()->isManager()) {
             return redirect()->route('managers.show', $request->user());
         }
+
+        // TODO: admin logic for viewing managers
     }
 
     public function show(Manager $manager)
     {
-        $this->authorize('viewManager', $manager);
-
         return new UserResource($manager);
     }
 }

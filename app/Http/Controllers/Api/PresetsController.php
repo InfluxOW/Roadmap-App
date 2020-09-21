@@ -16,12 +16,17 @@ class PresetsController extends Controller
     public function __construct(PresetsRepository $repository)
     {
         $this->repository = $repository;
+
+        $this->authorizeResource(Preset::class);
+    }
+
+    protected function resourceMethodsWithoutModels()
+    {
+        return ['before', 'index', 'show', 'store'];
     }
 
     public function index(Request $request)
     {
-        $this->authorize(Preset::class);
-
         $presets = $this->repository->index($request);
 
         return PresetResource::collection($presets);
@@ -29,8 +34,6 @@ class PresetsController extends Controller
 
     public function show(Request $request)
     {
-        $this->authorize(Preset::class);
-
         $preset = $this->repository->show($request);
 
         return new PresetResource($preset);
@@ -38,8 +41,6 @@ class PresetsController extends Controller
 
     public function store(PresetRequest $request)
     {
-        $this->authorize(Preset::class);
-
         $preset = $this->repository->store($request);
 
         return new PresetResource($preset);
@@ -47,8 +48,6 @@ class PresetsController extends Controller
 
     public function update(PresetRequest $request, Preset $preset)
     {
-        $this->authorize($preset);
-
         $preset->update($request->validated());
 
         return new PresetResource($preset);
@@ -56,8 +55,6 @@ class PresetsController extends Controller
 
     public function destroy(Preset $preset)
     {
-        $this->authorize($preset);
-
         $preset->delete();
 
         return response()->noContent();

@@ -16,12 +16,25 @@ class EmployeesController extends Controller
     public function __construct(EmployeesRepository $repository)
     {
         $this->repository = $repository;
+
+        $this->authorizeResource(User::class, 'employee');
+    }
+
+    protected function resourceAbilityMap()
+    {
+        return [
+            'index' => 'viewEmployees',
+            'show' => 'viewEmployee',
+        ];
+    }
+
+    protected function resourceMethodsWithoutModels()
+    {
+        return ['index'];
     }
 
     public function index(Request $request)
     {
-        $this->authorize('viewEmployees', User::class);
-
         if ($request->user()->isEmployee()) {
             return redirect()->route('employees.show', $request->user());
         }
@@ -33,8 +46,6 @@ class EmployeesController extends Controller
 
     public function show(Employee $employee, Request $request)
     {
-        $this->authorize('viewEmployee', $employee);
-
         return new UserResource($employee);
     }
 }
