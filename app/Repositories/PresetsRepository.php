@@ -33,12 +33,14 @@ class PresetsRepository
                 'name',
                 AllowedFilter::callback('creator', function (Builder $query, $managers) {
                     return $query->whereHas('manager', function (Builder $query) use ($managers) {
-                        return $query->whereIn('name', (array) $managers);
+                        return $query->whereIn('name', (array) $managers)
+                            ->orWhereIn('username', (array) $managers)
+                            ->orWhereIn('email', (array) $managers);
                     });
                 }),
                 AllowedFilter::callback('courses', function (Builder $query, $courses) {
                     return $query->whereHas('courses', function (Builder $query) use ($courses) {
-                        return $query->whereIn('courses.name', (array) $courses);
+                        return $query->whereIn('name', (array) $courses)->orWhereIn('slug', (array) $courses);
                     });
                 }),
             ])

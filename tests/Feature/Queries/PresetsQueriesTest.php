@@ -57,9 +57,42 @@ class PresetsQueriesTest extends TestCase
     }
 
     /** @test */
+    public function presets_can_be_filtered_by_creator_username()
+    {
+        $creator = $this->manager->username;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'presets.index',
+                    ['filter[creator]' => $creator]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonFragment(['username' => $creator]);
+    }
+
+    /** @test */
+    public function presets_can_be_filtered_by_creator_email()
+    {
+        $creator = $this->manager->email;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'presets.index',
+                    ['filter[creator]' => $creator]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount(1, 'data');
+    }
+
+    /** @test */
     public function presets_can_be_filtered_by_course_name()
     {
-        $name = Course::first()->name;
+        $name = Preset::first()->courses->first()->name;
 
         $this->actingAs($this->manager)
             ->get(
@@ -73,6 +106,24 @@ class PresetsQueriesTest extends TestCase
                 return $query->whereName($name);
             })->count(), 'data')
             ->assertJsonFragment(['name' => $name]);
+    }
+
+    /** @test */
+    public function presets_can_be_filtered_by_course_slug()
+    {
+        $slug = Preset::first()->courses->first()->slug;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'presets.index',
+                    ['filter[courses]' => $slug]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount(Preset::whereHas('courses', function (Builder $query) use ($slug) {
+                return $query->whereSlug($slug);
+            })->count(), 'data');
     }
 
     /** @test */

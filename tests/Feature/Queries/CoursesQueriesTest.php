@@ -3,6 +3,7 @@
 namespace Tests\Feature\Queries;
 
 use App\Models\Course;
+use App\Models\Preset;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Builder;
@@ -57,7 +58,7 @@ class CoursesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function courses_can_be_filtered_by_levels()
+    public function courses_can_be_filtered_by_levels_name()
     {
         $level = Course::first()->level->name;
 
@@ -76,7 +77,25 @@ class CoursesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function courses_can_be_filtered_by_technologies()
+    public function courses_can_be_filtered_by_levels_slug()
+    {
+        $level = Course::first()->level->slug;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'courses.index',
+                    ['filter[levels]' => $level]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount(Course::whereHas('level', function (Builder $query) use ($level) {
+                return $query->whereSlug($level);
+            })->count(), 'data');
+    }
+
+    /** @test */
+    public function courses_can_be_filtered_by_technologies_name()
     {
         $technology = Course::first()->technologies->first()->name;
 
@@ -94,9 +113,27 @@ class CoursesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function courses_can_be_filtered_by_presets()
+    public function courses_can_be_filtered_by_technologies_slug()
     {
-        $preset = Course::first()->presets->first()->name;
+        $technology = Course::first()->technologies->first()->slug;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'courses.index',
+                    ['filter[technologies]' => $technology]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount(Course::whereHas('technologies', function (Builder $query) use ($technology) {
+                return $query->whereSlug($technology);
+            })->count(), 'data');
+    }
+
+    /** @test */
+    public function courses_can_be_filtered_by_presets_name()
+    {
+        $preset = Preset::first()->name;
 
         $this->actingAs($this->manager)
             ->get(
@@ -112,9 +149,59 @@ class CoursesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function courses_can_be_filtered_by_completed_by_the_specific_employee()
+    public function courses_can_be_filtered_by_presets_slug()
+    {
+        $preset = Preset::first()->slug;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'courses.index',
+                    ['filter[presets]' => $preset]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount(Course::whereHas('presets', function (Builder $query) use ($preset) {
+                return $query->whereSlug($preset);
+            })->count(), 'data');
+    }
+
+    /** @test */
+    public function courses_can_be_filtered_by_completed_by_the_specific_employee_name()
     {
         $employee = Employee::first()->name;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'courses.index',
+                    ['filter[completed_by]' => $employee]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount(Employee::first()->completions->count(), 'data');
+    }
+
+    /** @test */
+    public function courses_can_be_filtered_by_completed_by_the_specific_employee_username()
+    {
+        $employee = Employee::first()->username;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'courses.index',
+                    ['filter[completed_by]' => $employee]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount(Employee::first()->completions->count(), 'data');
+    }
+
+    /** @test */
+    public function courses_can_be_filtered_by_completed_by_the_specific_employee_email()
+    {
+        $employee = Employee::first()->email;
 
         $this->actingAs($this->manager)
             ->get(

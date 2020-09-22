@@ -39,33 +39,33 @@ class EmployeesRepository
                 'position',
                 AllowedFilter::callback('technologies', function (Builder $query, $technologies) {
                     return $query->whereHas('technologies', function (Builder $query) use ($technologies) {
-                        return $query->whereIn('name', (array) $technologies);
+                        return $query->whereIn('name', (array) $technologies)->orWhereIn('slug', (array) $technologies);
                     });
                 }),
                 AllowedFilter::callback('directions', function (Builder $query, $directions) {
                     return $query->whereHas('directions', function (Builder $query) use ($directions) {
-                        return $query->whereIn('name', (array) $directions);
+                        return $query->whereIn('name', (array) $directions)->orWhereIn('slug', (array) $directions);
                     });
                 }),
                 AllowedFilter::callback('teams', function (Builder $query, $teams) {
                     return $query->whereHas('teams', function (Builder $query) use ($teams) {
-                        return $query->whereIn('name', (array) $teams);
+                        return $query->whereIn('name', (array) $teams)->orWhereIn('slug', (array) $teams);
                     });
                 }),
                 AllowedFilter::callback('presets', function (Builder $query, $presets) {
                     return $query->whereHas('presets', function (Builder $query) use ($presets) {
-                        return $query->whereIn('name', (array) $presets);
+                        return $query->whereIn('name', (array) $presets)->orWhereIn('slug', (array) $presets);
                     });
                 }),
                 AllowedFilter::callback('courses', function (Builder $query, $courses) {
                     return $query->whereHas('courses', function (Builder $query) use ($courses) {
-                        return $query->whereIn('courses.name', (array) $courses);
+                        return $query->whereIn('courses.name', (array) $courses)->orWhereIn('courses.slug', (array) $courses);
                     });
                 }),
                 AllowedFilter::callback('completed_courses', function (Builder $query, $courses) {
                     return $query->whereHas('completions', function (Builder $query) use ($courses) {
                         return $query->whereHas('course', function (Builder $query) use ($courses) {
-                            return $query->whereIn('courses.name', (array) $courses);
+                            return $query->whereIn('name', (array) $courses)->orWhereIn('slug', (array) $courses);
                         });
                     });
                 }),

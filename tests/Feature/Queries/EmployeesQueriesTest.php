@@ -104,7 +104,7 @@ class EmployeesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function employees_can_be_filtered_by_used_technologies()
+    public function employees_can_be_filtered_by_used_technologies_name()
     {
         $technology = $this->manager->employees->first()->technologies->first()->name;
         $employees = $this->manager->employees()->whereHas('technologies', function (Builder $query) use ($technology) {
@@ -123,7 +123,26 @@ class EmployeesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function employees_can_be_filtered_by_their_development_directions()
+    public function employees_can_be_filtered_by_used_technologies_slug()
+    {
+        $technology = $this->manager->employees->first()->technologies->first()->slug;
+        $employees = $this->manager->employees()->whereHas('technologies', function (Builder $query) use ($technology) {
+            return $query->whereSlug($technology);
+        })->get();
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['filter[technologies]' => $technology]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($employees->count(), 'data');
+    }
+
+    /** @test */
+    public function employees_can_be_filtered_by_their_development_directions_name()
     {
         $direction = $this->manager->employees->first()->directions->first()->name;
         $employees = $this->manager->employees()->whereHas('directions', function (Builder $query) use ($direction) {
@@ -142,7 +161,26 @@ class EmployeesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function employees_can_be_filtered_by_their_teams()
+    public function employees_can_be_filtered_by_their_development_directions_slug()
+    {
+        $direction = $this->manager->employees->first()->directions->first()->slug;
+        $employees = $this->manager->employees()->whereHas('directions', function (Builder $query) use ($direction) {
+            return $query->whereSlug($direction);
+        })->get();
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['filter[directions]' => $direction]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($employees->count(), 'data');
+    }
+
+    /** @test */
+    public function employees_can_be_filtered_by_their_teams_name()
     {
         $team = $this->manager->employees->first()->teams->first()->name;
         $employees = $this->manager->employees()->whereHas('teams', function (Builder $query) use ($team) {
@@ -161,7 +199,26 @@ class EmployeesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function employees_can_be_filtered_by_assigned_presets()
+    public function employees_can_be_filtered_by_their_teams_slug()
+    {
+        $team = $this->manager->employees->first()->teams->first()->slug;
+        $employees = $this->manager->employees()->whereHas('teams', function (Builder $query) use ($team) {
+            return $query->whereSlug($team);
+        })->get();
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['filter[teams]' => $team]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($employees->count(), 'data');
+    }
+
+    /** @test */
+    public function employees_can_be_filtered_by_assigned_presets_name()
     {
         $preset = $this->manager->employees->first()->presets->first()->name;
         $employees = $this->manager->employees()->whereHas('presets', function (Builder $query) use ($preset) {
@@ -180,7 +237,26 @@ class EmployeesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function employees_can_be_filtered_by_assigned_courses()
+    public function employees_can_be_filtered_by_assigned_presets_slug()
+    {
+        $preset = $this->manager->employees->first()->presets->first()->slug;
+        $employees = $this->manager->employees()->whereHas('presets', function (Builder $query) use ($preset) {
+            return $query->whereSlug($preset);
+        })->get();
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['filter[presets]' => $preset]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($employees->count(), 'data');
+    }
+
+    /** @test */
+    public function employees_can_be_filtered_by_assigned_courses_name()
     {
         $course = $this->manager->employees->first()->courses->first()->name;
         $employees = $this->manager->employees()->whereHas('courses', function (Builder $query) use ($course) {
@@ -199,12 +275,52 @@ class EmployeesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function employees_can_be_filtered_by_completed_courses()
+    public function employees_can_be_filtered_by_assigned_courses_slug()
+    {
+        $course = $this->manager->employees->first()->courses->first()->slug;
+        $employees = $this->manager->employees()->whereHas('courses', function (Builder $query) use ($course) {
+            return $query->where('courses.slug', $course);
+        })->get();
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['filter[courses]' => $course]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($employees->count(), 'data');
+    }
+
+    /** @test */
+    public function employees_can_be_filtered_by_completed_courses_name()
     {
         $course = $this->manager->employees->first()->completions->first()->course->name;
         $employees = $this->manager->employees()->whereHas('completions', function (Builder $query) use ($course) {
             return $query->whereHas('course', function (Builder $query) use ($course) {
                 return $query->whereName($course);
+            });
+        })->get();
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['filter[completed_courses]' => $course]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($employees->count(), 'data');
+    }
+
+    /** @test */
+    public function employees_can_be_filtered_by_completed_courses_slug()
+    {
+        $course = $this->manager->employees->first()->completions->first()->course->slug;
+        $employees = $this->manager->employees()->whereHas('completions', function (Builder $query) use ($course) {
+            return $query->whereHas('course', function (Builder $query) use ($course) {
+                return $query->whereSlug($course);
             });
         })->get();
 

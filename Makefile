@@ -1,7 +1,7 @@
 test:
 	php artisan test
 test-coverage:
-	php artisan test --coverage-clover build/logs/clover.xml
+	php artisan test -vvv --coverage-clover build/logs/clover.xml
 setup:
 	composer install
 	cp -n .env.example .env || true
