@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Course;
+use App\Models\EmployeeLevel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -64,5 +65,25 @@ class CoursesRepository
     public function show(Request $request)
     {
         return Course::whereSlug($request->route('course'))->with(self::WITH)->firstOrFail();
+    }
+
+    public function store(Request $request)
+    {
+        $course = Course::make($request->only('name', 'source', 'description'));
+        $course->level()->associate(EmployeeLevel::whereSlug($request->level)->first());
+        $course->save();
+
+        return $course;
+    }
+
+    public function update(Request $request)
+    {
+        $course = $request->route('course');
+
+        $course->update($request->only('name', 'source', 'description'));
+        $course->level()->associate(EmployeeLevel::whereSlug($request->level)->first());
+        $course->save();
+
+        return $course;
     }
 }

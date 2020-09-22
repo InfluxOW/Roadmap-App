@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\EmployeeLevel;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CourseRequest extends FormRequest
@@ -17,7 +18,7 @@ class CourseRequest extends FormRequest
             'name' => ['required', 'string', 'unique:courses,name'],
             'description' => ['required', 'string'],
             'source' => ['required', 'string', 'url', 'unique:courses,source'],
-            'employee_level_id' => ['required', 'integer', 'exists:employee_levels,id']
+            'level' => ['required', 'string', 'exists:employee_levels,slug']
         ];
     }
 }

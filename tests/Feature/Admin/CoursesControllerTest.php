@@ -3,7 +3,9 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\Course;
+use App\Models\EmployeeLevel;
 use App\Models\UserTypes\Admin;
+use Illuminate\Support\Arr;
 use Tests\TestCase;
 
 class CoursesControllerTest extends TestCase
@@ -16,8 +18,9 @@ class CoursesControllerTest extends TestCase
     {
         parent::setUp();
 
+        EmployeeLevel::factory()->create(['name' => 'junior']);
+        $this->attributes = ['name' => 'test name', 'description' => 'test description', 'source' => 'http://test.com', 'level' => 'junior'];
         $this->admin = Admin::factory()->create();
-        $this->attributes = Course::factory()->raw();
         $this->courses = Course::factory()->count(3)->create();
     }
 
@@ -52,7 +55,7 @@ class CoursesControllerTest extends TestCase
             ->assertCreated();
 
         $this->assertDatabaseCount('courses', $this->courses->count() + 1);
-        $this->assertDatabaseHas('courses', $this->attributes);
+        $this->assertDatabaseHas('courses', Arr::only($this->attributes, ['name', 'source', 'description']));
     }
 
     /** @test */
@@ -62,7 +65,7 @@ class CoursesControllerTest extends TestCase
             ->patch(route('courses.update', $this->courses->first()), $this->attributes)
             ->assertOk();
 
-        $this->assertDatabaseHas('courses', $this->attributes);
+        $this->assertDatabaseHas('courses', Arr::only($this->attributes, ['name', 'source', 'description']));
     }
 
     /** @test */

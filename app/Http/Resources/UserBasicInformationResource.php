@@ -5,16 +5,6 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 
-/**
- *
- * @OA\Schema(
- * @OA\Xml(name="UserBasicInformationResource"),
- * @OA\Property(property="name", type="string", example="Igor Petrov"),
- * @OA\Property(property="username", type="string", example="igor-1988"),
- * @OA\Property(property="company", type="string", example="Microsoft"),
- * )
- *
- */
 class UserBasicInformationResource extends JsonResource
 {
     public function toArray($request)

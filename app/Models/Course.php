@@ -14,7 +14,7 @@ class Course extends Model
     use HasFactory;
     use HasSlug;
 
-    protected $fillable = ['name', 'description', 'source', 'employee_level_id'];
+    protected $fillable = ['name', 'description', 'source'];
 
     public function getSlugOptions(): SlugOptions
     {

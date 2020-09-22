@@ -126,6 +126,15 @@ class CoursesController extends Controller
      *         type="integer"
      *    )
      *  ),
+     *  @OA\Parameter(
+     *    name="show[course]",
+     *    in="query",
+     *    description="Course model attributes that should be returned (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
      * @OA\Response(
      *    response=200,
      *    description="Courses were fetched",
@@ -140,7 +149,7 @@ class CoursesController extends Controller
      *         collectionFormat="multi",
      *         @OA\Items(
      *           type="object",
-     *           ref="#/components/schemas/CourseResource",
+     *           ref="#/components/schemas/Course",
      *        )
      *      ),
      *    )
@@ -183,13 +192,22 @@ class CoursesController extends Controller
      *           type="string"
      *      )
      *   ),
+     *  @OA\Parameter(
+     *    name="show[course]",
+     *    in="query",
+     *    description="Course model attributes that should be returned (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
      * @OA\Response(
      *    response=200,
      *    description="Specified course has been fetched",
      *     @OA\JsonContent(
      *     @OA\Items(
      *      type="object",
-     *      ref="#/components/schemas/CourseResource",
+     *      ref="#/components/schemas/Course",
      *    )
      *   )
      *  ),
@@ -245,6 +263,26 @@ class CoursesController extends Controller
      *    response=401,
      *    description="Unauthenticated",
      * ),
+     * @OA\Response(
+     *     response=422,
+     *     description="Course has not been suggested due to validation error",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *        @OA\Property(
+     *           property="errors",
+     *           type="object",
+     *           @OA\Property(
+     *              property="source",
+     *              type="array",
+     *              collectionFormat="multi",
+     *              @OA\Items(
+     *                 type="string",
+     *                 example={"The source attribute is required."},
+     *              )
+     *           )
+     *        )
+     *     )
+     *  ),
      * )
      * @param \App\Http\Requests\SuggestCourseRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
