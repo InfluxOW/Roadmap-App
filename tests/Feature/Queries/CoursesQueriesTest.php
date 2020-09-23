@@ -9,6 +9,7 @@ use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class CoursesQueriesTest extends TestCase
@@ -212,6 +213,21 @@ class CoursesQueriesTest extends TestCase
             )
             ->assertOk()
             ->assertJsonCount($employee->completions->count(), 'data');
+    }
+
+    /** @test */
+    public function a_manager_cannot_filter_courses_by_completed_by_not_his_employees()
+    {
+        $employee = Employee::all()->except($this->manager->employees->pluck('id')->toArray())->first();
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'courses.index',
+                    ['filter[completed_by]' => $employee->name]
+                )
+            )
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */

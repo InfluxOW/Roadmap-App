@@ -48,7 +48,7 @@ class TechnologiesRepository
                     if ($request->user()->isManager()) {
                         $existingEmployees = Employee::havingSpecifiedDetails((array) $employees)->get();
                         $managerHasEmployeesCheck = $existingEmployees
-                            ->each(function ($employee) use ($request) {
+                            ->every(function ($employee) use ($request) {
                                 return $request->user()->hasEmployee($employee);
                             });
 
