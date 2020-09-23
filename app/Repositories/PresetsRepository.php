@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Preset;
+use App\Models\Technology;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -65,5 +66,17 @@ class PresetsRepository
         return $request->user()->isAdmin() ?
             Preset::create($request->validated()) :
             $request->user()->presets()->create($request->validated());
+    }
+
+    public function generate(Request $request)
+    {
+        $preset = $this->store($request);
+        $courses = collect($request->technologies)->map(function ($technology) {
+            return Technology::whereName($technology)->first()->courses;
+        })->flatten()->unique('id', true);
+
+        $preset->courses()->attach($courses->pluck('id')->toArray(), ['assigned_at' => now()]);
+
+        return $preset;
     }
 }

@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
      * Presets
      *  */
     Route::apiResource('presets', Api\PresetsController::class)->parameters(['presets' => 'preset:slug']);
+    Route::post('presets/generation', [Api\PresetsGenerationController::class, 'store'])->name('presets.generate');
 
     /*
      * Roadmaps

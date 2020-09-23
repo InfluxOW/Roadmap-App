@@ -41,4 +41,9 @@ class PresetsPolicy
     {
         return isset($preset->manager) && $preset->manager->is($user);
     }
+
+    public function generate(User $user)
+    {
+        return $user->isManager();
+    }
 }

@@ -108,49 +108,49 @@ class TechnologiesQueriesTest extends TestCase
     /** @test */
     public function technologies_can_be_filtered_by_employees_name()
     {
-        $name = $this->manager->employees->first()->name;
+        $employee = $this->manager->employees->first();
 
         $this->actingAs($this->manager)
             ->get(
                 route(
                     'technologies.index',
-                    ['filter[employees]' => $name]
+                    ['filter[employees]' => $employee->name]
                 )
             )
             ->assertOk()
-            ->assertJsonCount($this->manager->employees->first()->count(), 'data');
+            ->assertJsonCount($employee->technologies->count(), 'data');
     }
 
     /** @test */
     public function technologies_can_be_filtered_by_employees_username()
     {
-        $username = $this->manager->employees->first()->username;
+        $employee = $this->manager->employees->first();
 
         $this->actingAs($this->manager)
             ->get(
                 route(
                     'technologies.index',
-                    ['filter[employees]' => $username]
+                    ['filter[employees]' => $employee->username]
                 )
             )
             ->assertOk()
-            ->assertJsonCount($this->manager->employees->first()->technologies->count(), 'data');
+            ->assertJsonCount($employee->technologies->count(), 'data');
     }
 
     /** @test */
     public function technologies_can_be_filtered_by_employees_email()
     {
-        $email = $this->manager->employees->first()->email;
+        $employee = $this->manager->employees->first();
 
         $this->actingAs($this->manager)
             ->get(
                 route(
                     'technologies.index',
-                    ['filter[employees]' => $email]
+                    ['filter[employees]' => $employee->email]
                 )
             )
             ->assertOk()
-            ->assertJsonCount($this->manager->employees->first()->technologies->count(), 'data');
+            ->assertJsonCount($employee->technologies->count(), 'data');
     }
 
     /** @test */
