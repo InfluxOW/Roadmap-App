@@ -169,49 +169,49 @@ class CoursesQueriesTest extends TestCase
     /** @test */
     public function courses_can_be_filtered_by_completed_by_the_specific_employee_name()
     {
-        $employee = Employee::first()->name;
+        $employee = $this->manager->employees->first();
 
         $this->actingAs($this->manager)
             ->get(
                 route(
                     'courses.index',
-                    ['filter[completed_by]' => $employee]
+                    ['filter[completed_by]' => $employee->name]
                 )
             )
             ->assertOk()
-            ->assertJsonCount(Employee::first()->completions->count(), 'data');
+            ->assertJsonCount($employee->completions->count(), 'data');
     }
 
     /** @test */
     public function courses_can_be_filtered_by_completed_by_the_specific_employee_username()
     {
-        $employee = Employee::first()->username;
+        $employee = $this->manager->employees->first();
 
         $this->actingAs($this->manager)
             ->get(
                 route(
                     'courses.index',
-                    ['filter[completed_by]' => $employee]
+                    ['filter[completed_by]' => $employee->username]
                 )
             )
             ->assertOk()
-            ->assertJsonCount(Employee::first()->completions->count(), 'data');
+            ->assertJsonCount($employee->completions->count(), 'data');
     }
 
     /** @test */
     public function courses_can_be_filtered_by_completed_by_the_specific_employee_email()
     {
-        $employee = Employee::first()->email;
+        $employee = $this->manager->employees->first();
 
         $this->actingAs($this->manager)
             ->get(
                 route(
                     'courses.index',
-                    ['filter[completed_by]' => $employee]
+                    ['filter[completed_by]' => $employee->email]
                 )
             )
             ->assertOk()
-            ->assertJsonCount(Employee::first()->completions->count(), 'data');
+            ->assertJsonCount($employee->completions->count(), 'data');
     }
 
     /** @test */

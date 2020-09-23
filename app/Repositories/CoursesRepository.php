@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Course;
 use App\Models\EmployeeLevel;
+use App\Models\UserTypes\Employee;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -42,12 +43,23 @@ class CoursesRepository
                         return $query->whereIn('name', (array) $presets)->orWhereIn('slug', (array) $presets);
                     });
                 }),
-                AllowedFilter::callback('completed_by', function (Builder $query, $employees) {
+                AllowedFilter::callback('completed_by', function (Builder $query, $employees) use ($request) {
+                    if ($request->user()->isManager()) {
+                        $existingEmployees = Employee::havingSpecifiedDetails((array) $employees)->get();
+                        $managerHasEmployeesCheck = $existingEmployees
+                            ->each(function ($employee) use ($request) {
+                                return $request->user()->hasEmployee($employee);
+                            });
+
+                        throw_if(
+                            $existingEmployees->isEmpty() || $managerHasEmployeesCheck === false,
+                            new \LogicException("You cannot filter by not yours employees.")
+                        );
+                    }
+
                     return $query->whereHas('completions', function (Builder $query) use ($employees) {
                         return $query->whereHas('employee', function (Builder $query) use ($employees) {
-                            return $query->whereIn('name', (array) $employees)
-                                ->orWhereIn('username', (array) $employees)
-                                ->orWhereIn('email', (array) $employees);
+                              return $query->havingSpecifiedDetails((array) $employees);
                         });
                     });
                 }),

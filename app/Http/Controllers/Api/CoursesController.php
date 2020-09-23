@@ -163,6 +163,13 @@ class CoursesController extends Controller
      *    response=403,
      *    description="Unauthorized",
      * ),
+     * @OA\Response(
+     *     response=422,
+     *     description="Courses were not shown due to validation error",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="error", type="string", example="You cannot filter by not yours employees."),
+     *     )
+     *  ),
      * )
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection

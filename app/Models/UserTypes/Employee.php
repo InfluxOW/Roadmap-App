@@ -131,6 +131,13 @@ class Employee extends User
      * Helpers
      * */
 
+    public function scopeHavingSpecifiedDetails(Builder $query, array $details)
+    {
+        return $query->whereIn('name', $details)
+            ->orWhereIn('username', $details)
+            ->orWhereIn('email', $details);
+    }
+
     public function doesntHaveCourse(Course $course)
     {
         return ! $this->hasCourse($course);

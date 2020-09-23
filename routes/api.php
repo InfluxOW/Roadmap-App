@@ -67,6 +67,11 @@ Route::middleware('auth:sanctum')->group(function () {
      * */
     Route::get('managers', [Api\ManagersController::class, 'index'])->name('managers.index');
     Route::get('managers/{manager:username}', [Api\ManagersController::class, 'show'])->name('managers.show');
+
+    /*
+     * Technologies
+     * */
+    Route::get('technologies', [Api\TechnologiesController::class, 'index'])->name('technologies.index');
 });
 
 /*
