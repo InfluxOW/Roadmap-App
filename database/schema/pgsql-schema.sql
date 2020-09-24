@@ -574,6 +574,7 @@ CREATE TABLE public.users (
     sex character varying(255),
     birthday timestamp(0) without time zone,
     "position" character varying(255),
+    remember_token character varying(100),
     email_verified_at timestamp(0) without time zone,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,

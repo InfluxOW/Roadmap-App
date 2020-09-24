@@ -34,6 +34,7 @@ class UserFactory extends Factory
             'sex' => $sex,
             'birthday' => $this->faker->dateTimeBetween('-60 years', '-20 years'),
             'position' => $this->faker->jobTitle,
+            'remember_token' => Str::random(10),
         ];
     }
 

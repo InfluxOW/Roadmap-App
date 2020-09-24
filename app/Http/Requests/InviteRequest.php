@@ -20,6 +20,7 @@ class InviteRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
+                'email',
                 Rule::unique('invites', 'email')->where(function (Builder $query) {
                     return $query->where('expires_at', '>', now());
                 }),

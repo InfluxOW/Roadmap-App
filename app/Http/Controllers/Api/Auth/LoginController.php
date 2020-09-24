@@ -20,7 +20,7 @@ class LoginController extends Controller
      *    required=true,
      *    description="User credentials",
      *    @OA\JsonContent(
-     *       required={"username","password"},
+     *       required={"email","password"},
      *       @OA\Property(property="email", type="string", format="email", example="user@mail.com"),
      *       @OA\Property(property="password", type="string", format="password", example="password"),
      *       @OA\Property(property="remember", type="boolean", example=true),

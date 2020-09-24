@@ -4,7 +4,6 @@
 /storage/*.key
 /storage/api-docs
 /vendor
-/resources/views
 /.idea
 .env
 .env.backup
