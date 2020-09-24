@@ -281,6 +281,40 @@ ALTER SEQUENCE public.failed_jobs_id_seq OWNED BY public.failed_jobs.id;
 
 
 --
+-- Name: invites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.invites (
+    id bigint NOT NULL,
+    email character varying(255) NOT NULL,
+    role character varying(255) NOT NULL,
+    code character varying(255) NOT NULL,
+    company_id bigint NOT NULL,
+    expires_at timestamp(0) without time zone NOT NULL,
+    used_at timestamp(0) without time zone
+);
+
+
+--
+-- Name: invites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.invites_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.invites_id_seq OWNED BY public.invites.id;
+
+
+--
 -- Name: jobs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -540,7 +574,6 @@ CREATE TABLE public.users (
     sex character varying(255),
     birthday timestamp(0) without time zone,
     "position" character varying(255),
-    remember_token character varying(100),
     email_verified_at timestamp(0) without time zone,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,
@@ -614,6 +647,13 @@ ALTER TABLE ONLY public.employee_roadmaps ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.failed_jobs ALTER COLUMN id SET DEFAULT nextval('public.failed_jobs_id_seq'::regclass);
+
+
+--
+-- Name: invites id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invites ALTER COLUMN id SET DEFAULT nextval('public.invites_id_seq'::regclass);
 
 
 --
@@ -815,6 +855,22 @@ ALTER TABLE ONLY public.failed_jobs
 
 ALTER TABLE ONLY public.failed_jobs
     ADD CONSTRAINT failed_jobs_uuid_unique UNIQUE (uuid);
+
+
+--
+-- Name: invites invites_code_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invites
+    ADD CONSTRAINT invites_code_unique UNIQUE (code);
+
+
+--
+-- Name: invites invites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invites
+    ADD CONSTRAINT invites_pkey PRIMARY KEY (id);
 
 
 --
@@ -1046,6 +1102,13 @@ CREATE INDEX employee_technologies_technology_id_index ON public.employee_techno
 
 
 --
+-- Name: invites_company_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invites_company_id_index ON public.invites USING btree (company_id);
+
+
+--
 -- Name: jobs_queue_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1233,6 +1296,14 @@ ALTER TABLE ONLY public.employee_technologies
 
 
 --
+-- Name: invites invites_company_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invites
+    ADD CONSTRAINT invites_company_id_foreign FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
 -- Name: preset_courses preset_courses_course_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1336,3 +1407,4 @@ INSERT INTO public.migrations VALUES (17, '2020_09_09_150026_create_employee_dev
 INSERT INTO public.migrations VALUES (18, '2020_09_10_065837_create_technology_development_directions_table', 1);
 INSERT INTO public.migrations VALUES (19, '2020_09_10_070100_create_course_technologies_table', 1);
 INSERT INTO public.migrations VALUES (20, '2020_09_16_143442_create_jobs_table', 1);
+INSERT INTO public.migrations VALUES (21, '2020_09_24_074812_create_invites_table', 1);
