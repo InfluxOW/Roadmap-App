@@ -42,4 +42,9 @@ class Company extends Model
     {
         return $this->hasMany(Team::class);
     }
+
+    public function invites()
+    {
+        return $this->hasMany(Invite::class);
+    }
 }

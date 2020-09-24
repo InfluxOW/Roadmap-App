@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\RoadmapRequest;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,7 +39,7 @@ class Roadmap extends Model
         return $this->belongsTo(Manager::class);
     }
 
-    public static function createFromRequest(Request $request)
+    public static function createFromRequest(RoadmapRequest $request)
     {
         $employee = Employee::whereUsername($request->employee)->firstOrFail();
         $preset = Preset::whereSlug($request->preset)->firstOrFail();

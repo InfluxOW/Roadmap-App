@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Course;
+use App\Models\Invite;
 use App\Models\Preset;
 use App\Models\Technology;
 use App\Models\User;
 use App\Policies\CoursesPolicy;
+use App\Policies\InvitesPolicy;
 use App\Policies\PresetsPolicy;
 use App\Policies\TechnologiesPolicy;
 use App\Policies\UsersPolicy;
@@ -24,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Preset::class => PresetsPolicy::class,
         User::class => UsersPolicy::class,
         Technology::class => TechnologiesPolicy::class,
+        Invite::class => InvitesPolicy::class,
     ];
 
     /**

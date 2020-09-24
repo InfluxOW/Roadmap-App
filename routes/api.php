@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//Auth::loginUsingId(1);
+
 /*
  * Auth
  *  */
@@ -73,6 +73,11 @@ Route::middleware('auth:sanctum')->group(function () {
      * Technologies
      * */
     Route::get('technologies', [Api\TechnologiesController::class, 'index'])->name('technologies.index');
+
+    /*
+     * Invites
+     * */
+    Route::post('invites', [Api\InvitesController::class, 'store'])->name('invites.store');
 });
 
 /*
