@@ -16,7 +16,12 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role' => $this->role,
             'sex' => $this->when(isset($this->sex), $this->sex),
-            'birthday' => $this->when(isset($this->birthday), $this->birthday->format('d-M-Y')),
+            'birthday' => $this->when(
+                isset($this->birthday),
+                function () {
+                    return $this->birthday->format('d-M-Y');
+                }
+            ),
             'position' => $this->when(isset($this->position), $this->position),
             'teams' => isset($request->take['teams']) ?
                 $this->teams->take($request->take['teams'])->pluck('name') :

@@ -44,4 +44,9 @@ class Invite extends Model
 
         return $invite;
     }
+
+    public function revoke()
+    {
+        return $this->update(['used_at' => now()]);
+    }
 }

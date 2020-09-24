@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Company;
+use App\Models\Invite;
 use App\Models\User;
+use App\Models\UserTypes\Employee;
+use App\Models\UserTypes\Manager;
 
 class RegisterController extends Controller
 {
@@ -14,16 +18,15 @@ class RegisterController extends Controller
      * summary="Register",
      * description="Register a new user",
      * operationId="authRegister",
-     * tags={"NOT WORKING"},
+     * tags={"Authentication"},
      * @OA\RequestBody(
      *    required=true,
      *    description="User data",
      *    @OA\JsonContent(
-     *       required={"name", "username", "email", "role", "password", "password_confirmation" },
+     *       required={"invite_token", "name", "username", "password", "password_confirmation"},
+     *       @OA\Property(property="invite_token", type="string", example="niUljlJf2jUB9XxxQW8n5BlHfKsL9RFNfXCMc8viDof3MtsHpRoQUkoMllrW"),
      *       @OA\Property(property="name", type="string", example="John Doe"),
      *       @OA\Property(property="username", type="string", example="john_doe"),
-     *       @OA\Property(property="email", type="string", format="email", example="john_doe@mail.com"),
-     *       @OA\Property(property="role", type="string", enum={"buyer", "seller"}),
      *       @OA\Property(property="password", type="string", example="password"),
      *       @OA\Property(property="password_confirmation", type="string", format="password", example="password"),
      *    ),
@@ -32,7 +35,7 @@ class RegisterController extends Controller
      *    response=200,
      *    description="User has been registered",
      *    @OA\JsonContent(
-     *       @OA\Property(property="access_token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDM2N2RkZTczY2NiYmE2ZjRkYTkxY2VjOWRlODA0NmYzYjNkYTI5MWRlZjM4Mjg1OTliZTY5YzAxOTUyMTIwMGIwYTU1ZGM5NWEyMzM2NmUiLCJpYXQiOjE1OTg1Mjg1NTYsIm5iZiI6MTU5ODUyODU1NiwiZXhwIjoxNjMwMDY0NTU2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.BfFE40nkUt-Jwr7S8gCvogsCoYsX6VSYvVzuT9czVuGS_VeDFV4W2riQ0SopOeLtsvZttMI8VLgpXDYBYsASsFo4H-zrAmGRYZ2qLi4QNj5cPVJpXqe4xhRQsYbpY4xre7lNfXaYod56Ocek-3psN3A68eTZ2ro_cPde42lkur5eQTx7-TojHeqpK3uywl8IugzvBq3wcfcHLRQZSmEVvkJzYNuLs-03YsMnyod1wk3FszqzqzmZP2hiTXj-HhU1N6WRy6XobGzgoM__bxPRsQoMK3TCphqHIhwO14pJzaFbDqEf3USEMmPrF9rYJrgUjzGUglqRsg78GZsWHNakhH6-q1kibPI-k-VMazKSn85wi6HuXXCwycBXY0PRYpYAGbUrfBkuxK_t21peZ8tb6kD3XEr6XEz3PgEmbaRbnFelQEybjLCGYmWj2yuKOjkSQgNeEdOmpqzUDUiJByjE_ElxRD77prr-OG6e3GwwwOaHYLy6_8MtRP1cTg81BtcEYc8AmFeuceSAEjbDzEzaLSgiAJH9dh3Qy24V5HNnQjXmWvpSAHW1sJcXAYZyPE1bY0h7LBk91UmTJ_mkxa0EDofQsOFMhAQdGrQr2HRdrwfmD_vrHDNL-MeP94XNAihrVg4AXjhTMuZOhuzSxza_DgNO9EACQuzy1f81mfMapGU"),
+     *       @OA\Property(property="message", type="string", example="You were successfully registered. Use your email and password to sign in."),
      *    )
      *     ),
      * @OA\Response(
@@ -61,9 +64,24 @@ class RegisterController extends Controller
      */
     public function __invoke(RegisterRequest $request)
     {
+        $invite = Invite::whereCode($request->invite_token)->first();
+        $invite->revoke();
+
         $validatedData = $request->validated();
+        $validatedData['email'] = $invite->email;
+        $validatedData['role'] = $invite->role;
         $validatedData['password'] = bcrypt($request->password);
-        User::create($validatedData);
+
+        if ($invite->role === 'employee') {
+            $user = Employee::make($validatedData);
+        }
+
+        if ($invite->role === 'manager') {
+            $user = Manager::make($validatedData);
+        }
+
+        $user->company()->associate($invite->company);
+        $user->save();
 
         return response(
             ['message' => 'You were successfully registered. Use your email and password to sign in.'],
