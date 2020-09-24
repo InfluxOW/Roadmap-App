@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PresetRequest;
 use App\Http\Resources\PresetResource;
+use App\Http\Resources\UserBasicInformationResource;
 use App\Models\Preset;
 use App\Repositories\PresetsRepository;
 use Illuminate\Http\Request;
@@ -107,6 +108,24 @@ class PresetsController extends Controller
      *         type="string"
      *    )
      *  ),
+     *  @OA\Parameter(
+     *    name="take[courses]",
+     *    in="query",
+     *    description="Count of course models that should be returned under 'courses' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[assigned_to]",
+     *    in="query",
+     *    description="Count of UserBasicInformation models that should be returned under 'assigned_to' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
      * @OA\Response(
      *    response=200,
      *    description="Presets were fetched",
@@ -177,6 +196,24 @@ class PresetsController extends Controller
      *    name="show[course]",
      *    in="query",
      *    description="Preset courses models attributes that should be returned (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[courses]",
+     *    in="query",
+     *    description="Count of course models that should be returned under 'courses' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[assigned_to]",
+     *    in="query",
+     *    description="Count of UserBasicInformation models that should be returned under 'assigned_to' key (by default returns all)",
      *    required=false,
      *    @OA\Schema(
      *         type="string"

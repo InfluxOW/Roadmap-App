@@ -14,9 +14,15 @@ class TechnologyResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
-            'courses' => CourseResource::collection($this->courses),
-            'directions' => $this->directions->pluck('name'),
-            'possessed_by' => UserBasicInformationResource::collection($this->ownedBy()),
+            'courses' => CourseResource::collection(
+                isset($request->take['courses']) ? $this->courses->take($request->take['courses']) : $this->courses
+            ),
+            'directions' => isset($request->take['directions']) ?
+                $this->directions->take($request->take['directions'])->pluck('name') :
+                $this->directions->pluck('name'),
+            'possessed_by' => UserBasicInformationResource::collection(
+                isset($request->take['possessed_by']) ? $this->ownedBy()->take($request->take['possessed_by']) : $this->ownedBy()
+            ),
         ];
 
         return ($request->show && is_array($request->show) && array_key_exists('technology', $request->show)) ?

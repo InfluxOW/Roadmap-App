@@ -21,11 +21,13 @@ class PresetResource extends JsonResource
                 ! ($request->is('api/presets/*') || $request->user()->isEmployee()),
                 route('presets.show', ['preset' => $this->resource])
             ),
-            'courses' => $this->courses(),
+            'courses' => $this->courses($request),
             'assigned_to' => $this->when(
                 ($request->is('api/presets') || $request->is('api/presets/*')),
-                function () {
-                    return UserBasicInformationResource::collection($this->assignedTo());
+                function () use ($request) {
+                    return UserBasicInformationResource::collection(
+                        isset($request->take['assigned_to']) ? $this->assignedTo()->take($request->take['assigned_to']) : $this->assignedTo()
+                    );
                 }
             )
         ];
@@ -49,11 +51,12 @@ class PresetResource extends JsonResource
             ->map(fn($roadmap) => $roadmap->employee);
     }
 
-    private function courses()
+    private function courses($request)
     {
         $courses = [];
+        $coursesToTake = isset($request->take['courses']) ? $this->courses->take($request->take['courses']) : $this->courses;
 
-        foreach ($this->courses as $course) {
+        foreach ($coursesToTake as $course) {
             foreach ($course->technologies as $technology) {
                 $courses[$course->level->name][$technology->name][] =
                     isset($this->additional['employee']) ?

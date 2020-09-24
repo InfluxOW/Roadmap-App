@@ -309,4 +309,40 @@ class CoursesQueriesTest extends TestCase
             Course::take(20)->get()->map->only(explode(',', $attributes))->toArray()
         );
     }
+
+    /** @test */
+    public function a_user_can_specify_how_many_course_technologies_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'courses.index',
+                    ['take[technologies]' => $take = 1]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['technologies']),
+            $take
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_how_many_course_completed_by_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'courses.index',
+                    ['take[completed_by]' => $take = 0]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['completed_by']),
+            $take
+        );
+    }
 }

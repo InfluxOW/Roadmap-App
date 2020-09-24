@@ -135,6 +135,24 @@ class CoursesController extends Controller
      *         type="string"
      *    )
      *  ),
+     *  @OA\Parameter(
+     *    name="take[technologies]",
+     *    in="query",
+     *    description="Count of technology models that should be returned under 'technologies' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[completed_by]",
+     *    in="query",
+     *    description="Count of UserBasicInformation models that should be returned under 'completed_by' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
      * @OA\Response(
      *    response=200,
      *    description="Courses were fetched",
@@ -203,6 +221,24 @@ class CoursesController extends Controller
      *    name="show[course]",
      *    in="query",
      *    description="Course model attributes that should be returned (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[technologies]",
+     *    in="query",
+     *    description="Count of technology models that should be returned under 'technologies' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[completed_by]",
+     *    in="query",
+     *    description="Count of UserBasicInformation models that should be returned under 'completed_by' key (by default returns all)",
      *    required=false,
      *    @OA\Schema(
      *         type="string"

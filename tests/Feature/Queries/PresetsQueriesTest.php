@@ -205,4 +205,40 @@ class PresetsQueriesTest extends TestCase
             Preset::all()->map->only(explode(',', $attributes))->toArray()
         );
     }
+
+    /** @test */
+    public function a_user_can_specify_how_many_preset_assigned_to_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'presets.index',
+                    ['take[assigned_to]' => $take = 0]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['assigned_to']),
+            $take
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_how_many_preset_courses_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'presets.index',
+                    ['take[courses]' => $take = 1]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['courses']),
+            $take
+        );
+    }
 }

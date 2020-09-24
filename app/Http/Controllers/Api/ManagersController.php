@@ -38,6 +38,24 @@ class ManagersController extends Controller
      * security={
      *   {"access_token": {}},
      * },
+     *  @OA\Parameter(
+     *    name="show[user]",
+     *    in="query",
+     *    description="Manager model attributes that should be returned (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[teams]",
+     *    in="query",
+     *    description="Count of team models that should be returned under 'teams' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
      * @OA\Response(
      *    response=301,
      *    description="Redirected",

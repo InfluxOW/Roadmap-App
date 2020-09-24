@@ -414,4 +414,59 @@ class EmployeesQueriesTest extends TestCase
             $this->manager->employees->map->only(explode(',', $attributes))->toArray()
         );
     }
+
+    /** @test */
+    public function a_user_can_specify_how_many_employee_teams_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['take[teams]' => $take = 1]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['teams']),
+            $take
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_how_many_employee_technologies_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['take[technologies]' => $take = 1]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['technologies']),
+            $take
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_how_many_employee_development_directions_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'employees.index',
+                    ['take[development_directions]' => $take = 1]
+                )
+            )
+            ->assertOk();
+
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['development_directions']),
+            $take
+        );
+    }
 }

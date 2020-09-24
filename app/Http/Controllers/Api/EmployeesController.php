@@ -178,6 +178,33 @@ class EmployeesController extends Controller
      *         type="string"
      *    )
      *  ),
+     *  @OA\Parameter(
+     *    name="take[teams]",
+     *    in="query",
+     *    description="Count of team models that should be returned under 'teams' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[technologies]",
+     *    in="query",
+     *    description="Count of technology models that should be returned under 'technologies' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[development_directions]",
+     *    in="query",
+     *    description="Count of DevelopmentDirection models that should be returned under 'development_directions' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
      * @OA\Response(
      *    response=200,
      *    description="Employees were fetched",
@@ -247,6 +274,33 @@ class EmployeesController extends Controller
      *    name="show[user]",
      *    in="query",
      *    description="Employee model attributes that should be returned (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[teams]",
+     *    in="query",
+     *    description="Count of team models that should be returned under 'teams' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[technologies]",
+     *    in="query",
+     *    description="Count of technology models that should be returned under 'technologies' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[development_directions]",
+     *    in="query",
+     *    description="Count of DevelopmentDirection models that should be returned under 'development_directions' key (by default returns all)",
      *    required=false,
      *    @OA\Schema(
      *         type="string"

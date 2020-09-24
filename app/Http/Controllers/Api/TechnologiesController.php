@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TechnologyResource;
+use App\Http\Resources\UserBasicInformationResource;
 use App\Models\Technology;
 use App\Repositories\TechnologiesRepository;
 use Illuminate\Http\Request;
@@ -96,6 +97,33 @@ class TechnologiesController extends Controller
      *    name="show[course]",
      *    in="query",
      *    description="Technology model attributes that should be returned (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[courses]",
+     *    in="query",
+     *    description="Count of course models that should be returned under 'courses' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[directions]",
+     *    in="query",
+     *    description="Count of DevelopmentDirection models that should be returned under 'directions' key (by default returns all)",
+     *    required=false,
+     *    @OA\Schema(
+     *         type="string"
+     *    )
+     *  ),
+     *  @OA\Parameter(
+     *    name="take[possessed_by]",
+     *    in="query",
+     *    description="Count of UserBasicInformation models that should be returned under 'possessed_by' key (by default returns all)",
      *    required=false,
      *    @OA\Schema(
      *         type="string"

@@ -167,4 +167,118 @@ class TechnologiesQueriesTest extends TestCase
             )
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
+    /** @test */
+    public function technologies_can_be_sorted_by_name()
+    {
+        $technologies = Technology::take(20)->get()->sortBy('name')->pluck('name');
+
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'technologies.index',
+                    ['sort' => 'name']
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            $technologies,
+            collect(json_decode($response->content(), true)['data'])->pluck('name')
+        );
+    }
+
+    /** @test */
+    public function technologies_can_be_sorted_by_courses_count()
+    {
+        $technologies = Technology::withCount('courses')->take(20)->get()->sortBy('courses_count')->pluck('name');
+
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'technologies.index',
+                    ['sort' => 'courses_count']
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            $technologies,
+            collect(json_decode($response->content(), true)['data'])->pluck('name')
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_what_attributes_should_be_returned()
+    {
+        $attributes = "name";
+
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'technologies.index',
+                    ['show[technology]' => $attributes]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            json_decode($response->content(), true)['data'],
+            Technology::take(20)->get()->map->only(explode(',', $attributes))->toArray()
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_how_many_technology_courses_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'technologies.index',
+                    ['take[courses]' => $take = 1]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['courses']),
+            $take
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_how_many_technology_directions_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'technologies.index',
+                    ['take[directions]' => $take = 1]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['directions']),
+            $take
+        );
+    }
+
+    /** @test */
+    public function a_user_can_specify_how_many_technology_possessed_by_should_be_returned()
+    {
+        $response = $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'technologies.index',
+                    ['take[possessed_by]' => $take = 0]
+                )
+            )
+            ->assertOk();
+
+        $this->assertEquals(
+            count(json_decode($response->content(), true)['data'][0]['possessed_by']),
+            $take
+        );
+    }
 }
