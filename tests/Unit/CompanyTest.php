@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Company;
+use App\Models\Invite;
 use App\Models\Team;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
@@ -44,5 +45,17 @@ class CompanyTest extends TestCase
         $this->assertTrue($company->teams->contains(Team::first()));
         $this->assertInstanceOf(Team::class, $company->teams->first());
         $this->assertCount($count, $company->teams);
+    }
+
+    /** @test */
+    public function it_may_have_invites()
+    {
+        $company = Company::factory()->has(
+            Invite::factory()->count($count = 3)
+        )->create();
+
+        $this->assertTrue($company->invites->contains(Invite::first()));
+        $this->assertInstanceOf(Invite::class, $company->invites->first());
+        $this->assertCount($count, $company->invites);
     }
 }

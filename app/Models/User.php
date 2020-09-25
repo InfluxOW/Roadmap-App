@@ -74,19 +74,4 @@ class User extends Authenticatable
     {
         return $this instanceof Employee;
     }
-
-    public function isNotAdmin()
-    {
-        return ! $this->isAdmin();
-    }
-
-    public function isNotManager()
-    {
-        return ! $this->isManager();
-    }
-
-    public function isNotEmployee()
-    {
-        return ! $this->isEmployee();
-    }
 }

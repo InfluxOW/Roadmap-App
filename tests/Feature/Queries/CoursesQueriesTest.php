@@ -104,7 +104,7 @@ class CoursesQueriesTest extends TestCase
             ->get(
                 route(
                     'courses.index',
-                    ['filter[technologies]' => $technology]
+                    ['filter[technologies]' => $technology, 'take[courses]' => 20]
                 )
             )
             ->assertOk()

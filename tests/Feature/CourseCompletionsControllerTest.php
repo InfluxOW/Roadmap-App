@@ -8,6 +8,7 @@ use App\Models\Roadmap;
 use App\Models\UserTypes\Admin;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class CourseCompletionsControllerTest extends TestCase
@@ -149,6 +150,20 @@ class CourseCompletionsControllerTest extends TestCase
         $this->actingAs($this->employee)
             ->put(route('completions.update', Course::first()), ['rating' => $rating = 5])
             ->assertForbidden();
+    }
+
+    /** @test */
+    public function an_employee_cannot_rate_a_course_with_incorrect_rating()
+    {
+        $this->employee->complete(Course::first());
+
+        $this->actingAs($this->employee)
+            ->put(route('completions.update', Course::first()), ['rating' => -5])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $this->actingAs($this->employee)
+            ->put(route('completions.update', Course::first()), ['rating' => 5400])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */

@@ -49,4 +49,24 @@ class Invite extends Model
     {
         return $this->update(['used_at' => now()]);
     }
+
+    public function isRevoked()
+    {
+        return isset($this->used_at);
+    }
+
+    public function isNotRevoked()
+    {
+        return ! $this->isRevoked();
+    }
+
+    public function isExpired()
+    {
+        return $this->expires_at < now();
+    }
+
+    public function isNotExpired()
+    {
+        return ! $this->isExpired();
+    }
 }
