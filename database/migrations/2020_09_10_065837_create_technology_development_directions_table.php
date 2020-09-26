@@ -14,6 +14,7 @@ class CreateTechnologyDevelopmentDirectionsTable extends Migration
     public function up()
     {
         Schema::create('technology_development_directions', function (Blueprint $table) {
+            $table->id('technology_for_development_direction');
             $table->foreignId('technology_id')->index()->constrained()->cascadeOnDelete();
             $table->foreignId('development_direction_id')->index()->constrained()->cascadeOnDelete();
             $table->unique(['technology_id', 'development_direction_id']);

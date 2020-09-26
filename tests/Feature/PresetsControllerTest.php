@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Course;
 use App\Models\Preset;
 use App\Models\UserTypes\Admin;
 use App\Models\UserTypes\Employee;
@@ -25,7 +26,7 @@ class PresetsControllerTest extends TestCase
         $this->admin = Admin::factory()->create();
 
         $this->attributes = Preset::factory()->raw();
-        $this->presets = Preset::factory()->for(Manager::factory())->count(3)->create();
+        $this->presets = Preset::factory()->for(Manager::factory())->hasAttached(Course::factory(), ['assigned_at' => now()])->count(3)->create();
     }
 
     /** @test */

@@ -30,7 +30,8 @@ class DevelopmentDirection extends Model
 
     public function technologies()
     {
-        return $this->belongsToMany(Technology::class, 'technology_development_directions');
+        return $this->belongsToMany(Technology::class, 'technology_development_directions')
+            ->using(TechnologyForDevelopmentDirection::class);
     }
 
     public function employees()

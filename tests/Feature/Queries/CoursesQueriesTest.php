@@ -128,7 +128,7 @@ class CoursesQueriesTest extends TestCase
             ->assertOk()
             ->assertJsonCount(Course::whereHas('technologies', function (Builder $query) use ($technology) {
                 return $query->whereSlug($technology);
-            })->count(), 'data');
+            })->take(20)->get()->count(), 'data');
     }
 
     /** @test */

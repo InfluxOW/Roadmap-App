@@ -50,6 +50,7 @@ class PresetsRepository
                 AllowedSort::field('courses_count'),
                 AllowedSort::field('manager', 'manager_id'),
             ])
+            ->whereHas('courses')
             ->with(self::WITH)
             ->withCount(self::WITH_COUNT)
             ->paginate($request->per ?? 20)
