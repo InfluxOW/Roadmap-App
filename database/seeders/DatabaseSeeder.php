@@ -19,15 +19,17 @@ class DatabaseSeeder extends Seeder
         switch (app('env')) {
             case 'production':
                 $this->call([
-                    Production\SkillsSeeder::class,
-                    Production\EmployeeLevelsSeeder::class,
-                    Production\CoursesSeeder::class
+//                    EmployeeLevelsSeeder::class,
+//                    DevelopmentDirectionsSeeder::class,
+//                    Production\SkillsSeeder::class,
+//                Production\TechnologiesSeeder::class,
+//                    Production\CoursesSeeder::class,
                 ]);
                 break;
             case 'local':
                 $this->call([
-                    Local\EmployeeLevelsSeeder::class,
-                    Local\DevelopmentDirectionsSeeder::class,
+                    EmployeeLevelsSeeder::class,
+                    DevelopmentDirectionsSeeder::class,
                     Local\CompaniesSeeder::class,
                     Local\UsersSeeder::class,
                     Local\TeamsSeeder::class,
@@ -46,8 +48,8 @@ class DatabaseSeeder extends Seeder
                 break;
             case 'testing':
                 $this->call([
-                    Testing\EmployeeLevelsSeeder::class,
-                    Testing\DevelopmentDirectionsSeeder::class,
+                    EmployeeLevelsSeeder::class,
+                    DevelopmentDirectionsSeeder::class,
                     Testing\CompaniesSeeder::class,
                     Testing\UsersSeeder::class,
                     Testing\TeamsSeeder::class,

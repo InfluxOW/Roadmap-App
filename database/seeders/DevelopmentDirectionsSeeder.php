@@ -1,13 +1,13 @@
 <?php
 
-namespace Database\Seeders\Testing;
+namespace Database\Seeders;
 
 use App\Models\DevelopmentDirection;
 use Illuminate\Database\Seeder;
 
 class DevelopmentDirectionsSeeder extends Seeder
 {
-    public const DIRECTIONS = ['Backend', 'Frontend'];
+    public const DIRECTIONS = ['Frontend', 'Backend'];
 
     public function run()
     {
