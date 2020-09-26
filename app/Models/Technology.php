@@ -41,4 +41,14 @@ class Technology extends Model
     {
         return $this->belongsToMany(Employee::class, 'employee_technologies', 'technology_id', 'employee_id');
     }
+
+    public function relatedTechnologies()
+    {
+        return $this->belongsToMany(self::class, 'technologies_connections', 'technology_id', 'related_technology_id');
+    }
+
+    public function relatedToTechnologies()
+    {
+        return $this->belongsToMany(self::class, 'technologies_connections', 'related_technology_id', 'technology_id');
+    }
 }

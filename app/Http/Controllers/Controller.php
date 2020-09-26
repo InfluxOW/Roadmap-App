@@ -11,7 +11,7 @@ use Illuminate\Routing\Controller as BaseController;
  * @OA\Info(
  *    title="Roadmap App API",
  *    description="Roadmap App",
- *    version="0.0.1",
+ *    version="1.3",
  *    @OA\Contact(
  *      email="krochak_n@mail.ru",
  *      url="https://github.com/InfluxOW"
@@ -19,7 +19,7 @@ use Illuminate\Routing\Controller as BaseController;
  * )
  *  @OA\Server(
  *      url=L5_SWAGGER_CONST_HOST,
- *      description="Demo API Server"
+ *      description="Roadmap App API Server"
  * ),
  *  @OA\SecurityScheme(
  *      securityScheme="access_token",

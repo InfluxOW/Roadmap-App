@@ -191,13 +191,13 @@ class TechnologiesQueriesTest extends TestCase
     /** @test */
     public function technologies_can_be_sorted_by_courses_count()
     {
-        $technologies = Technology::withCount('courses')->take(20)->get()->sortBy('courses_count')->pluck('name');
+        $technologies = Technology::withCount('courses')->take(20)->groupBy('courses_count')->groupBy('name')->pluck('name');
 
         $response = $this->actingAs($this->manager)
             ->get(
                 route(
                     'technologies.index',
-                    ['sort' => 'courses_count']
+                    ['sort' => 'courses_count,name']
                 )
             )
             ->assertOk();

@@ -531,6 +531,16 @@ CREATE TABLE public.technologies (
 
 
 --
+-- Name: technologies_connections; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.technologies_connections (
+    technology_id bigint NOT NULL,
+    related_technology_id bigint NOT NULL
+);
+
+
+--
 -- Name: technologies_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -971,6 +981,14 @@ ALTER TABLE ONLY public.teams
 
 
 --
+-- Name: technologies_connections technologies_connections_technology_id_related_technology_id_un; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.technologies_connections
+    ADD CONSTRAINT technologies_connections_technology_id_related_technology_id_un UNIQUE (technology_id, related_technology_id);
+
+
+--
 -- Name: technologies technologies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1180,6 +1198,20 @@ CREATE INDEX teams_owner_id_index ON public.teams USING btree (owner_id);
 
 
 --
+-- Name: technologies_connections_related_technology_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX technologies_connections_related_technology_id_index ON public.technologies_connections USING btree (related_technology_id);
+
+
+--
+-- Name: technologies_connections_technology_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX technologies_connections_technology_id_index ON public.technologies_connections USING btree (technology_id);
+
+
+--
 -- Name: technology_development_directions_development_direction_id_inde; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1361,6 +1393,22 @@ ALTER TABLE ONLY public.teams
 
 
 --
+-- Name: technologies_connections technologies_connections_related_technology_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.technologies_connections
+    ADD CONSTRAINT technologies_connections_related_technology_id_foreign FOREIGN KEY (related_technology_id) REFERENCES public.technologies(id);
+
+
+--
+-- Name: technologies_connections technologies_connections_technology_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.technologies_connections
+    ADD CONSTRAINT technologies_connections_technology_id_foreign FOREIGN KEY (technology_id) REFERENCES public.technologies(id);
+
+
+--
 -- Name: technology_development_directions technology_development_directions_development_direction_id_fore; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1409,3 +1457,4 @@ INSERT INTO public.migrations VALUES (18, '2020_09_10_065837_create_technology_d
 INSERT INTO public.migrations VALUES (19, '2020_09_10_070100_create_course_technologies_table', 1);
 INSERT INTO public.migrations VALUES (20, '2020_09_16_143442_create_jobs_table', 1);
 INSERT INTO public.migrations VALUES (21, '2020_09_24_074812_create_invites_table', 1);
+INSERT INTO public.migrations VALUES (22, '2020_09_26_072930_create_technologies_connections_table', 1);
