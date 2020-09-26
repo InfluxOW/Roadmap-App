@@ -11,12 +11,8 @@ use Illuminate\Http\Request;
 
 class PresetsGenerationController extends Controller
 {
-    protected PresetsRepository $repository;
-
-    public function __construct(PresetsRepository $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
-
         $this->authorizeResource(Preset::class);
     }
 
@@ -96,7 +92,7 @@ class PresetsGenerationController extends Controller
      */
     public function store(PresetGenerationRequest $request)
     {
-        $preset = $this->repository->generate($request);
+        $preset = Preset::generateFromRequest($request);
 
         return new PresetResource($preset);
     }

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Requests\PresetGenerationRequest;
 use App\Models\UserTypes\Manager;
+use Facades\App\Repositories\PresetsRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -40,5 +42,22 @@ class Preset extends Model
     public function courses()
     {
         return $this->belongsToMany(Course::class, 'preset_courses')->withPivot('assigned_at');
+    }
+
+    /*
+     * Helpers
+     * */
+
+    public static function generateFromRequest(PresetGenerationRequest $request)
+    {
+        $preset = PresetsRepository::store($request);
+
+        $courses = collect($request->technologies)->map(function ($technology) {
+            return Technology::whereName($technology)->first()->courses;
+        })->flatten()->unique('id', true);
+
+        $preset->courses()->attach($courses->pluck('id')->toArray(), ['assigned_at' => now()]);
+
+        return $preset;
     }
 }

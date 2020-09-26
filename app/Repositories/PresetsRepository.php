@@ -67,16 +67,4 @@ class PresetsRepository
             Preset::create($request->validated()) :
             $request->user()->presets()->create($request->validated());
     }
-
-    public function generate(Request $request)
-    {
-        $preset = $this->store($request);
-        $courses = collect($request->technologies)->map(function ($technology) {
-            return Technology::whereName($technology)->first()->courses;
-        })->flatten()->unique('id', true);
-
-        $preset->courses()->attach($courses->pluck('id')->toArray(), ['assigned_at' => now()]);
-
-        return $preset;
-    }
 }
