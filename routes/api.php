@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
  * Auth
  *  */
 Route::middleware('guest')->group(function () {
+    Route::get('users', function () {
+        return User::all();
+    });
     Route::post('login', Api\Auth\LoginController::class)->name('login');
     Route::post('register', Api\Auth\RegisterController::class)->name('register');
 });
@@ -48,7 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
      *  */
     Route::apiResource('presets', Api\PresetsController::class)->parameters(['presets' => 'preset:slug']);
     Route::post('presets/generation', [Api\PresetsGenerationController::class, 'store'])->name('presets.generate');
-    Route::post('presets/{preset:slug}/courses', [Api\CourseAssignmentsController::class, 'store'])->name('presets.courses.assign');
+    Route::post('presets/{preset:slug}/courses/{course:slug}', [Api\CourseAssignmentsController::class, 'store'])->name('presets.courses.assign');
     Route::delete('presets/{preset:slug}/courses/{course:slug}', [Api\CourseAssignmentsController::class, 'destroy'])->name('presets.courses.unassign');
 
     /*
@@ -92,6 +96,3 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
      * */
     Route::apiResource('courses', Api\Admin\CoursesController::class)->parameters(['courses' => 'course:slug'])->only('store', 'update', 'destroy');
 });
-
-//POST /presets/{preset:slug}/courses/{course:slug} - для менеджеров
-//добавить указанный курс в указанный пресет

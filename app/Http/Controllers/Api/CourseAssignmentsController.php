@@ -28,18 +28,18 @@ class CourseAssignmentsController extends Controller
         return [];
     }
 
-    public function store(Preset $preset, CourseAssignmentRequest $request)
+    public function store(Preset $preset, Course $course, Request $request)
     {
-        $preset->courses()->attach(
-            Course::whereSlug($request->course)->first(),
-            ['assigned_at' => now()]
-        );
+        // check if preset has course
+        $preset->courses()->attach($course,['assigned_at' => now()]);
 
         return response(['message' => 'Specified course has been assigned to the preset.'], 200);
     }
 
     public function destroy(Preset $preset, Course $course)
     {
+        //        check if preset has course
+
         $preset->courses()->detach($course);
 
         return response(['message' => 'Specified course has been unassigned from the preset.'], 200);
