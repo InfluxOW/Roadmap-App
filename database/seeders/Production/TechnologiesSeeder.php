@@ -4,7 +4,7 @@ namespace Database\Seeders\Production;
 
 use App\Models\Technology;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class TechnologiesSeeder extends Seeder
 {
@@ -17,8 +17,18 @@ class TechnologiesSeeder extends Seeder
             JSON_THROW_ON_ERROR
         )['technologies'];
 
-        foreach ($technologies as $technology) {
-            Technology::create(Arr::only($technology, ['name', 'description']));
+        foreach ($technologies as $attributes) {
+            $technology = Technology::make($attributes);
+
+            if ($attributes['name'] === 'C#') {
+                $technology->slug = "c_sharp";
+            }
+
+            if ($attributes['name'] === 'C++') {
+                $technology->slug = "c_plus_plus";
+            }
+
+            $technology->save();
         }
     }
 }

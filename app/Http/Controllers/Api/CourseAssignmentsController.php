@@ -31,7 +31,7 @@ class CourseAssignmentsController extends Controller
     public function store(Preset $preset, Course $course, Request $request)
     {
         // check if preset has course
-        $preset->courses()->attach($course,['assigned_at' => now()]);
+        $preset->courses()->attach($course, ['assigned_at' => now()]);
 
         return response(['message' => 'Specified course has been assigned to the preset.'], 200);
     }

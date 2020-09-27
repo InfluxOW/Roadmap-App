@@ -3,8 +3,9 @@
 namespace Database\Seeders\Production;
 
 use App\Models\Course;
-use App\Models\Technology;
+use App\Models\EmployeeLevel;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class CoursesSeeder extends Seeder
 {
@@ -18,23 +19,9 @@ class CoursesSeeder extends Seeder
         )['courses'];
 
         foreach ($courses as $attributes) {
-            if (Course::whereName($attributes['name'])->orWhere('source', $attributes['source'])->exists()) {
-                continue;
-            }
-
-            $course = Course::make([
-                'name' => $attributes['name'],
-                'description' => $attributes['description'],
-                'source' => $attributes['source']
-            ]);
-
-
-            $course->level()->associate($attributes['employee_level_id']);
+            $course = Course::make(Arr::only($attributes, ['name', 'source', 'description']));
+            $course->level()->associate(EmployeeLevel::whereName($attributes['employee_level'])->first());
             $course->save();
-
-            foreach (explode(',', $attributes['technology']) as $technology) {
-                $course->technologies()->attach(Technology::whereName($technology)->first());
-            }
         }
     }
 }

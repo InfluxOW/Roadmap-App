@@ -1,0 +1,548 @@
+{
+    "course_technologies": [
+        {
+            "course": "JavaScript. Уровень 1. Интерактивные веб-приложения",
+            "technologies": "JavaScript"
+        },
+        {
+            "course": "Практический JavaScript (Продвинутый уровень)",
+            "technologies": "JavaScript"
+        },
+        {
+            "course": "Асинхронная разработка на JS",
+            "technologies": "JavaScript"
+        },
+        {
+            "course": "HTML/CSS. Интерактивный курс",
+            "technologies": "CSS, HTML"
+        },
+        {
+            "course": "HTML5 и CSS3. Современные средства Web-разработки",
+            "technologies": "CSS, HTML"
+        },
+        {
+            "course": "Веб-вёрстка",
+            "technologies": "CSS"
+        },
+        {
+            "course": "CSS: Позиционирование",
+            "technologies": "CSS"
+        },
+        {
+            "course": "CSS: Адаптивность",
+            "technologies": "CSS"
+        },
+        {
+            "course": "Git. Базовый курс. Основы работы с Git.",
+            "technologies": "Git"
+        },
+        {
+            "course": "JavaScript-фреймворк React.js",
+            "technologies": "React, TypeScript"
+        },
+        {
+            "course": "Vue.js",
+            "technologies": "Vue.js, Vuex, API"
+        },
+        {
+            "course": "Как быстро начать использовать JavaScript-фреймворк Vue.js",
+            "technologies": "Vue.js"
+        },
+        {
+            "course": "JS: Redux (React)",
+            "technologies": "Redux"
+        },
+        {
+            "course": "Node.js",
+            "technologies": "Node.js"
+        },
+        {
+            "course": "Node JS. Практический курс. (Mongo, GraphQL, MySQL, Express)",
+            "technologies": "Node.js, API, MySQL, MongoDB, GraphQL"
+        },
+        {
+            "course": "Курс bootstrap",
+            "technologies": "Bootstrap"
+        },
+        {
+            "course": "Программист PHP от GeekBrains",
+            "technologies": "PHP"
+        },
+        {
+            "course": "SQL и получение данных",
+            "technologies": "SQL"
+        },
+        {
+            "course": "Администрирование PostgreSQL 10. Базовый курс",
+            "technologies": "PostgreSQL, SQL"
+        },
+        {
+            "course": "Администрирование PostgreSQL 10. Настройка и мониторинг",
+            "technologies": "PostgreSQL, SQL"
+        },
+        {
+            "course": "Курс MySQL c нуля",
+            "technologies": "MySQL, SQL"
+        },
+        {
+            "course": "Понятный видеокурс по основам ООП",
+            "technologies": "ООП"
+        },
+        {
+            "course": "Linux с нуля до Сертификата",
+            "technologies": "Linux, Bash"
+        },
+        {
+            "course": "1С-Битрикс. Администратор. Базовый",
+            "technologies": "1С-Битрикс"
+        },
+        {
+            "course": "1С-Битрикс. Многосайтовость",
+            "technologies": "1С-Битрикс"
+        },
+        {
+            "course": "1С-Битрикс. Многосайтовость. Масштабирование",
+            "technologies": "1С-Битрикс"
+        },
+        {
+            "course": "Jenkins",
+            "technologies": "Jenkins"
+        },
+        {
+            "course": "Создание SOAP Web-сервиса",
+            "technologies": "SOAP, Spring"
+        },
+        {
+            "course": "Веб сервисы SOAP и RESTful",
+            "technologies": "SOAP, REST, Java"
+        },
+        {
+            "course": "Создание RESTful Web-сервиса",
+            "technologies": "REST, HTTP, JSON"
+        },
+        {
+            "course": "Курс «Разработчик на Spring Framework» от Otus",
+            "technologies": "Spring"
+        },
+        {
+            "course": "Основы командной строки",
+            "technologies": "Bash"
+        },
+        {
+            "course": "Java. Уровень 1. Язык программирования Java",
+            "technologies": "Java"
+        },
+        {
+            "course": "Java. Уровень 2. Разработка клиент - серверных приложений",
+            "technologies": "Java"
+        },
+        {
+            "course": "jQuery. Основы",
+            "technologies": "jQuery"
+        },
+        {
+            "course": "jQuery для профессионалов",
+            "technologies": "jQuery"
+        },
+        {
+            "course": "Основы MongoDB",
+            "technologies": "MongoDB, Node.js"
+        },
+        {
+            "course": "React JS. Практический Курс 2020",
+            "technologies": "React"
+        },
+        {
+            "course": "Python: основы и применение",
+            "technologies": "Python"
+        },
+        {
+            "course": "Курс по фреймворку Symfony",
+            "technologies": "Symfony"
+        },
+        {
+            "course": "Видеокурс по Docker",
+            "technologies": "Docker"
+        },
+        {
+            "course": "Framework Laravel",
+            "technologies": "Laravel"
+        },
+        {
+            "course": "Курс по Angular",
+            "technologies": "Angular"
+        },
+        {
+            "course": "Интенсив по \"продвинутой\" разработке на Angular",
+            "technologies": "Angular"
+        },
+        {
+            "course": "Backbone Tutorial: Learn Backbonejs from Scratch",
+            "technologies": "Backbone"
+        },
+        {
+            "course": "Learning BackboneJS Testing",
+            "technologies": "Backbone"
+        },
+        {
+            "course": "Курс по Gulp",
+            "technologies": "Gulp"
+        },
+        {
+            "course": "Интенсив. Сборка. Gulp 4, SCSS и шаблонизатор PUG",
+            "technologies": "Gulp, PUG, SCSS"
+        },
+        {
+            "course": "Продвинутый курс по Webpack v4",
+            "technologies": "WebPack"
+        },
+        {
+            "course": "WebPack 4+",
+            "technologies": "WebPack"
+        },
+        {
+            "course": "Уроки Ajax",
+            "technologies": "Ajax"
+        },
+        {
+            "course": "WebGL w/ Unity: The Ultimate Guide to Games in the Browser",
+            "technologies": "WebGL"
+        },
+        {
+            "course": "Препроцессор Less",
+            "technologies": "Less"
+        },
+        {
+            "course": "Курс LESS Упрощение CSS",
+            "technologies": "Less"
+        },
+        {
+            "course": "SASS: Основы",
+            "technologies": "SASS, CSS"
+        },
+        {
+            "course": "SASS: Программирование",
+            "technologies": "SASS, CSS"
+        },
+        {
+            "course": "Продвинутый курс по Redis",
+            "technologies": "Redis"
+        },
+        {
+            "course": "C#-разработчик",
+            "technologies": "C#"
+        },
+        {
+            "course": "Фреймворк YII2 с Нуля до Профи",
+            "technologies": "Yii Framework"
+        },
+        {
+            "course": "Python-фреймворк Django",
+            "technologies": "Django"
+        },
+        {
+            "course": "Продвинутый видеокурс по Redux",
+            "technologies": "Redux, Websocket"
+        },
+        {
+            "course": "Интенсив по TypeScript",
+            "technologies": "TypeScript"
+        },
+        {
+            "course": "Oracle Database 12c R2: Введение в SQL",
+            "technologies": "Oracle, SQL"
+        },
+        {
+            "course": "Oracle Database: Основы языка PL/SQL",
+            "technologies": "Oracle, PL/SQL"
+        },
+        {
+            "course": "Oracle Database : Программирование на языке PL/SQL",
+            "technologies": "Oracle, PL/SQL"
+        },
+        {
+            "course": "Oracle Database 12c R2: Продвинутый PL/SQL",
+            "technologies": "Oracle, PL/SQL"
+        },
+        {
+            "course": "Microsoft Access",
+            "technologies": "Microsoft Access"
+        },
+        {
+            "course": "Курсы SQL Server",
+            "technologies": "MS SQL Server"
+        },
+        {
+            "course": "Figma",
+            "technologies": "Figma"
+        },
+        {
+            "course": "RabbitMQ: Концепции очереди сообщений от начала до конца",
+            "technologies": "RabbitMQ"
+        },
+        {
+            "course": "Курсы Zend Framework с созданием блога",
+            "technologies": "Zend Framework"
+        },
+        {
+            "course": "Уроки Kotlin",
+            "technologies": "Kotlin"
+        },
+        {
+            "course": "Полное руководство по Elasticsearch",
+            "technologies": "Elasticsearch"
+        },
+        {
+            "course": "Курс WordPress – с нуля до Профи!",
+            "technologies": "WordPress"
+        },
+        {
+            "course": "Apache CouchDB for Developers",
+            "technologies": "CouchDB"
+        },
+        {
+            "course": "Начало работы с Amazon DynamoDB",
+            "technologies": "DynamoDB"
+        },
+        {
+            "course": "Введение в ASP.NET Core 2.1 MVC",
+            "technologies": "ASP.NET"
+        },
+        {
+            "course": "API. Основы работы.",
+            "technologies": "API, JSON"
+        },
+        {
+            "course": "Symfony. Создание API-платформы.",
+            "technologies": "API, Symfony"
+        },
+        {
+            "course": "БЭМ-платформа",
+            "technologies": "БЭМ"
+        },
+        {
+            "course": "UX/UI дизайнер",
+            "technologies": "UX, UI"
+        },
+        {
+            "course": "Уроки по C# и платформе .NET Framework",
+            "technologies": "C#, .NET Framework, ООП"
+        },
+        {
+            "course": "Adobe Illustrator",
+            "technologies": "Adobe Illustrator"
+        },
+        {
+            "course": "Интенсив по RxJS",
+            "technologies": "RxJS"
+        },
+        {
+            "course": "React Native 2020. Мобильные приложения на JavaScript",
+            "technologies": "React Native"
+        },
+        {
+            "course": "DevOps Старт!",
+            "technologies": "DevOps"
+        },
+        {
+            "course": "Stylus: быстрый старт",
+            "technologies": "Stylus"
+        },
+        {
+            "course": "Фреймворк NuxtJS",
+            "technologies": "Nuxt.js"
+        },
+        {
+            "course": "Entity Framework",
+            "technologies": "Entity Framework"
+        },
+        {
+            "course": "Основной курс по Joomla 3.9",
+            "technologies": "Joomla"
+        },
+        {
+            "course": "Основы Hibernate для начинающих",
+            "technologies": "Hibernate, ORM"
+        },
+        {
+            "course": "AWS - С Нуля до Профессионала",
+            "technologies": "AWS"
+        },
+        {
+            "course": "Профессия Go-разработчик",
+            "technologies": "Go"
+        },
+        {
+            "course": "Основы Apache Kafka",
+            "technologies": "Kafka"
+        },
+        {
+            "course": "Kubernetes База",
+            "technologies": "Kubernetes"
+        },
+        {
+            "course": "Unit тестирование в Java с JUnit",
+            "technologies": "JUnit"
+        },
+        {
+            "course": "Бесплатный курс по SVG",
+            "technologies": "SVG"
+        },
+        {
+            "course": "Начало работы с WPF. Visual Studio",
+            "technologies": "WPF, Visual Studio"
+        },
+        {
+            "course": "Visual Studio 2019 Tips & Tricks",
+            "technologies": "Visual Studio"
+        },
+        {
+            "course": "Основы Nginx: Высокопроизводительные серверы с нуля (Часть 1 из 2)",
+            "technologies": "Nginx"
+        },
+        {
+            "course": "Изучаем Dart",
+            "technologies": "Dart"
+        },
+        {
+            "course": "Видеокурс по GraphQL",
+            "technologies": "GraphQL"
+        },
+        {
+            "course": "Photoshop с нуля до PRO",
+            "technologies": "Photoshop"
+        },
+        {
+            "course": "Настройка и администрирование jira Software, настройка функциональности для работы по Scrum и Kanban",
+            "technologies": "Atlassian Jira, Scrum"
+        },
+        {
+            "course": "БАЗОВЫЙ КУРС ПО PHOTOSHOP",
+            "technologies": "Photoshop"
+        },
+        {
+            "course": "Курс agile scrum. Курс agile. Курс scrum Управление проектом",
+            "technologies": "Agile, Scrum"
+        },
+        {
+            "course": "Управление по Agile: Scrum, Kanban, Lean",
+            "technologies": "Agile, Scrum"
+        },
+        {
+            "course": "XML и XSLT. Современные технологии обработки данных для ВЕБ",
+            "technologies": "XML"
+        },
+        {
+            "course": "XML Fundamentals",
+            "technologies": "XML"
+        },
+        {
+            "course": "CI/CD",
+            "technologies": "CI/CD"
+        },
+        {
+            "course": "RubyGarage: Курсы по Ruby/Rails",
+            "technologies": "Ruby on Rails"
+        },
+        {
+            "course": "Thinknetica: Профессиональная разработка на Ruby on Rails",
+            "technologies": "Ruby on Rails"
+        },
+        {
+            "course": "Хороший программист: Интенсив Ruby on Rails",
+            "technologies": "Ruby on Rails, HTML, CSS, JavaScript, Git, Linux"
+        },
+        {
+            "course": "Программист С++",
+            "technologies": "C++"
+        },
+        {
+            "course": "Профессия Разработчик на C++ с нуля",
+            "technologies": "C++"
+        },
+        {
+            "course": "Познайте искусство С++  со специалистами Яндекса и МФТИ",
+            "technologies": "C++"
+        },
+        {
+            "course": "Flutter уроки От идеи до приложения",
+            "technologies": "Flutter"
+        },
+        {
+            "course": "Flutter",
+            "technologies": "Flutter"
+        },
+        {
+            "course": "ES5 руководство по JavaScript",
+            "technologies": "ES5"
+        },
+        {
+            "course": "Babel JS из ES6 в стандарт ES5",
+            "technologies": "Babel, ES6, ES5"
+        },
+        {
+            "course": "Babel",
+            "technologies": "Babel"
+        },
+        {
+            "course": "PostCSS",
+            "technologies": "PostCSS"
+        },
+        {
+            "course": "Postcss от mooc",
+            "technologies": "PostCSS"
+        },
+        {
+            "course": "Тестирование с Jest",
+            "technologies": "Jest"
+        },
+        {
+            "course": "Jest",
+            "technologies": "Jest"
+        },
+        {
+            "course": "Курсы TCP/IP",
+            "technologies": "TCP/IP"
+        },
+        {
+            "course": "Детальный разбор AWS Lambda",
+            "technologies": "Lambda"
+        },
+        {
+            "course": "Руководство по NoSQL для разработчиков",
+            "technologies": "NoSQL"
+        },
+        {
+            "course": "Урок Mercurial - полный цикл использования",
+            "technologies": "Mercurial"
+        },
+        {
+            "course": "Основы микросервисов",
+            "technologies": "Microservices"
+        },
+        {
+            "course": "Введение в Scala",
+            "technologies": "Scala"
+        },
+        {
+            "course": "Основы LINQ",
+            "technologies": "LINQ, C#"
+        },
+        {
+            "course": "Spring Boot",
+            "technologies": "Spring Boot"
+        },
+        {
+            "course": "Интенсив-курс по Asterisk",
+            "technologies": "Asterisk"
+        },
+        {
+            "course": "Базовый курс английского языка с нуля (для новичков)",
+            "technologies": "Английский язык"
+        },
+        {
+            "course": "React + mobx путь с нуля. Mobx + react, взгляд со стороны",
+            "technologies": "React, Mobx"
+        }
+    ]
+}

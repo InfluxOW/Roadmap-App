@@ -1,0 +1,448 @@
+{
+    "technologies": [
+        {
+            "name": "JavaScript",
+            "description": "JavaScript"
+        },
+        {
+            "name": "CSS",
+            "description": "CSS"
+        },
+        {
+            "name": "HTML",
+            "description": "HTML"
+        },
+        {
+            "name": "Git",
+            "description": "Git"
+        },
+        {
+            "name": "React",
+            "description": "React"
+        },
+        {
+            "name": "Vue.js",
+            "description": "Vue.js"
+        },
+        {
+            "name": "Redux",
+            "description": "Redux"
+        },
+        {
+            "name": "Node.js",
+            "description": "Node.js"
+        },
+        {
+            "name": "Bootstrap",
+            "description": "Bootstrap"
+        },
+        {
+            "name": "PHP",
+            "description": "PHP"
+        },
+        {
+            "name": "SQL",
+            "description": "SQL"
+        },
+        {
+            "name": "PostgreSQL",
+            "description": "PostgreSQL"
+        },
+        {
+            "name": "MySQL",
+            "description": "MySQL"
+        },
+        {
+            "name": "ООП",
+            "description": "ООП"
+        },
+        {
+            "name": "Linux",
+            "description": "Linux"
+        },
+        {
+            "name": "1С-Битрикс",
+            "description": "1С-Битрикс"
+        },
+        {
+            "name": "Jenkins",
+            "description": "Jenkins"
+        },
+        {
+            "name": "SOAP",
+            "description": "SOAP"
+        },
+        {
+            "name": "REST",
+            "description": "REST"
+        },
+        {
+            "name": "Spring",
+            "description": "Spring"
+        },
+        {
+            "name": "Bash",
+            "description": "Bash"
+        },
+        {
+            "name": "Java",
+            "description": "Java"
+        },
+        {
+            "name": "jQuery",
+            "description": "jQuery"
+        },
+        {
+            "name": "MongoDB",
+            "description": "MongoDB"
+        },
+        {
+            "name": "Python",
+            "description": "Python"
+        },
+        {
+            "name": "Symfony",
+            "description": "Symfony"
+        },
+        {
+            "name": "Docker",
+            "description": "Docker"
+        },
+        {
+            "name": "Laravel",
+            "description": "Laravel"
+        },
+        {
+            "name": "Angular",
+            "description": "Angular"
+        },
+        {
+            "name": "Backbone",
+            "description": "Backbone"
+        },
+        {
+            "name": "Gulp",
+            "description": "Gulp"
+        },
+        {
+            "name": "WebPack",
+            "description": "WebPack"
+        },
+        {
+            "name": "Ajax",
+            "description": "Ajax"
+        },
+        {
+            "name": "WebGL",
+            "description": "WebGL"
+        },
+        {
+            "name": "Less",
+            "description": "Less"
+        },
+        {
+            "name": "SASS",
+            "description": "SASS"
+        },
+        {
+            "name": "PUG",
+            "description": "PUG"
+        },
+        {
+            "name": "SCSS",
+            "description": "SCSS"
+        },
+        {
+            "name": "Redis",
+            "description": "Redis"
+        },
+        {
+            "name": "C#",
+            "description": "C#"
+        },
+        {
+            "name": "Yii Framework",
+            "description": "Yii Framework"
+        },
+        {
+            "name": "Django",
+            "description": "Django"
+        },
+        {
+            "name": "TypeScript",
+            "description": "TypeScript"
+        },
+        {
+            "name": "Oracle",
+            "description": "Oracle"
+        },
+        {
+            "name": "PL/SQL",
+            "description": "PL/SQL"
+        },
+        {
+            "name": "MS SQL Server",
+            "description": "MS SQL Server"
+        },
+        {
+            "name": "Figma",
+            "description": "Figma"
+        },
+        {
+            "name": "RabbitMQ",
+            "description": "RabbitMQ"
+        },
+        {
+            "name": "Zend Framework",
+            "description": "Zend Framework"
+        },
+        {
+            "name": "Kotlin",
+            "description": "Kotlin"
+        },
+        {
+            "name": "Elasticsearch",
+            "description": "Elasticsearch"
+        },
+        {
+            "name": "WordPress",
+            "description": "WordPress"
+        },
+        {
+            "name": "CouchDB",
+            "description": "CouchDB"
+        },
+        {
+            "name": "DynamoDB",
+            "description": "DynamoDB"
+        },
+        {
+            "name": "ASP.NET",
+            "description": "ASP.NET"
+        },
+        {
+            "name": "API",
+            "description": "API"
+        },
+        {
+            "name": "Websocket",
+            "description": "Websocket"
+        },
+        {
+            "name": "Lambda",
+            "description": "Lambda"
+        },
+        {
+            "name": "БЭМ",
+            "description": "БЭМ"
+        },
+        {
+            "name": "UX",
+            "description": "UX"
+        },
+        {
+            "name": "UI",
+            "description": "UI"
+        },
+        {
+            "name": "Adobe Illustrator",
+            "description": "Adobe Illustrator"
+        },
+        {
+            "name": "RxJS",
+            "description": "RxJS"
+        },
+        {
+            "name": "React Native",
+            "description": "React Native"
+        },
+        {
+            "name": "DevOps",
+            "description": "DevOps"
+        },
+        {
+            "name": "Stylus",
+            "description": "Stylus"
+        },
+        {
+            "name": "Nuxt.js",
+            "description": "Nuxt.js"
+        },
+        {
+            "name": "Entity Framework",
+            "description": "Entity Framework"
+        },
+        {
+            "name": "Joomla",
+            "description": "Joomla"
+        },
+        {
+            "name": "Hibernate",
+            "description": "Hibernate"
+        },
+        {
+            "name": "AWS",
+            "description": "AWS"
+        },
+        {
+            "name": "Go",
+            "description": "Go"
+        },
+        {
+            "name": "Kafka",
+            "description": "Kafka"
+        },
+        {
+            "name": "Kubernetes",
+            "description": "Kubernetes"
+        },
+        {
+            "name": "JUnit",
+            "description": "JUnit"
+        },
+        {
+            "name": "SVG",
+            "description": "SVG"
+        },
+        {
+            "name": "WPF",
+            "description": "WPF"
+        },
+        {
+            "name": "Visual Studio",
+            "description": "Visual Studio"
+        },
+        {
+            "name": "Nginx",
+            "description": "Nginx"
+        },
+        {
+            "name": "Dart",
+            "description": "Dart"
+        },
+        {
+            "name": "GraphQL",
+            "description": "GraphQL"
+        },
+        {
+            "name": ".NET Framework",
+            "description": ".NET Framework"
+        },
+        {
+            "name": "Microsoft Access",
+            "description": "Microsoft Access"
+        },
+        {
+            "name": "Photoshop",
+            "description": "Photoshop"
+        },
+        {
+            "name": "Atlassian Jira",
+            "description": "Atlassian Jira"
+        },
+        {
+            "name": "Scrum",
+            "description": "Scrum"
+        },
+        {
+            "name": "Agile",
+            "description": "Agile"
+        },
+        {
+            "name": "XML",
+            "description": "XML"
+        },
+        {
+            "name": "CI/CD",
+            "description": "CI/CD"
+        },
+        {
+            "name": "Ruby on Rails",
+            "description": "Ruby on Rails"
+        },
+        {
+            "name": "C++",
+            "description": "C++"
+        },
+        {
+            "name": "Flutter",
+            "description": "Flutter"
+        },
+        {
+            "name": "ES5",
+            "description": "ES5"
+        },
+        {
+            "name": "ES6",
+            "description": "ES6"
+        },
+        {
+            "name": "Babel",
+            "description": "Babel"
+        },
+        {
+            "name": "PostCSS",
+            "description": "PostCSS"
+        },
+        {
+            "name": "Jest",
+            "description": "Jest"
+        },
+        {
+            "name": "TCP/IP",
+            "description": "TCP/IP"
+        },
+        {
+            "name": "NoSQL",
+            "description": "NoSQL"
+        },
+        {
+            "name": "Mercurial",
+            "description": "Mercurial"
+        },
+        {
+            "name": "Microservices",
+            "description": "Microservices"
+        },
+        {
+            "name": "Scala",
+            "description": "Scala"
+        },
+        {
+            "name": "LINQ",
+            "description": "LINQ"
+        },
+        {
+            "name": "Spring Boot",
+            "description": "Spring Boot"
+        },
+        {
+            "name": "Asterisk",
+            "description": "Asterisk"
+        },
+        {
+            "name": "Vuex",
+            "description": "Vuex"
+        },
+        {
+            "name": "HTTP",
+            "description": "HTTP"
+        },
+        {
+            "name": "JSON",
+            "description": "JSON"
+        },
+        {
+            "name": "ORM",
+            "description": "ORM"
+        },
+        {
+            "name": "Английский язык",
+            "description": "Английский язык"
+        },
+        {
+            "name": "Mobx",
+            "description": "Mobx"
+        }
+    ]
+}
