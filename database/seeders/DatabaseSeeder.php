@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
                     Production\CoursesSeeder::class,
                     Production\CourseTechnologiesSeeder::class,
                     Production\TechnologyDevelopmentDirectionsSeeder::class,
+                    Production\TechnologiesConnectionsSeeder::class,
                     Production\PresetsSeeder::class,
                     Local\EmployeeRoadmapsSeeder::class,
                     Local\EmployeeDevelopmentDirectionsSeeder::class,

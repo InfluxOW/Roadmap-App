@@ -178,7 +178,7 @@
         },
         {
             "technology": "PL/SQL",
-            "development_directions": "Frontend"
+            "development_directions": "Backend"
         },
         {
             "technology": "MS SQL Server",
@@ -210,7 +210,7 @@
         },
         {
             "technology": "CouchDB",
-            "development_directions": "Frontend"
+            "development_directions": "Backend"
         },
         {
             "technology": "DynamoDB",
@@ -318,7 +318,7 @@
         },
         {
             "technology": "Dart",
-            "development_directions": "Backend"
+            "development_directions": "Frontend"
         },
         {
             "technology": "GraphQL",
@@ -330,7 +330,7 @@
         },
         {
             "technology": "Microsoft Access",
-            "development_directions": "Frontend"
+            "development_directions": "Backend"
         },
         {
             "technology": "Photoshop",
