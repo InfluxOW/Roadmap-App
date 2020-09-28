@@ -18,6 +18,7 @@ class CreateTechnologiesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

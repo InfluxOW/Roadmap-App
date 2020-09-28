@@ -23,20 +23,6 @@ class TechnologyTest extends TestCase
     }
 
     /** @test */
-    public function it_may_belong_to_many_directions()
-    {
-        $technology = Technology::factory()->hasAttached(
-            DevelopmentDirection::factory()->count($count = 3),
-            [],
-            'directions'
-        )->create();
-
-        $this->assertTrue($technology->directions->contains(DevelopmentDirection::first()));
-        $this->assertInstanceOf(DevelopmentDirection::class, $technology->directions->first());
-        $this->assertCount($count, $technology->directions);
-    }
-
-    /** @test */
     public function it_may_belong_to_many_employees()
     {
         $technology = Technology::factory()->hasAttached(

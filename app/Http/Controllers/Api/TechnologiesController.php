@@ -49,15 +49,6 @@ class TechnologiesController extends Controller
      *    )
      *  ),
      *  @OA\Parameter(
-     *    name="filter[directions]",
-     *    in="query",
-     *    description="Filter technologies by specific developmen directions",
-     *    required=false,
-     *    @OA\Schema(
-     *         type="string"
-     *    )
-     *  ),
-     *  @OA\Parameter(
      *    name="filter[employees]",
      *    in="query",
      *    description="Filter technologies by possessing by specific employees",
@@ -106,15 +97,6 @@ class TechnologiesController extends Controller
      *    name="take[courses]",
      *    in="query",
      *    description="Count of course models that should be returned under 'courses' key (by default returns all)",
-     *    required=false,
-     *    @OA\Schema(
-     *         type="string"
-     *    )
-     *  ),
-     *  @OA\Parameter(
-     *    name="take[directions]",
-     *    in="query",
-     *    description="Count of DevelopmentDirection models that should be returned under 'directions' key (by default returns all)",
      *    required=false,
      *    @OA\Schema(
      *         type="string"

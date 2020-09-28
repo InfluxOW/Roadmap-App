@@ -26,33 +26,4 @@ class TechnologyForDevelopmentDirection extends Pivot
     {
         return $this->belongsTo(DevelopmentDirection::class, 'development_direction_id');
     }
-
-    public function relatives()
-    {
-        return $this->belongsToMany(
-            self::class,
-            'technologies_connections',
-            'technology_for_development_direction_id',
-            'related_technology_for_development_direction_id'
-        );
-    }
-
-    public function related()
-    {
-        return $this->belongsToMany(
-            self::class,
-            'technologies_connections',
-            'related_technology_for_development_direction_id',
-            'technology_for_development_direction_id'
-        );
-    }
-
-    /*
-     * Helpers
-     * */
-
-    public function hasRelatives()
-    {
-        return $this->relatives->isNotEmpty();
-    }
 }

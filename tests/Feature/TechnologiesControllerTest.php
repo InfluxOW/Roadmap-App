@@ -25,7 +25,6 @@ class TechnologiesControllerTest extends TestCase
 
         $this->technologies = Technology::factory()->count(3)
             ->has(Course::factory()->count(3))
-            ->has(DevelopmentDirection::factory()->count(2), 'directions')
             ->has(Employee::factory()->count(3))
             ->create();
         $this->employee = Employee::first();
@@ -50,7 +49,7 @@ class TechnologiesControllerTest extends TestCase
             ->assertJsonCount($this->technologies->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['name', 'slug', 'description', 'courses', 'directions', 'possessed_by']
+                    '*' => ['name', 'slug', 'description', 'courses', 'possessed_by']
                 ]
             ]);
     }
@@ -58,13 +57,14 @@ class TechnologiesControllerTest extends TestCase
     /** @test */
     public function an_admin_can_view_technologies()
     {
+        $this->withoutExceptionHandling();
         $this->actingAs($this->admin)
             ->get(route('technologies.index'))
             ->assertOk()
             ->assertJsonCount($this->technologies->count(), 'data')
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['name', 'slug', 'description', 'courses', 'directions', 'possessed_by']
+                    '*' => ['name', 'slug', 'description', 'courses', 'possessed_by']
                 ]
             ]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\TechnologyForDevelopmentDirection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,6 @@ class TechnologyResource extends JsonResource
             'courses' => CourseResource::collection(
                 isset($request->take['courses']) ? $this->courses->take($request->take['courses']) : $this->courses
             ),
-            'directions' => isset($request->take['directions']) ?
-                $this->directions->take($request->take['directions'])->pluck('name') :
-                $this->directions->pluck('name'),
             'possessed_by' => UserBasicInformationResource::collection(
                 isset($request->take['possessed_by']) ? $this->ownedBy()->take($request->take['possessed_by']) : $this->ownedBy()
             ),

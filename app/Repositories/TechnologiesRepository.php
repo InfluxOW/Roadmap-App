@@ -13,7 +13,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 class TechnologiesRepository
 {
     private const WITH = [
-        'directions',
         'courses.technologies',
         'courses.level',
         'courses.completions',
@@ -37,11 +36,6 @@ class TechnologiesRepository
                 AllowedFilter::callback('courses', function (Builder $query, $courses) {
                     return $query->whereHas('courses', function (Builder $query) use ($courses) {
                         return $query->whereIn('name', (array) $courses)->orWhereIn('slug', (array) $courses);
-                    });
-                }),
-                AllowedFilter::callback('directions', function (Builder $query, $directions) {
-                    return $query->whereHas('directions', function (Builder $query) use ($directions) {
-                        return $query->whereIn('name', (array) $directions)->orWhereIn('slug', (array) $directions);
                     });
                 }),
                 AllowedFilter::callback('employees', function (Builder $query, $employees) use ($request) {

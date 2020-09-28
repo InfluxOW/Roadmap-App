@@ -525,6 +525,7 @@ CREATE TABLE public.technologies (
     name character varying(255) NOT NULL,
     slug character varying(255) NOT NULL,
     description text NOT NULL,
+    type character varying(255),
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone
 );
@@ -535,8 +536,8 @@ CREATE TABLE public.technologies (
 --
 
 CREATE TABLE public.technologies_connections (
-    technology_for_development_direction_id bigint NOT NULL,
-    related_technology_for_development_direction_id bigint NOT NULL
+    technology_id bigint NOT NULL,
+    related_technology_id bigint NOT NULL
 );
 
 
@@ -557,36 +558,6 @@ CREATE SEQUENCE public.technologies_id_seq
 --
 
 ALTER SEQUENCE public.technologies_id_seq OWNED BY public.technologies.id;
-
-
---
--- Name: technology_development_directions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.technology_development_directions (
-    technology_for_development_direction bigint NOT NULL,
-    technology_id bigint NOT NULL,
-    development_direction_id bigint NOT NULL
-);
-
-
---
--- Name: technology_development_direct_technology_for_development_di_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.technology_development_direct_technology_for_development_di_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: technology_development_direct_technology_for_development_di_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.technology_development_direct_technology_for_development_di_seq OWNED BY public.technology_development_directions.technology_for_development_direction;
 
 
 --
@@ -727,13 +698,6 @@ ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_
 --
 
 ALTER TABLE ONLY public.technologies ALTER COLUMN id SET DEFAULT nextval('public.technologies_id_seq'::regclass);
-
-
---
--- Name: technology_development_directions technology_for_development_direction; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.technology_development_directions ALTER COLUMN technology_for_development_direction SET DEFAULT nextval('public.technology_development_direct_technology_for_development_di_seq'::regclass);
 
 
 --
@@ -1008,11 +972,11 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: technologies_connections technologies_for_development_directions_unique; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: technologies_connections technologies_connections_technology_id_related_technology_id_un; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.technologies_connections
-    ADD CONSTRAINT technologies_for_development_directions_unique UNIQUE (technology_for_development_direction_id, related_technology_for_development_direction_id);
+    ADD CONSTRAINT technologies_connections_technology_id_related_technology_id_un UNIQUE (technology_id, related_technology_id);
 
 
 --
@@ -1029,22 +993,6 @@ ALTER TABLE ONLY public.technologies
 
 ALTER TABLE ONLY public.technologies
     ADD CONSTRAINT technologies_slug_unique UNIQUE (slug);
-
-
---
--- Name: technology_development_directions technology_development_directions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.technology_development_directions
-    ADD CONSTRAINT technology_development_directions_pkey PRIMARY KEY (technology_for_development_direction);
-
-
---
--- Name: technology_development_directions technology_development_directions_technology_id_development_dir; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.technology_development_directions
-    ADD CONSTRAINT technology_development_directions_technology_id_development_dir UNIQUE (technology_id, development_direction_id);
 
 
 --
@@ -1233,31 +1181,17 @@ CREATE INDEX teams_owner_id_index ON public.teams USING btree (owner_id);
 
 
 --
--- Name: technologies_connections_related_technology_for_development_dir; Type: INDEX; Schema: public; Owner: -
+-- Name: technologies_connections_related_technology_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX technologies_connections_related_technology_for_development_dir ON public.technologies_connections USING btree (related_technology_for_development_direction_id);
-
-
---
--- Name: technologies_connections_technology_for_development_direction_i; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX technologies_connections_technology_for_development_direction_i ON public.technologies_connections USING btree (technology_for_development_direction_id);
+CREATE INDEX technologies_connections_related_technology_id_index ON public.technologies_connections USING btree (related_technology_id);
 
 
 --
--- Name: technology_development_directions_development_direction_id_inde; Type: INDEX; Schema: public; Owner: -
+-- Name: technologies_connections_technology_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX technology_development_directions_development_direction_id_inde ON public.technology_development_directions USING btree (development_direction_id);
-
-
---
--- Name: technology_development_directions_technology_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX technology_development_directions_technology_id_index ON public.technology_development_directions USING btree (technology_id);
+CREATE INDEX technologies_connections_technology_id_index ON public.technologies_connections USING btree (technology_id);
 
 
 --
@@ -1428,35 +1362,19 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: technologies_connections technologies_connections_related_technology_for_development_dir; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: technologies_connections technologies_connections_related_technology_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.technologies_connections
-    ADD CONSTRAINT technologies_connections_related_technology_for_development_dir FOREIGN KEY (related_technology_for_development_direction_id) REFERENCES public.technology_development_directions(technology_for_development_direction);
+    ADD CONSTRAINT technologies_connections_related_technology_id_foreign FOREIGN KEY (related_technology_id) REFERENCES public.technologies(id);
 
 
 --
--- Name: technologies_connections technologies_connections_technology_for_development_direction_i; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: technologies_connections technologies_connections_technology_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.technologies_connections
-    ADD CONSTRAINT technologies_connections_technology_for_development_direction_i FOREIGN KEY (technology_for_development_direction_id) REFERENCES public.technology_development_directions(technology_for_development_direction);
-
-
---
--- Name: technology_development_directions technology_development_directions_development_direction_id_fore; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.technology_development_directions
-    ADD CONSTRAINT technology_development_directions_development_direction_id_fore FOREIGN KEY (development_direction_id) REFERENCES public.development_directions(id) ON DELETE CASCADE;
-
-
---
--- Name: technology_development_directions technology_development_directions_technology_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.technology_development_directions
-    ADD CONSTRAINT technology_development_directions_technology_id_foreign FOREIGN KEY (technology_id) REFERENCES public.technologies(id) ON DELETE CASCADE;
+    ADD CONSTRAINT technologies_connections_technology_id_foreign FOREIGN KEY (technology_id) REFERENCES public.technologies(id);
 
 
 --
@@ -1488,8 +1406,7 @@ INSERT INTO public.migrations VALUES (14, '2020_09_07_173017_create_preset_cours
 INSERT INTO public.migrations VALUES (15, '2020_09_07_173944_create_team_members_table', 1);
 INSERT INTO public.migrations VALUES (16, '2020_09_07_180958_create_employee_technologies_table', 1);
 INSERT INTO public.migrations VALUES (17, '2020_09_09_150026_create_employee_development_directions_table', 1);
-INSERT INTO public.migrations VALUES (18, '2020_09_10_065837_create_technology_development_directions_table', 1);
-INSERT INTO public.migrations VALUES (19, '2020_09_10_070100_create_course_technologies_table', 1);
-INSERT INTO public.migrations VALUES (20, '2020_09_16_143442_create_jobs_table', 1);
-INSERT INTO public.migrations VALUES (21, '2020_09_24_074812_create_invites_table', 1);
-INSERT INTO public.migrations VALUES (22, '2020_09_26_072930_create_technologies_connections_table', 1);
+INSERT INTO public.migrations VALUES (18, '2020_09_10_070100_create_course_technologies_table', 1);
+INSERT INTO public.migrations VALUES (19, '2020_09_16_143442_create_jobs_table', 1);
+INSERT INTO public.migrations VALUES (20, '2020_09_24_074812_create_invites_table', 1);
+INSERT INTO public.migrations VALUES (21, '2020_09_26_072930_create_technologies_connections_table', 1);

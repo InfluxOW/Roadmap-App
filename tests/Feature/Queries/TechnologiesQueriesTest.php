@@ -42,38 +42,6 @@ class TechnologiesQueriesTest extends TestCase
     }
 
     /** @test */
-    public function technologies_can_be_filtered_by_directions_name()
-    {
-        $name = DevelopmentDirection::first()->name;
-
-        $this->actingAs($this->manager)
-            ->get(
-                route(
-                    'technologies.index',
-                    ['filter[directions]' => $name]
-                )
-            )
-            ->assertOk()
-            ->assertJsonCount(DevelopmentDirection::first()->technologies->count(), 'data');
-    }
-
-    /** @test */
-    public function technologies_can_be_filtered_by_directions_slug()
-    {
-        $slug = DevelopmentDirection::first()->slug;
-
-        $this->actingAs($this->manager)
-            ->get(
-                route(
-                    'technologies.index',
-                    ['filter[directions]' => $slug]
-                )
-            )
-            ->assertOk()
-            ->assertJsonCount(DevelopmentDirection::first()->technologies->count(), 'data');
-    }
-
-    /** @test */
     public function technologies_can_be_filtered_by_courses_name()
     {
         $name = Course::first()->name;
@@ -242,24 +210,6 @@ class TechnologiesQueriesTest extends TestCase
 
         $this->assertEquals(
             count(json_decode($response->content(), true)['data'][0]['courses']),
-            $take
-        );
-    }
-
-    /** @test */
-    public function a_user_can_specify_how_many_technology_directions_should_be_returned()
-    {
-        $response = $this->actingAs($this->manager)
-            ->get(
-                route(
-                    'technologies.index',
-                    ['take[directions]' => $take = 1]
-                )
-            )
-            ->assertOk();
-
-        $this->assertEquals(
-            count(json_decode($response->content(), true)['data'][0]['directions']),
             $take
         );
     }

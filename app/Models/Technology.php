@@ -32,14 +32,32 @@ class Technology extends Model
         return $this->belongsToMany(Course::class, 'course_technologies');
     }
 
-    public function directions()
-    {
-        return $this->belongsToMany(DevelopmentDirection::class, 'technology_development_directions')
-            ->using(TechnologyForDevelopmentDirection::class);
-    }
-
     public function employees()
     {
         return $this->belongsToMany(Employee::class, 'employee_technologies', 'technology_id', 'employee_id');
+    }
+
+    public function relatedTechnologies()
+    {
+        return $this->belongsToMany(self::class, 'technologies_connections', 'technology_id', 'related_technology_id');
+    }
+
+    public function relatedToTechnologies()
+    {
+        return $this->belongsToMany(self::class, 'technologies_connections', 'related_technology_id', 'technology_id');
+    }
+
+    /*
+     * Helpers
+     * */
+
+    public function hasRelatedTechnologies()
+    {
+        return $this->relatedTechnologies->isNotEmpty();
+    }
+
+    public function hasRelatedToTechnologies()
+    {
+        return $this->relatedToTechnologies->isNotEmpty();
     }
 }
