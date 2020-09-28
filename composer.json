@@ -27,7 +27,6 @@
         "laravel/framework": "^8.0",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
-        "nikic/php-parser": "4.9.1",
         "rollbar/rollbar-laravel": "^7.0",
         "spatie/laravel-collection-macros": "^7.0",
         "spatie/laravel-query-builder": "^3.2",
