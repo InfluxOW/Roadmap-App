@@ -6,14 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PresetGenerationRequest;
 use App\Http\Resources\PresetResource;
 use App\Models\Preset;
+use App\Repositories\PresetsGenerationRepository;
 use App\Repositories\PresetsRepository;
 use Illuminate\Http\Request;
 
 class PresetsGenerationController extends Controller
 {
-    public function __construct()
+    protected PresetsGenerationRepository $repository;
+
+    public function __construct(PresetsGenerationRepository $repository)
     {
         $this->authorizeResource(Preset::class);
+
+        $this->repository = $repository;
     }
 
     protected function resourceAbilityMap()
@@ -92,7 +97,7 @@ class PresetsGenerationController extends Controller
      */
     public function store(PresetGenerationRequest $request)
     {
-        $preset = Preset::generateFromRequest($request);
+        $preset = $this->repository->store($request);
 
         return new PresetResource($preset);
     }
