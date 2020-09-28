@@ -11,7 +11,7 @@ use Illuminate\Routing\Controller as BaseController;
  * @OA\Info(
  *    title="Roadmap App API",
  *    description="Roadmap App",
- *    version="1.3",
+ *    version="1.3.2",
  *    @OA\Contact(
  *      email="krochak_n@mail.ru",
  *      url="https://github.com/InfluxOW"

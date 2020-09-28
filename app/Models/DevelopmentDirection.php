@@ -28,12 +28,6 @@ class DevelopmentDirection extends Model
      * Relations
      * */
 
-    public function technologies()
-    {
-        return $this->belongsToMany(Technology::class, 'technology_development_directions')
-            ->using(TechnologyForDevelopmentDirection::class);
-    }
-
     public function employees()
     {
         return $this->belongsToMany(Employee::class, 'employee_development_directions', 'development_direction_id', 'employee_id');

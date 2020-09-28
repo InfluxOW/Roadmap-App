@@ -60,4 +60,32 @@ class Preset extends Model
 
         return $preset;
     }
+
+    public function assignCourse(Course $course)
+    {
+        if ($this->hasCourse($course)) {
+            throw new \LogicException("You can't assign a course to the preset twice.");
+        }
+
+        $this->courses()->attach($course, ['assigned_at' => now()]);
+    }
+
+    public function unassignCourse(Course $course)
+    {
+        if ($this->doesntHaveCourse($course)) {
+            throw new \LogicException("You can't unassign an unsigned course from the preset.");
+        }
+
+        $this->courses()->detach($course);
+    }
+
+    public function hasCourse(Course $course)
+    {
+        return $this->courses->contains($course);
+    }
+
+    public function doesntHaveCourse(Course $course)
+    {
+        return ! $this->hasCourse($course);
+    }
 }
