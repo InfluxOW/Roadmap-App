@@ -46,4 +46,13 @@ class TechnologyForDevelopmentDirection extends Pivot
             'technology_for_development_direction_id'
         );
     }
+
+    /*
+     * Helpers
+     * */
+
+    public function hasRelatives()
+    {
+        return $this->relatives->isNotEmpty();
+    }
 }
