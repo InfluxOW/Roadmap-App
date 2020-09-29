@@ -186,7 +186,7 @@ class RoadmapsController extends Controller
 
     /**
      * @OA\Get(
-     * path="/roadmaps/{roadmap:slug}",
+     * path="/roadmaps/{employee:username}",
      * summary="Roadmaps Show",
      * description="View a specific employee roadmaps",
      * operationId="roadmapsShow",
@@ -195,7 +195,7 @@ class RoadmapsController extends Controller
      *   {"access_token": {}},
      * },
      *   @OA\Parameter(
-     *      name="roadmap:slug",
+     *      name="employee:username",
      *      in="path",
      *      required=true,
      *      @OA\Schema(
