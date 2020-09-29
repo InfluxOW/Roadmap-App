@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Company;
 use App\Models\UserTypes\Employee;
+use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -24,13 +26,9 @@ class EmployeesRepository
         'completions',
     ];
 
-    public function index(Request $request)
+    public function show(Company $company)
     {
-        $query = $request->user()->isAdmin() ?
-            Employee::query() :
-            $request->user()->employees();
-
-        return  QueryBuilder::for($query)
+        return QueryBuilder::for($company->employees())
             ->allowedFilters([
                 AllowedFilter::exact('name', 'users.name'),
                 'username',
@@ -66,6 +64,15 @@ class EmployeesRepository
                     return $query->whereHas('completions', function (Builder $query) use ($courses) {
                         return $query->whereHas('course', function (Builder $query) use ($courses) {
                             return $query->whereIn('name', (array) $courses)->orWhereIn('slug', (array) $courses);
+                        });
+                    });
+                }),
+                AllowedFilter::callback('manager', function (Builder $query, $managers) {
+                    return $query->whereHas('teams', function (Builder $query) use ($managers) {
+                        return $query->whereHas('owner', function (Builder $query) use ($managers) {
+                            return $query->whereIn('name', (array) $managers)
+                                ->orWhereIn('username', (array) $managers)
+                                ->orWhereIn('email', (array) $managers);
                         });
                     });
                 }),

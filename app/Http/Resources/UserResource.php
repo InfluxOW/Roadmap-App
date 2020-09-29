@@ -23,15 +23,16 @@ class UserResource extends JsonResource
                 }
             ),
             'position' => $this->when(isset($this->position), $this->position),
-            'teams' => isset($request->take['teams']) ?
-                $this->teams->take($request->take['teams'])->pluck('name') :
-                $this->teams->pluck('name'),
+            'teams' => $this->when(
+                isset($this->teams),
+                function () {
+                    return $this->teams->pluck('name');
+                }
+            ),
             'technologies' => $this->when(
                 $this->isEmployee(),
-                function () use ($request) {
-                    return isset($request->take['technologies']) ?
-                        $this->technologies->take($request->take['technologies'])->pluck('name') :
-                        $this->technologies->pluck('name');
+                function () {
+                    return $this->technologies->pluck('name');
                 }
             ),
             'development_directions' => $this->when(

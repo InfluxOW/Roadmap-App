@@ -33,6 +33,11 @@ Route::middleware('auth:sanctum')->post('logout', Api\Auth\LogoutController::cla
 
 Route::middleware('auth:sanctum')->group(function () {
     /*
+     * Companies
+     * */
+    Route::apiResource('companies', Api\CompaniesController::class)->parameters(['companies' => 'company:slug'])->only('index', 'show');
+
+    /*
      * Courses
      *  */
     Route::apiResource('courses', Api\CoursesController::class)->parameters(['courses' => 'course:slug'])->only('index', 'show');
@@ -64,16 +69,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('roadmaps/{preset:slug}/{employee:username}', [Api\RoadmapsController::class, 'destroy'])->name('roadmaps.destroy');
 
     /*
-     * Employees
+     * Profiles
      * */
-    Route::get('employees', [Api\EmployeesController::class, 'index'])->name('employees.index');
-    Route::get('employees/{employee:username}', [Api\EmployeesController::class, 'show'])->name('employees.show');
-
-    /*
-     * Managers
-     * */
-    Route::get('managers', [Api\ManagersController::class, 'index'])->name('managers.index');
-    Route::get('managers/{manager:username}', [Api\ManagersController::class, 'show'])->name('managers.show');
+    Route::apiResource('profiles', Api\ProfilesController::class)->parameters(['profiles' => 'user:username'])->only('index', 'show');
 
     /*
      * Technologies

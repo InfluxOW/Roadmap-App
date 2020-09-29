@@ -38,6 +38,11 @@ class Company extends Model
         return $this->hasMany(Employee::class);
     }
 
+    public function members()
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function teams()
     {
         return $this->hasMany(Team::class);
