@@ -26,19 +26,4 @@ class CompaniesPolicy
     {
         return $user->isManager() && $user->company->is($company);
     }
-
-    public function create(User $user)
-    {
-        //
-    }
-
-    public function update(User $user, Company $company)
-    {
-        //
-    }
-
-    public function delete(User $user, Company $company)
-    {
-        //
-    }
 }

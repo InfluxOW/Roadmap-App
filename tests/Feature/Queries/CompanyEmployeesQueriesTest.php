@@ -370,6 +370,60 @@ class CompanyEmployeesQueriesTest extends TestCase
     }
 
     /** @test */
+    public function employees_can_be_filtered_by_their_manager_name()
+    {
+        $manager = $this->manager->name;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'companies.show',
+                    [
+                        'company' => $this->manager->company,
+                        'filter[manager]' => $manager]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($this->manager->employees->count(), 'data');
+    }
+
+    /** @test */
+    public function employees_can_be_filtered_by_their_manager_username()
+    {
+        $manager = $this->manager->username;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'companies.show',
+                    [
+                        'company' => $this->manager->company,
+                        'filter[manager]' => $manager]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($this->manager->employees->count(), 'data');
+    }
+
+    /** @test */
+    public function employees_can_be_filtered_by_their_manager_email()
+    {
+        $manager = $this->manager->email;
+
+        $this->actingAs($this->manager)
+            ->get(
+                route(
+                    'companies.show',
+                    [
+                        'company' => $this->manager->company,
+                        'filter[manager]' => $manager]
+                )
+            )
+            ->assertOk()
+            ->assertJsonCount($this->manager->employees->count(), 'data');
+    }
+
+    /** @test */
     public function employees_can_be_sorted_by_employee_name()
     {
         $employees = $this->manager->company->employees->sortBy('name')->pluck('name');
