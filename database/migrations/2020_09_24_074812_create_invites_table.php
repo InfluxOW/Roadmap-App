@@ -18,6 +18,7 @@ class CreateInvitesTable extends Migration
             $table->string('email');
             $table->string('role');
             $table->string('code')->unique();
+            $table->foreignId('sent_by_id')->index()->constrained('users');
             $table->foreignId('company_id')->index()->constrained();
             $table->timestamp('expires_at');
             $table->timestamp('used_at')->nullable();

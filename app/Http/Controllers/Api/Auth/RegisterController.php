@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Company;
 use App\Models\Invite;
+use App\Models\Team;
 use App\Models\User;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
@@ -64,9 +65,39 @@ class RegisterController extends Controller
      */
     public function __invoke(RegisterRequest $request)
     {
-        $invite = Invite::whereCode($request->invite_token)->first();
-        $invite->revoke();
+        $invite = tap(Invite::whereCode($request->invite_token)->first(), function ($invite) {
+            $invite->revoke();
+        });
 
+        $user = $this->createUser($invite, $request);
+
+        if ($user->isManager()) {
+            $this->createManagerDefaultTeam($user);
+        }
+
+        if ($user->isEmployee() && $invite->sender->isManager()) {
+            $this->joinManagerDefaultTeam($user, $invite->sender);
+        }
+
+        return response(
+            ['message' => 'You were successfully registered. Use your email and password to sign in.'],
+            200
+        );
+    }
+
+    private function createManagerDefaultTeam($manager)
+    {
+        $manager->teams()->create(['name' => 'Default Team']);
+    }
+
+    private function joinManagerDefaultTeam(Employee $employee, Manager $manager)
+    {
+        $team = $manager->teams->where('name', 'Default Team')->first();
+        $employee->teams()->attach($team, ['assigned_at' => now()]);
+    }
+
+    private function createUser(Invite $invite, RegisterRequest $request)
+    {
         $validatedData = $request->validated();
         $validatedData['email'] = $invite->email;
         $validatedData['role'] = $invite->role;
@@ -83,9 +114,6 @@ class RegisterController extends Controller
         $user->company()->associate($invite->company);
         $user->save();
 
-        return response(
-            ['message' => 'You were successfully registered. Use your email and password to sign in.'],
-            200
-        );
+        return $user;
     }
 }

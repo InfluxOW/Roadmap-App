@@ -20,6 +20,11 @@ class Invite extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sent_by_id');
+    }
+
     /*
      * Helpers
      * */
@@ -30,15 +35,9 @@ class Invite extends Model
         $invite->code = Str::random(60);
         $invite->expires_at = now()->addHours(24);
 
-        if ($request->user()->isAdmin()) {
-            $company = Company::whereSlug($request->company)->first();
-        }
-
-        if ($request->user()->isManager()) {
-            $company = $request->user()->company;
-        }
-
+        $company = $request->user()->isAdmin() ? Company::whereSlug($request->company)->first() : $request->user()->company;
         $invite->company()->associate($company);
+        $invite->sender()->associate($request->user());
         $invite->save();
 
         return $invite;

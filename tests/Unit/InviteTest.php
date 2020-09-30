@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Company;
 use App\Models\Invite;
+use App\Models\UserTypes\Manager;
 use Tests\TestCase;
 
 class InviteTest extends TestCase
@@ -17,6 +18,18 @@ class InviteTest extends TestCase
 
         $this->assertEquals(Company::first(), $invite->company);
         $this->assertTrue($invite->company->is(Company::first()));
+    }
+
+    /** @test */
+    public function it_belongs_to_a_sender()
+    {
+        $invite = Invite::factory()->for(
+            Manager::factory(),
+            'sender'
+        )->create();
+
+        $this->assertEquals(Manager::first(), $invite->sender);
+        $this->assertTrue($invite->sender->is(Manager::first()));
     }
 
     /** @test */

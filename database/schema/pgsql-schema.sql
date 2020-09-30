@@ -289,6 +289,7 @@ CREATE TABLE public.invites (
     email character varying(255) NOT NULL,
     role character varying(255) NOT NULL,
     code character varying(255) NOT NULL,
+    sent_by_id bigint NOT NULL,
     company_id bigint NOT NULL,
     expires_at timestamp(0) without time zone NOT NULL,
     used_at timestamp(0) without time zone
@@ -1110,6 +1111,13 @@ CREATE INDEX invites_company_id_index ON public.invites USING btree (company_id)
 
 
 --
+-- Name: invites_sent_by_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invites_sent_by_id_index ON public.invites USING btree (sent_by_id);
+
+
+--
 -- Name: jobs_queue_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1295,6 +1303,14 @@ ALTER TABLE ONLY public.employee_technologies
 
 ALTER TABLE ONLY public.invites
     ADD CONSTRAINT invites_company_id_foreign FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: invites invites_sent_by_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invites
+    ADD CONSTRAINT invites_sent_by_id_foreign FOREIGN KEY (sent_by_id) REFERENCES public.users(id);
 
 
 --
