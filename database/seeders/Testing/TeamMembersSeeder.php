@@ -10,7 +10,7 @@ class TeamMembersSeeder extends Seeder
     public function run()
     {
         foreach (Team::all() as $team) {
-            $employees = $team->company->employees()->whereDoesntHave('teams')->inRandomOrder()->take(2)->get();
+            $employees = $team->owner->company->employees()->whereDoesntHave('teams')->inRandomOrder()->take(2)->get();
             $team->employees()->attach($employees, ['assigned_at' => now()]);
         }
     }

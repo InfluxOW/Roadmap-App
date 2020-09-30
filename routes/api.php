@@ -82,6 +82,11 @@ Route::middleware('auth:sanctum')->group(function () {
      * Invites
      * */
     Route::post('invites', [Api\InvitesController::class, 'store'])->name('invites.store');
+
+    /*
+     * Teams
+     * */
+    Route::apiResource('teams', Api\TeamsController::class)->parameters(['teams' => 'team:slug'])->only('store', 'update', 'destroy');
 });
 
 /*

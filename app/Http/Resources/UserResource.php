@@ -26,7 +26,12 @@ class UserResource extends JsonResource
             'teams' => $this->when(
                 isset($this->teams),
                 function () {
-                    return $this->teams->pluck('name');
+                    return $this->teams->map(function ($team) {
+                        return [
+                            'name' => $team->name,
+                            'slug' => $team->slug,
+                        ];
+                    });
                 }
             ),
             'technologies' => $this->when(

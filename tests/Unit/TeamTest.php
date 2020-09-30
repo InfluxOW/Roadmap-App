@@ -23,19 +23,6 @@ class TeamTest extends TestCase
     }
 
     /** @test */
-    public function it_belongs_to_a_company()
-    {
-        $team = Team::factory()->for(Company::factory())->for(
-            Manager::factory(['company_id' => Company::first()]),
-            'owner'
-        )
-            ->create();
-
-        $this->assertEquals(Company::first(), $team->company);
-        $this->assertTrue($team->company->is(Company::first()));
-    }
-
-    /** @test */
     public function it_may_have_employees_as_team_members()
     {
         $team = Team::factory()

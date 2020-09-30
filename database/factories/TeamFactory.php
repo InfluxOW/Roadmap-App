@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Company;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\UserTypes\Manager;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TeamFactory extends Factory
@@ -25,8 +26,7 @@ class TeamFactory extends Factory
     {
         return [
             'name' => $this->faker->words(2, true),
-            'owner_id' => User::factory()->manager(),
-            'company_id' => Company::factory(),
+            'owner_id' => Manager::factory(),
         ];
     }
 }

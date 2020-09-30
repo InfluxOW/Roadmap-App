@@ -36,18 +36,6 @@ class CompanyTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_teams()
-    {
-        $company = Company::factory()->has(
-            Team::factory()->count($count = 3)
-        )->create();
-
-        $this->assertTrue($company->teams->contains(Team::first()));
-        $this->assertInstanceOf(Team::class, $company->teams->first());
-        $this->assertCount($count, $company->teams);
-    }
-
-    /** @test */
     public function it_may_have_invites()
     {
         $company = Company::factory()->has(

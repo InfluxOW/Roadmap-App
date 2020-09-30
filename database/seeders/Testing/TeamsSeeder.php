@@ -13,12 +13,10 @@ class TeamsSeeder extends Seeder
         foreach (Company::all() as $company) {
             Team::factory([
                 'owner_id' => $company->managers->first(),
-                'company_id' => $company
             ])->create();
 
             Team::factory([
                 'owner_id' => $company->managers->second(),
-                'company_id' => $company
             ])->create();
         }
     }

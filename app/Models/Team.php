@@ -19,7 +19,7 @@ class Team extends Model
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(['name', 'company.name'])
+            ->generateSlugsFrom(['name', 'owner.name'])
             ->saveSlugsTo('slug')
             ->allowDuplicateSlugs();
     }

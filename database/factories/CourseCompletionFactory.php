@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Course;
 use App\Models\CourseCompletion;
 use App\Models\User;
+use App\Models\UserTypes\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CourseCompletionFactory extends Factory
@@ -24,7 +25,7 @@ class CourseCompletionFactory extends Factory
     public function definition()
     {
         return [
-            'employee_id' => User::factory()->employee(),
+            'employee_id' => Employee::factory(),
             'course_id' => Course::factory(),
             'rating' => $this->faker->numberBetween(0, 10),
             'completed_at' => $this->faker->dateTimeBetween('-1 year'),
