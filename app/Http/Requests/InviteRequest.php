@@ -26,7 +26,7 @@ class InviteRequest extends FormRequest
                 }),
                 Rule::unique('users', 'email'),
             ],
-            'role' => [Rule::requiredIf($this->user()->isAdmin()), 'string', Rule::in(['manager', 'employee'])],
+            'role' => ['required', 'string', Rule::in(['manager', 'employee'])],
             'company' => [Rule::requiredIf($this->user()->isAdmin()), 'string', Rule::exists('companies', 'slug')]
         ];
     }

@@ -26,19 +26,18 @@ class Invite extends Model
 
     public static function createFromRequest(InviteRequest $request)
     {
+        $invite = self::make($request->only('email', 'role'));
+        $invite->code = Str::random(60);
+        $invite->expires_at = now()->addHours(24);
+
         if ($request->user()->isAdmin()) {
-            $invite = self::make($request->only('email', 'role'));
             $company = Company::whereSlug($request->company)->first();
         }
 
         if ($request->user()->isManager()) {
-            $invite = self::make($request->only('email'));
-            $invite->role = 'employee';
             $company = $request->user()->company;
         }
 
-        $invite->code = Str::random(60);
-        $invite->expires_at = now()->addHours(24);
         $invite->company()->associate($company);
         $invite->save();
 

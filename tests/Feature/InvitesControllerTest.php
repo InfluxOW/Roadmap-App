@@ -41,10 +41,10 @@ class InvitesControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_manager_can_send_invites()
+    public function a_manager_can_invite_employees()
     {
         Event::fake(InviteCreated::class);
-        $attributes = ['email' => 'test@mail.com'];
+        $attributes = ['email' => 'test@mail.com', 'role' => 'employee'];
 
         $this->actingAs($this->manager)
             ->post(route('invites.store'), $attributes)
@@ -54,7 +54,7 @@ class InvitesControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_manager_can_invite_only_employees()
+    public function a_manager_can_invite_managers()
     {
         Event::fake(InviteCreated::class);
         $attributes = ['email' => 'test@mail.com', 'role' => 'manager'];
@@ -63,9 +63,6 @@ class InvitesControllerTest extends TestCase
             ->post(route('invites.store'), $attributes)
             ->assertOk();
 
-        $this->assertDatabaseMissing('invites', $attributes);
-
-        $attributes['role'] = 'employee';
         $this->assertDatabaseHas('invites', $attributes);
     }
 
@@ -86,7 +83,7 @@ class InvitesControllerTest extends TestCase
     public function sending_an_invite_dispatches_invite_created_event()
     {
         Event::fake(InviteCreated::class);
-        $attributes = ['email' => 'test@mail.com'];
+        $attributes = ['email' => 'test@mail.com', 'role' => 'employee'];
 
         $this->actingAs($this->manager)
             ->post(route('invites.store'), $attributes)
@@ -110,7 +107,7 @@ class InvitesControllerTest extends TestCase
 
     private function mockInviteCreatedEvent()
     {
-        $attributes = ['email' => 'test@mail.com'];
+        $attributes = ['email' => 'test@mail.com', 'role' => 'employee'];
         $this->actingAs($this->manager)
             ->post(route('invites.store'), $attributes);
 

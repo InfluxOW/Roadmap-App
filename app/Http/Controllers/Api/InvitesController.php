@@ -28,8 +28,9 @@ class InvitesController extends Controller
      *    required=true,
      *    description="Invite information",
      *    @OA\JsonContent(
-     *       required={"email"},
+     *       required={"email", "role"},
      *       @OA\Property(property="email", type="string", example="john_doe@mail.com"),
+     *       @OA\Property(property="role", type="string", enum={"manager", "employee"})
      *    ),
      * ),
      * @OA\Response(
