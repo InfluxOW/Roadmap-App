@@ -491,7 +491,6 @@ CREATE TABLE public.teams (
     name character varying(255) NOT NULL,
     slug character varying(255) NOT NULL,
     owner_id bigint NOT NULL,
-    company_id bigint NOT NULL,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone
 );
@@ -948,11 +947,11 @@ ALTER TABLE ONLY public.team_members
 
 
 --
--- Name: teams teams_name_company_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: teams teams_name_owner_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.teams
-    ADD CONSTRAINT teams_name_company_id_unique UNIQUE (name, company_id);
+    ADD CONSTRAINT teams_name_owner_id_unique UNIQUE (name, owner_id);
 
 
 --
@@ -1167,13 +1166,6 @@ CREATE INDEX team_members_user_id_index ON public.team_members USING btree (user
 
 
 --
--- Name: teams_company_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX teams_company_id_index ON public.teams USING btree (company_id);
-
-
---
 -- Name: teams_owner_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1343,14 +1335,6 @@ ALTER TABLE ONLY public.team_members
 
 ALTER TABLE ONLY public.team_members
     ADD CONSTRAINT team_members_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
-
-
---
--- Name: teams teams_company_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.teams
-    ADD CONSTRAINT teams_company_id_foreign FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
