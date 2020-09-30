@@ -9,7 +9,7 @@ use App\Models\Course;
 use App\Models\Preset;
 use Illuminate\Http\Request;
 
-class CourseAssignmentsController extends Controller
+class PresetCoursesController extends Controller
 {
     public function __construct()
     {

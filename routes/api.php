@@ -57,8 +57,8 @@ Route::middleware('auth:sanctum')->group(function () {
      *  */
     Route::apiResource('presets', Api\PresetsController::class)->parameters(['presets' => 'preset:slug']);
     Route::post('presets/generation', [Api\PresetsGenerationController::class, 'store'])->name('presets.generate');
-    Route::post('presets/{preset:slug}/courses', [Api\CourseAssignmentsController::class, 'store'])->name('presets.courses.assign');
-    Route::delete('presets/{preset:slug}/courses/{course:slug}', [Api\CourseAssignmentsController::class, 'destroy'])->name('presets.courses.unassign');
+    Route::post('presets/{preset:slug}/courses', [Api\PresetCoursesController::class, 'store'])->name('presets.courses.assign');
+    Route::delete('presets/{preset:slug}/courses/{course:slug}', [Api\PresetCoursesController::class, 'destroy'])->name('presets.courses.unassign');
 
     /*
      * Roadmaps

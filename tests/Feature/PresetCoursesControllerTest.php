@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class CourseAssignmentsControllerTest extends TestCase
+class PresetCoursesControllerTest extends TestCase
 {
     public $employee;
     public $manager;
