@@ -86,7 +86,11 @@ Route::middleware('auth:sanctum')->group(function () {
     /*
      * Teams
      * */
-    Route::apiResource('teams', Api\TeamsController::class)->parameters(['teams' => 'team:slug'])->only('store', 'update', 'destroy');
+    Route::middleware('manager')->group(function () {
+        Route::apiResource('teams', Api\TeamsController::class)->parameters(['teams' => 'team:slug'])->only('store', 'update', 'destroy');
+        Route::post('teams/{team:slug}/employees', [Api\TeamEmployeesController::class, 'store'])->name('team.employees.store');
+        Route::delete('teams/{team:slug}/employees/{employee:username}', [Api\TeamEmployeesController::class, 'destroy'])->name('team.employees.destroy');
+    });
 });
 
 /*

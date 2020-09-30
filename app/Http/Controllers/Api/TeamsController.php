@@ -72,7 +72,7 @@ class TeamsController extends Controller
     {
         $request->user()->teams()->create($request->validated());
 
-        return response(['message' => 'Team has been created'], 201);
+        return response(['message' => 'Team has been created.'], 201);
     }
 
     /**
@@ -146,7 +146,7 @@ class TeamsController extends Controller
     {
         $team->update($request->validated());
 
-        return response(['message' => 'Team has been updated'], 200);
+        return response(['message' => 'Team has been updated.'], 200);
     }
 
     /**

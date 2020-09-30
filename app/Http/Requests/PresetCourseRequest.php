@@ -6,7 +6,7 @@ use App\Models\Course;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CourseAssignmentRequest extends FormRequest
+class PresetCourseRequest extends FormRequest
 {
     public function authorize()
     {

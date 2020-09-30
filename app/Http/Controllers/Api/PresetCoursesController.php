@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CourseAssignmentRequest;
+use App\Http\Requests\PresetCourseRequest;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use App\Models\Preset;
@@ -83,10 +83,10 @@ class PresetCoursesController extends Controller
      *  ),
      * )
      * @param \App\Models\Preset $preset
-     * @param \App\Http\Requests\CourseAssignmentRequest $request
+     * @param \App\Http\Requests\PresetCourseRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function store(Preset $preset, CourseAssignmentRequest $request)
+    public function store(Preset $preset, PresetCourseRequest $request)
     {
         $preset->assignCourse($request->getCourse());
 

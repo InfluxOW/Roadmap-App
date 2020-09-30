@@ -42,4 +42,36 @@ class Team extends Model
     {
         return $this->belongsToMany(Employee::class, 'team_members', 'team_id', 'user_id')->withPivot('assigned_at');
     }
+
+    /*
+     * Helpers
+     * */
+
+    public function assignEmployee(Employee $employee)
+    {
+        if ($this->hasEmployee($employee)) {
+            throw new \LogicException("You can't assign an employee to the team twice.");
+        }
+
+        $this->employees()->attach($employee, ['assigned_at' => now()]);
+    }
+
+    public function unassignEmployee(Employee $employee)
+    {
+        if ($this->doesntHaveEmployee($employee)) {
+            throw new \LogicException("You can't unassign an unsigned employee from the team.");
+        }
+
+        $this->employees()->detach($employee);
+    }
+
+    public function hasEmployee(Employee $employee)
+    {
+        return $this->employees->contains($employee);
+    }
+
+    public function doesntHaveEmployee(Employee $employee)
+    {
+        return ! $this->hasEmployee($employee);
+    }
 }

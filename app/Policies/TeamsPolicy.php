@@ -12,16 +12,16 @@ class TeamsPolicy
 
     public function create(User $user)
     {
-        return $user->isManager();
+        return true;
     }
 
     public function update(User $user, Team $team)
     {
-        return $user->isManager() && $team->owner->is($user);
+        return $team->owner->is($user);
     }
 
     public function delete(User $user, Team $team)
     {
-        return $user->isManager() && $team->owner->is($user);
+        return $team->owner->is($user);
     }
 }
