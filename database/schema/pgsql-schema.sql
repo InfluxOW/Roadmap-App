@@ -28,7 +28,7 @@ CREATE TABLE public.companies (
     name character varying(255) NOT NULL,
     slug character varying(255) NOT NULL,
     description text NOT NULL,
-    foundation_year smallint NOT NULL,
+    foundation_year integer NOT NULL,
     industry character varying(255) NOT NULL,
     location character varying(255) NOT NULL,
     created_at timestamp(0) without time zone,

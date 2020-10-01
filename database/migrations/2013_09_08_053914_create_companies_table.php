@@ -19,7 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
-            $table->smallInteger('foundation_year');
+            $table->year('foundation_year');
             $table->string('industry');
             $table->string('location');
             $table->timestamps();

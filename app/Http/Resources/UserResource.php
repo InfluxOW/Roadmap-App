@@ -12,7 +12,12 @@ class UserResource extends JsonResource
         $attributes = [
             'name' => $this->name,
             'username' => $this->username,
-            'company' => $this->when($request->user()->isAdmin(), $this->company->name),
+            'company' => $this->when(
+                $request->user()->isAdmin() && ! $this->isAdmin(),
+                function () {
+                    return $this->company->name;
+                }
+            ),
             'email' => $this->email,
             'role' => $this->role,
             'sex' => $this->when(isset($this->sex), $this->sex),

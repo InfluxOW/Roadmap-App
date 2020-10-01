@@ -24,6 +24,7 @@ Route::middleware('guest')->group(function () {
     });
     Route::post('login', Api\Auth\LoginController::class)->name('login');
     Route::post('register', Api\Auth\RegisterController::class)->name('register');
+    Route::post('first_access', Api\FirstAccessController::class)->name('first_access');
 });
 Route::middleware('auth:sanctum')->post('logout', Api\Auth\LogoutController::class)->name('logout');
 
