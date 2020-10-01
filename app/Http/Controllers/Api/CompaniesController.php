@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Company;
 use Facades\App\Repositories\EmployeesRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class CompaniesController extends Controller
 {
@@ -44,7 +45,10 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
         if ($request->user()->isManager()) {
-            return redirect()->route('companies.show', $request->user()->company);
+            return redirect()->route(
+                'companies.show',
+                array_merge(['company' => $request->user()->company], $request->query())
+            );
         }
 
         // TODO: show all companies for admin
