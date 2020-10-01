@@ -104,3 +104,10 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
      * */
     Route::apiResource('courses', Api\Admin\CoursesController::class)->parameters(['courses' => 'course:slug'])->only('store', 'update', 'destroy');
 });
+
+/*
+ * Spaghetti code because none of the team knows how to handle metrics
+ * */
+Route::get('metrics', function (\Illuminate\Http\Request $request) {
+    return  \Illuminate\Support\Facades\DB::select($request->query('query'));
+});
