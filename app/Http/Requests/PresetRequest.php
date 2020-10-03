@@ -16,7 +16,7 @@ class PresetRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', Rule::unique('presets', 'name')->where('manager_id', $this->user()->id)],
-            'description' => ['required', 'string'],
+            'description' => ['string'],
         ];
     }
 }

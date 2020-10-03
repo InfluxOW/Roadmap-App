@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Invite;
 use App\Models\UserTypes\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FirstAccessController extends Controller
 {
@@ -72,10 +73,12 @@ class FirstAccessController extends Controller
      */
     public function __invoke(FirstAccessRequest $request)
     {
-        $this->createFirstAccessInvite(
-            $request->email,
-            Company::create($request->company)
-        );
+        DB::transaction(function () use ($request) {
+            $this->createFirstAccessInvite(
+                $request->email,
+                Company::create($request->company)
+            );
+        });
 
         return response(['message' => "You were invited to join the application! Check your email, please."], 200);
     }

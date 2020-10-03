@@ -47,7 +47,7 @@ class PresetsGenerationController extends Controller
      *    required=true,
      *    description="Preset information and necessery technologies",
      *    @OA\JsonContent(
-     *       required={"name", "description", "technologies"},
+     *       required={"name", "technologies"},
      *       @OA\Property(property="name", type="string", example="Basic PHP prest"),
      *       @OA\Property(property="description", type="string", example="Start preset to become a PHP developer"),
      *       @OA\Property(property="technologies", type="array", @OA\Items(type="string"), example={"PHP", "Laravel", "Javascript"}),

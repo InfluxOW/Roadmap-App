@@ -266,7 +266,7 @@ class PresetsController extends Controller
      *    required=true,
      *    description="Preset information",
      *    @OA\JsonContent(
-     *       required={"name", "description"},
+     *       required={"name"},
      *       @OA\Property(property="name", type="string", example="Basic PHP prest"),
      *       @OA\Property(property="description", type="string", example="Start preset to become a PHP developer"),
      *    ),

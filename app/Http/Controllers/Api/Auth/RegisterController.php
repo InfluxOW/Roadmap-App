@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\User;
 use App\Models\UserTypes\Employee;
 use App\Models\UserTypes\Manager;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -65,19 +66,21 @@ class RegisterController extends Controller
      */
     public function __invoke(RegisterRequest $request)
     {
-        $invite = tap(Invite::whereCode($request->invite_token)->first(), function ($invite) {
-            $invite->revoke();
+        DB::transaction(function () use ($request) {
+            $invite = tap(Invite::whereCode($request->invite_token)->first(), function ($invite) {
+                $invite->revoke();
+            });
+
+            $user = $this->createUser($invite, $request);
+
+            if ($user->isManager()) {
+                $this->createManagerDefaultTeam($user);
+            }
+
+            if ($user->isEmployee() && $invite->sender->isManager()) {
+                $this->joinManagerDefaultTeam($user, $invite->sender);
+            }
         });
-
-        $user = $this->createUser($invite, $request);
-
-        if ($user->isManager()) {
-            $this->createManagerDefaultTeam($user);
-        }
-
-        if ($user->isEmployee() && $invite->sender->isManager()) {
-            $this->joinManagerDefaultTeam($user, $invite->sender);
-        }
 
         return response(
             ['message' => 'You were successfully registered. Use your email and password to sign in.'],
