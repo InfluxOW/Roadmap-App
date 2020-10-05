@@ -84,6 +84,7 @@ class EmployeesRepository
             ])
             ->with(self::WITH)
             ->withCount(self::WITH_COUNT)
+            ->latest('updated_at')
             ->paginate($request->per ?? 20)
             ->appends(request()->query());
     }

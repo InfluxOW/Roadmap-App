@@ -21,7 +21,7 @@ class GeneratedPresetsSeeder extends Seeder
 
         foreach (Preset::all() as $preset) {
             $request = new Request();
-            $request->technologies = Technology::inRandomOrder()->take(10)->pluck('name')->toArray();
+            $request->technologies = Technology::inRandomOrder()->take(5)->pluck('name')->toArray();
 
             PresetsGenerationRepository::store($request, $preset);
         }

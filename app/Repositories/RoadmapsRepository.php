@@ -25,6 +25,7 @@ class RoadmapsRepository
 
         return $query
                 ->with(self::WITH)
+                ->latest('assigned_at')
                 ->paginate($request->per ?? 20)
                 ->appends(request()->query());
     }

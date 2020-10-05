@@ -70,6 +70,7 @@ class CoursesRepository
                 AllowedSort::field('level', 'employee_level_id'),
             ])
             ->with(self::WITH)
+            ->latest('updated_at')
             ->paginate($request->per ?? 20)
             ->appends(request()->query());
     }

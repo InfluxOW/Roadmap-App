@@ -56,6 +56,7 @@ class LoginController extends Controller
         $user->tokens()->delete();
 
         return response([
+            'user_id' => $user->id,
             'user' => new UserResource($user),
             'access_token' => $user->createToken('access_token')->plainTextToken,
         ], 200);

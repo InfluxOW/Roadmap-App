@@ -31,11 +31,11 @@ class CoursesControllerTest extends TestCase
     }
 
     /** @test */
-    public function an_employee_cannot_view_courses()
+    public function an_employee_can_view_courses()
     {
         $this->actingAs($this->employee)
             ->get(route('courses.index'))
-            ->assertForbidden();
+            ->assertOk();
     }
 
     /** @test */
@@ -67,11 +67,11 @@ class CoursesControllerTest extends TestCase
     }
 
     /** @test */
-    public function an_employee_cannot_view_a_specific_course()
+    public function an_employee_can_view_a_specific_course()
     {
         $this->actingAs($this->employee)
             ->get(route('courses.show', $this->courses->first()))
-            ->assertForbidden();
+            ->assertOk();
     }
 
     /** @test */

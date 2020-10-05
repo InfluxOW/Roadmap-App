@@ -25,10 +25,10 @@ class CourseResource extends JsonResource
 
         $attributes = $default;
 
-        if (isset($this->additional['employee'])) {
+        if (isset($this->additional['employee']) || $request->user()->isEmployee()) {
             $completion = $this->completions->where(
                 'employee_id',
-                $this->additional['employee']->id
+                $request->user()->isEmployee() ? $request->user()->id : $this->additional['employee']->id
             )->first();
 
             if ($completion) {
@@ -50,7 +50,7 @@ class CourseResource extends JsonResource
                 $this->technologies->pluck('name');
         }
 
-        if ($request->is('api/courses/*') || $request->is('api/courses')) {
+        if (! $request->user()->isEmployee() && ($request->is('api/courses/*') || $request->is('api/courses'))) {
             $attributes['completed_by'] = UserBasicInformationResource::collection(
                 isset($request->take['completed_by']) ? $this->completedBy()->take($request->take['completed_by']) : $this->completedBy()
             );

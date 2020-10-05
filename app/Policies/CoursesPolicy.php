@@ -13,12 +13,12 @@ class CoursesPolicy
 
     public function viewAny(User $user)
     {
-        return $user->isManager() || $user->isAdmin();
+        return true;
     }
 
     public function view(User $user)
     {
-        return $user->isManager() || $user->isAdmin();
+        return true;
     }
 
     /*

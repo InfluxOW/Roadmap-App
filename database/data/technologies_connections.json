@@ -1,0 +1,440 @@
+{
+    "technologies_connections": [
+        {
+            "technology": "JavaScript",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "CSS",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "HTML",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "PHP",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "React",
+            "related_technologies": "CSS,HTML,JavaScript"
+        },
+        {
+            "technology": "Vue.js",
+            "related_technologies": "CSS,HTML,JavaScript"
+        },
+        {
+            "technology": "Redux",
+            "related_technologies": "JavaScript,React"
+        },
+        {
+            "technology": "Node.js",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Bootstrap",
+            "related_technologies": "CSS,PHP"
+        },
+        {
+            "technology": "SQL",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "PostgreSQL",
+            "related_technologies": "SQL"
+        },
+        {
+            "technology": "MySQL",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "ООП",
+            "related_technologies": "MySQL,PostgreSQL"
+        },
+        {
+            "technology": "Linux",
+            "related_technologies": "PostgreSQL,MySQL"
+        },
+        {
+            "technology": "1С-Битрикс",
+            "related_technologies": "MySQL"
+        },
+        {
+            "technology": "Jenkins",
+            "related_technologies": "Java,REST,JUnit"
+        },
+        {
+            "technology": "SOAP",
+            "related_technologies": "REST,Java,Spring"
+        },
+        {
+            "technology": "REST",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "Spring",
+            "related_technologies": "Java,PostgreSQL,SQL,HTML"
+        },
+        {
+            "technology": "Bash",
+            "related_technologies": "Docker,Linux,Yii Framework"
+        },
+        {
+            "technology": "Java",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "jQuery",
+            "related_technologies": "Bootstrap,CSS"
+        },
+        {
+            "technology": "MongoDB",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Python",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "Symfony",
+            "related_technologies": "PostgreSQL,Laravel"
+        },
+        {
+            "technology": "Docker",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "Laravel",
+            "related_technologies": "CI/CD,Symfony"
+        },
+        {
+            "technology": "Angular",
+            "related_technologies": "JavaScript,Less"
+        },
+        {
+            "technology": "Backbone",
+            "related_technologies": "JavaScript,REST,SASS"
+        },
+        {
+            "technology": "Gulp",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "WebPack",
+            "related_technologies": "JavaScript,TypeScript"
+        },
+        {
+            "technology": "Ajax",
+            "related_technologies": "Bootstrap"
+        },
+        {
+            "technology": "WebGL",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Less",
+            "related_technologies": "SASS,jQuery"
+        },
+        {
+            "technology": "SASS",
+            "related_technologies": "HTML"
+        },
+        {
+            "technology": "PUG",
+            "related_technologies": "Vue.js"
+        },
+        {
+            "technology": "SCSS",
+            "related_technologies": "CSS"
+        },
+        {
+            "technology": "Redis",
+            "related_technologies": "PostgreSQL"
+        },
+        {
+            "technology": "C#",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "Yii Framework",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Django",
+            "related_technologies": "CSS"
+        },
+        {
+            "technology": "TypeScript",
+            "related_technologies": "Angular"
+        },
+        {
+            "technology": "Oracle",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "PL/SQL",
+            "related_technologies": "Oracle"
+        },
+        {
+            "technology": "MS SQL Server",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "Figma",
+            "related_technologies": "HTML"
+        },
+        {
+            "technology": "RabbitMQ",
+            "related_technologies": "PostgreSQL"
+        },
+        {
+            "technology": "Zend Framework",
+            "related_technologies": "Yii Framework,Laravel"
+        },
+        {
+            "technology": "Kotlin",
+            "related_technologies": "Java"
+        },
+        {
+            "technology": "Elasticsearch",
+            "related_technologies": "MongoDB"
+        },
+        {
+            "technology": "WordPress",
+            "related_technologies": "Laravel,jQuery"
+        },
+        {
+            "technology": "CouchDB",
+            "related_technologies": "NoSQL"
+        },
+        {
+            "technology": "DynamoDB",
+            "related_technologies": "NoSQL"
+        },
+        {
+            "technology": "ASP.NET",
+            "related_technologies": "C#,MS SQL Server"
+        },
+        {
+            "technology": "API",
+            "related_technologies": "REST"
+        },
+        {
+            "technology": "Websocket",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Lambda",
+            "related_technologies": "Node.js,JavaScript"
+        },
+        {
+            "technology": "БЭМ",
+            "related_technologies": "ES6,jQuery"
+        },
+        {
+            "technology": "UX",
+            "related_technologies": "UI,Photoshop"
+        },
+        {
+            "technology": "UI",
+            "related_technologies": "UX,Photoshop"
+        },
+        {
+            "technology": "Adobe Illustrator",
+            "related_technologies": "Photoshop,Figma"
+        },
+        {
+            "technology": "RxJS",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "React Native",
+            "related_technologies": "React"
+        },
+        {
+            "technology": "DevOps",
+            "related_technologies": "Laravel,CI/CD,Symfony"
+        },
+        {
+            "technology": "Stylus",
+            "related_technologies": "Vue.js"
+        },
+        {
+            "technology": "Nuxt.js",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Entity Framework",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Joomla",
+            "related_technologies": "JavaScript,Ajax"
+        },
+        {
+            "technology": "Hibernate",
+            "related_technologies": "Java,Spring Boot,Spring"
+        },
+        {
+            "technology": "AWS",
+            "related_technologies": "Redis"
+        },
+        {
+            "technology": "Go",
+            "related_technologies": "Java"
+        },
+        {
+            "technology": "Kafka",
+            "related_technologies": "Java,Kubernetes"
+        },
+        {
+            "technology": "Kubernetes",
+            "related_technologies": "PostgreSQL,Docker"
+        },
+        {
+            "technology": "JUnit",
+            "related_technologies": "Java"
+        },
+        {
+            "technology": "SVG",
+            "related_technologies": "SCSS,SASS"
+        },
+        {
+            "technology": "WPF",
+            "related_technologies": "C#,Entity Framework"
+        },
+        {
+            "technology": "Visual Studio",
+            "related_technologies": "ASP.NET,C#"
+        },
+        {
+            "technology": "Nginx",
+            "related_technologies": "CSS,HTML"
+        },
+        {
+            "technology": "Dart",
+            "related_technologies": "Flutter,TypeScript"
+        },
+        {
+            "technology": "GraphQL",
+            "related_technologies": "MongoDB,Node.js"
+        },
+        {
+            "technology": ".NET Framework",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Microsoft Access",
+            "related_technologies": "PostgreSQL"
+        },
+        {
+            "technology": "Photoshop",
+            "related_technologies": "Adobe Illustrator,Figma"
+        },
+        {
+            "technology": "Atlassian Jira",
+            "related_technologies": "Scrum"
+        },
+        {
+            "technology": "Agile",
+            "related_technologies": "Scrum"
+        },
+        {
+            "technology": "Scrum",
+            "related_technologies": "Atlassian Jira"
+        },
+        {
+            "technology": "XML",
+            "related_technologies": "Bootstrap"
+        },
+        {
+            "technology": "CI/CD",
+            "related_technologies": "ООП,PHP"
+        },
+        {
+            "technology": "Ruby on Rails",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "C++",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "Flutter",
+            "related_technologies": "Dart,JavaScript"
+        },
+        {
+            "technology": "ES5",
+            "related_technologies": "React,ES6"
+        },
+        {
+            "technology": "ES6",
+            "related_technologies": "React"
+        },
+        {
+            "technology": "Babel",
+            "related_technologies": "React,ES6"
+        },
+        {
+            "technology": "PostCSS",
+            "related_technologies": "CSS,API"
+        },
+        {
+            "technology": "Jest",
+            "related_technologies": "React"
+        },
+        {
+            "technology": "TCP/IP",
+            "related_technologies": "Redis"
+        },
+        {
+            "technology": "NoSQL",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "Mercurial",
+            "related_technologies": "JavaScript"
+        },
+        {
+            "technology": "Microservices",
+            "related_technologies": "Kotlin"
+        },
+        {
+            "technology": "Scala",
+            "related_technologies": "Java"
+        },
+        {
+            "technology": "LINQ",
+            "related_technologies": "C#,.NET Framework"
+        },
+        {
+            "technology": "Spring Boot",
+            "related_technologies": "Spring"
+        },
+        {
+            "technology": "Asterisk",
+            "related_technologies": "Linux"
+        },
+        {
+            "technology": "Vuex",
+            "related_technologies": "CSS"
+        },
+        {
+            "technology": "HTTP",
+            "related_technologies": "Bootstrap"
+        },
+        {
+            "technology": "JSON",
+            "related_technologies": "Git"
+        },
+        {
+            "technology": "ORM",
+            "related_technologies": "MySQL"
+        },
+        {
+            "technology": "Mobx",
+            "related_technologies": "React"
+        }
+    ]
+}

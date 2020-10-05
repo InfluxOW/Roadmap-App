@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
                     Local\TeamsSeeder::class,
                     Local\TeamMembersSeeder::class,
                     Production\TechnologiesSeeder::class,
+                    Production\TechnologiesConnectionsSeeder::class,
                     Production\CoursesSeeder::class,
                     Production\CourseTechnologiesSeeder::class,
                     Production\GeneratedPresetsSeeder::class,
