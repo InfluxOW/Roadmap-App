@@ -106,7 +106,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 });
 
 /*
- * Spaghetti code because none of the team knows how to handle metrics
+ * Shit code because none of the team knows how to handle metrics and we had no time for that.
  * */
 Route::post('metrics', function (\Illuminate\Http\Request $request) {
     return  \Illuminate\Support\Facades\DB::select($request->metrics);
